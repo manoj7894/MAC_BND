@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { lazy, Suspense } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-//! These All Files are imported for the JobSEEker Routes
-const JobSeekerLayout = lazy(() =>import("../pages/Job_Seeker/JobSeekerLayout"));
+//! These All Files are imported for the JobSeeker Routes
+const JobSeekerLayout = lazy(() => import("../pages/Job_Seeker/JobSeekerLayout"));
 const Dashboard = lazy(() => import("../pages/Job_Seeker/Dashboard/Dashboard.js"));
 const Assessment = lazy(() => import("../pages/Job_Seeker/Assessment/Assessment.js"));
 const InstructionPage = lazy(() => import("../pages/Job_Seeker/Assessment/InstructionPage.js"));
@@ -16,12 +17,63 @@ const MYResume = lazy(() => import("../pages/Job_Seeker/MyResume/MyResume.js"));
 const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js"));
 const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
-//! These All Files are imported for the JobSEEker Routes
+
+//! These All Files are imported for the Employer Routes
+const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
+const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
+const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
+const Employees = lazy(() => import("../pages/Employer/Employees/Employees.js"));
+const Attendance = lazy(() => import("../pages/Employer/Employees/Attendance.js"));
+const OnTime = lazy(() => import("../pages/Employer/Employees/OnTime.js"));
+const Absent = lazy(() => import("../pages/Employer/Employees/Absent.js"));
+const LateArrivals = lazy(() => import("../pages/Employer/Employees/LateArrivals.js"));
+const LeaveRequests = lazy(() => import("../pages/Employer/Employees/LeaveRequests.js"));
+const Payroll = lazy(() => import("../pages/Employer/Payroll/Payroll.js"));
+const HRAnalytics = lazy(() => import("../pages/Employer/Analytics/HrAnalytics.js"));
+const Candidates = lazy(() => import("../pages/Employer/Candidates/Candidates.js"));
+const InterviewScheduled = lazy(() => import("../pages/Employer/InterviewScheduled/InterviewScheduled.js"));
+const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
+const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
+
+//! These All Files are imported for the Auth Routes
+const LoginPage = lazy(() =>
+  import("../pages/Auth/Login/ToggleLogin/LoginPage")
+);
+const Signup = lazy(() => import("../pages/Auth/Signup/UserSignup/UserSignup"));
+const HrLogin = lazy(() => import("../pages/Auth/Login/HrLogin/HrLogin"));
+const ResetPassword = lazy(() =>import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword"));
+const ForgotPassword = lazy(() =>
+  import("../pages/Auth/Password/User/ResetPassword/ResetPassword")
+);
+const HrResetPassword = lazy(() =>
+  import("../pages/Auth/Password/Hr/ForgotPassword/HrForgotPassword")
+);
+const HrForgotPassword = lazy(() =>
+  import("../pages/Auth/Password/Hr/ResetPassword/HrResetPassword")
+);
+//! These All Files are imported for the Auth Routes
 
 function AppRoute() {
+   // const {pathaname} = useLocation();
+   const navigateTO = useNavigate();
+   const { token, userType } = useSelector(
+     (state) => state.Assessment.currentUser
+   );
+ 
+   useEffect(() => {
+     if (!token) {
+       navigateTO("/user-login");
+     }
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+   }, [token]);
   return (
     <>
-      <JobSeekerRoutes />
+      {token && userType === "user" && <JobSeekerRoutes />}
+
+      {/* Change the route to Hr Recruiter */}
+      {token && userType === "employee" && <EmployerRoutes />}
+      {!token && !userType && <AuthRouter />}
+      
     </>
   );
 }
@@ -32,119 +84,117 @@ export default AppRoute;
 function JobSeekerRoutes() {
   return (
     <Routes>
-
-      <Route
-        path="/"
-        element={
-          <Suspense>
-            <JobSeekerLayout />
-          </Suspense>
-        }
-      >
-        <Route
-          path="/dashboard"
-          element={
-            <Suspense>
-              <Dashboard />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/assessment"
-          element={
-            <Suspense>
-              <Assessment />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/chatbot"
-          element={
-            <Suspense>
-              <ChatBot />
-            </Suspense>
-          }
-        />
-
-        <Route
-          path="/analytics"
-          element={
-            <Suspense>
-              <Analytics />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/myjobs"
-          element={
-            <Suspense>
-              <MYJobs />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/myresume"
-          element={
-            <Suspense>
-              <MYResume />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/application"
-          element={
-            <Suspense>
-              <Application />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/interviews"
-          element={
-            <Suspense>
-              <Interviews />
-            </Suspense>
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            <Suspense>
-              <Settings />
-            </Suspense>
-          }
-        />
+      <Route path="/" element={<Suspense><JobSeekerLayout /></Suspense>}>
+        <Route path="/dashboard" element={<Suspense><Dashboard /></Suspense>} />
+        <Route path="/assessment" element={<Suspense><Assessment /></Suspense>} />
+        <Route path="/chatbot" element={<Suspense><ChatBot /></Suspense>} />
+        <Route path="/analytics" element={<Suspense><Analytics /></Suspense>} />
+        <Route path="/myjobs" element={<Suspense><MYJobs /></Suspense>} />
+        <Route path="/myresume" element={<Suspense><MYResume /></Suspense>} />
+        <Route path="/application" element={<Suspense><Application /></Suspense>} />
+        <Route path="/interviews" element={<Suspense><Interviews /></Suspense>} />
+        <Route path="/settings" element={<Suspense><Settings /></Suspense>} />
       </Route>
+      <Route path="/assessment-Instructions" element={<Suspense><InstructionPage /></Suspense>} />
+      <Route path="/assessment-test" element={<Suspense><SelfAssessmentPage /></Suspense>} />
+      <Route path="/assessment-result" element={<Suspense><AssessmentResult /></Suspense>} />
+    </Routes>
+  );
+}
 
+function EmployerRoutes() {
+  return (
+    <Routes>
+      <Route path='/recruiter' element={<Suspense><MainContainer /></Suspense>}>
+        <Route path='/recruiter/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
+        <Route path='/recruiter/create_post' element={<Suspense><CreatePost /></Suspense>} />
+        <Route path='/recruiter/employees' element={<Suspense><Employees /></Suspense>}>
+          <Route path='/recruiter/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
+          <Route path='/recruiter/employees/on time' element={<Suspense><OnTime /></Suspense>} />
+          <Route path='/recruiter/employees/absent' element={<Suspense><Absent /></Suspense>} />
+          <Route path='/recruiter/employees/late arrivals' element={<Suspense><LateArrivals /></Suspense>} />
+          <Route path='/recruiter/employees/leave requests' element={<Suspense><LeaveRequests /></Suspense>} />
+        </Route>
+        <Route path='/recruiter/payroll' element={<Suspense><Payroll /></Suspense>} />
+        <Route path='/recruiter/analytics' element={<Suspense><HRAnalytics /></Suspense>} />
+        <Route path='/recruiter/candidates' element={<Suspense><Candidates /></Suspense>} />
+        <Route path='/recruiter/interview_scheduled' element={<Suspense><InterviewScheduled /></Suspense>} />
+        <Route path='/recruiter/chatbot' element={<Suspense><Chatbot /></Suspense>} />
+        <Route path='/recruiter/Setting' element={<Suspense><Setting /></Suspense>} />
+      </Route>
+    </Routes>
+  )
+}
+
+// All Routing related to the Auth must be defined HERE
+function AuthRouter() {
+  return (
+    <Routes>
       <Route
-        path="/assessment-Instructions"
+        path="/user-login"
         element={
           <Suspense>
-            <InstructionPage />
+            <LoginPage />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/user-signup"
+        element={
+          <Suspense>
+            <Signup />{" "}
+          </Suspense>
+        }
+      />
+      <Route
+        path="/hr-login"
+        element={
+          <Suspense>
+            <HrLogin />{" "}
+          </Suspense>
+        }
+      />
+      <Route
+        path="/reset-password/:token"
+        element={
+          <Suspense>
+            <ResetPassword />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/forgot-password"
+        element={
+          <Suspense>
+            <ForgotPassword />
+          </Suspense>
+        }
+      />
+      <Route
+        path="/hr/reset-password/:token"
+        element={
+          <Suspense>
+            <HrResetPassword />{" "}
+          </Suspense>
+        }
+      />
+      <Route
+        path="/hr/forgot-password"
+        element={
+          <Suspense>
+            <HrForgotPassword />
           </Suspense>
         }
       />
 
       <Route
-        path="/assessment-test"
+        path="/*"
         element={
           <Suspense>
-            <SelfAssessmentPage />
-          </Suspense>
-        }
-      />
-      
-      <Route
-        path="/assessment-result"
-        element={
-          <Suspense>
-            <AssessmentResult />
+            <LoginPage />
           </Suspense>
         }
       />
     </Routes>
   );
 }
-
