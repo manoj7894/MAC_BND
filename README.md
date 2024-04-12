@@ -1,6 +1,6 @@
 The history of detail changes will be available here from now on.
 
-Date : 08-04-2024
+## Date : 08-04-2024
 
 1. Designed changed for HR login component.
 2. Added toggle functionality between hr and user.
