@@ -53,11 +53,11 @@ export default function HRDashboard() {
         <h2>Dashboard</h2>
         <div className={pages.__dropdown}>
           <button className={pages.__dropBtn}>Sort By :</button>
-          <div className={pages.__dropdown_content}>
+          <ul className={pages.__dropdown_content}>
             <li>Latest</li>
             <li>Name</li>
             <li>City</li>
-          </div>
+          </ul>
         </div>
       </header>
 
@@ -89,7 +89,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 UX Designer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -107,7 +107,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 Product Designer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -125,7 +125,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 IOS Developer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -143,7 +143,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 UX Designer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -161,7 +161,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 IOS Developer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -179,7 +179,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 Product Designer
-                <li style={{ fontSize: "13px" }}>Posted 2 days ago</li>
+                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>

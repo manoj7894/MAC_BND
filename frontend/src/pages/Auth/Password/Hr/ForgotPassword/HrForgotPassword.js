@@ -3,7 +3,7 @@ import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../../Assets/title_logo.png";
 import "./HrForgotPassword.css";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import axios from "axios";
 
 function HrForgotPassword() {
@@ -66,7 +66,6 @@ function HrForgotPassword() {
           </Form>
         </div>
       </div>
-      <ToastContainer/>
     </>
   );
 }

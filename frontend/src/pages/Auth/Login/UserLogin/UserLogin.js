@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import loginImage from "../../../../Assets/Login form Image.PNG";
@@ -71,10 +71,10 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
           "Error:",
           error.response ? error.response.data : error.message
         );
-        toast.warning("Email not registered.");
+        toast.error("Email not registered.");
       }
     } else {
-      toast.warning("Please fill in the email field.");
+      toast.error("Please fill in the email field.");
     }
   };
 
@@ -93,12 +93,10 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
 
       dispatchTO(handleUserLogin({ name, email, token, userType }));
       toast.success(`Welcome back, ${name}!`);
-      setTimeout(() => {
-        nav("/");
-      }, 1500);
+      nav("/");
     } catch (error) {
       console.error("Error:", error.response.data);
-      toast.warning("Invalid Credential");
+      toast.error("Invalid Credential");
     }
   };
 
@@ -336,8 +334,6 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
           </div>
         )}
       </>
-      {/* )} */}
-      <ToastContainer />
     </>
   );
 }
