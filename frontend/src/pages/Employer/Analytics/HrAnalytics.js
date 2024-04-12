@@ -144,49 +144,49 @@ function HRAnalyticsPageCarousel() {
   );
 }
 
-function SplineChart() {
-  const [data, setData] = useState({
-    labels: [
-      "Jan",
-      "Feb",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    datasets: [
-      {
-        label: "Hiring",
-        data: [50, 100, 150, 80, 120, 140, 100, 90, 150, 180, 200, 250],
-        backgroundColor: "rgba(0, 0, 255, 0.1)",
-        borderColor: "rgb(53, 168, 191)",
-        tension: 0.4,
-        fill: true,
-        pointStyle: "rect",
-        pointBorderColor: "blue",
-        pointBackgroundColor: "#fff",
-        showLine: true,
-      },
-    ],
-  });
-  console.log(setData);
-  return (
-    <>
-      <div className={hrAnalyticStyle.spline_chart_container}>
-        <div>Hiring In past few months</div>
-        <div style={{ height: "300px",}}>
-          <Line data={data}>Hello</Line>
-        </div>
-      </div>
-    </>
-  );
-}
+// function SplineChart() {
+//   const [data, setData] = useState({
+//     labels: [
+//       "Jan",
+//       "Feb",
+//       "March",
+//       "April",
+//       "May",
+//       "June",
+//       "July",
+//       "August",
+//       "September",
+//       "Oct",
+//       "Nov",
+//       "Dec",
+//     ],
+//     datasets: [
+//       {
+//         label: "Hiring",
+//         data: [50, 100, 150, 80, 120, 140, 100, 90, 150, 180, 200, 250],
+//         backgroundColor: "rgba(0, 0, 255, 0.1)",
+//         borderColor: "rgb(53, 168, 191)",
+//         tension: 0.4,
+//         fill: true,
+//         pointStyle: "rect",
+//         pointBorderColor: "blue",
+//         pointBackgroundColor: "#fff",
+//         showLine: true,
+//       },
+//     ],
+//   });
+//   console.log(setData);
+//   return (
+//     <>
+//       <div className={hrAnalyticStyle.spline_chart_container}>
+//         <div>Hiring In past few months</div>
+//         <div style={{ height: "300px",}}>
+//           <Line data={data}>Hello</Line>
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
 
 
 const DummyBarChart = ({ data }) => {
