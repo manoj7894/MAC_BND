@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { lazy, Suspense } from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 //! These All Files are imported for the JobSeeker Routes
@@ -41,36 +41,30 @@ const LoginPage = lazy(() =>
 );
 const Signup = lazy(() => import("../pages/Auth/Signup/UserSignup/UserSignup"));
 const HrLogin = lazy(() => import("../pages/Auth/Login/HrLogin/HrLogin"));
-const ResetPassword = lazy(() => import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword"));
+const ResetPassword = lazy(() => import("../pages/Auth/Password/User/ResetPassword/ResetPassword.js"));
 const ForgotPassword = lazy(() =>
-  import("../pages/Auth/Password/User/ResetPassword/ResetPassword")
+  import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword.js")
 );
 const HrResetPassword = lazy(() =>
-  import("../pages/Auth/Password/Hr/ForgotPassword/HrForgotPassword")
+  import("../pages/Auth/Password/Hr/ResetPassword/HrResetPassword")
 );
 const HrForgotPassword = lazy(() =>
-  import("../pages/Auth/Password/Hr/ResetPassword/HrResetPassword")
+  import("../pages/Auth/Password/Hr/ForgotPassword/HrForgotPassword")
 );
 //! These All Files are imported for the Auth Routes
 
 function AppRoute() {
-  const navigateTO = useNavigate();
-  const { token, userType } = useSelector(
+  const { userType } = useSelector(
     (state) => state.Assessment.currentUser
   );
 
-  useEffect(() => {
-    if (!token) {
-      navigateTO("/user-login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [token]);
   return (
     <>
-      {token && userType === "user" && <JobSeekerRoutes />}
-      {/* Change the route to Hr */}
-      {token && userType === "employee" && <EmployerRoutes />}
-      {!token && !userType && <AuthRouter />}
+      {userType === "user" && <JobSeekerRoutes />}
+    
+      {userType === "employee" && <EmployerRoutes />}
+
+      {!userType && <AuthRouter />}
 
     </>
   );
@@ -130,7 +124,7 @@ function AuthRouter() {
   return (
     <Routes>
       <Route
-        path="/user-login"
+        path="/login"
         element={
           <Suspense>
             <LoginPage />

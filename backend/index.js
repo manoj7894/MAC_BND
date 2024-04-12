@@ -13,7 +13,6 @@ app.use(
   })
 );
 
-ConnectDb();
 
 //!  Assessments Related  Routes and import
 const { assessmentRoute } = require("./routes/Assessment.Route");
@@ -22,15 +21,27 @@ app.use("/api/assessment", assessmentRoute);
 app.use("/api/questions", assesmentQuestionRouter);
 //!  Assessments Related  Routes and import
 
-//!  Assessments Related  Routes and import
+//!  Auth Related  Routes and import
 const userRoutes = require("./Routes/UserRoutes");
 app.use("/api", userRoutes);
 
 const HrRoutes = require("./Routes/HrRoutes");
 app.use("/api/hr", HrRoutes);
-//!  Assessments Related  Routes and import
+//!  Auth Related  Routes and import
+
+
+//!  Auth Related  Routes and import
+const jobRoutes = require("./Routes/Job.Route");
+app.use("api/jobs", jobRoutes);
+//!  Auth Related  Routes and import
 
 const Port = process.env.Port;
-app.listen(Port, () => {
-  console.log(`Express is running on ${Port}`);
+
+app.listen(Port, async () => {
+  try {
+    await ConnectDb();
+    console.log(`SERVER STARED  : http://localhost:${process.env.PORT}`);
+  } catch (err) {
+    console.log(`SOMETHING WENT WRONG : ${err}`);
+  }
 });
