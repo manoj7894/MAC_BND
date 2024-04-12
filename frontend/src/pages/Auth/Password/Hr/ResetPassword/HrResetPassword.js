@@ -3,7 +3,7 @@ import { Button, Form, InputGroup } from "react-bootstrap";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import logo from "../../../../../Assets/logo.png";
 import "./HrResetPassword.css";
-import { ToastContainer, toast } from "react-toastify";
+import toast from 'react-hot-toast';
 import axios from "axios";
 
 function HrResetPassword() {
@@ -88,7 +88,6 @@ function HrResetPassword() {
           </Form>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }
