@@ -17,15 +17,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  /* box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px; */
   width: 70%;
-  height: 74vh;
+  height: 87vh;
   overflow: hidden;
   overflow: auto;
   scrollbar-width: none;
   -webkit-user-select: none;
   user-select: none;
   margin-left: 100px;
+  margin-top: 30px;
 }
 
 .analyticsPage__navbar {
@@ -58,10 +58,19 @@
   text-align: center;
 }
 
-.analyticsPage__navLInks.active {
+.active {
   background-color: #0062ff;
   color: white;
   border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  text-decoration: none;
+  width: 180px;
+  font-weight: 400;
+  font-size: 20px;
+  text-align: center;
 }
 
 .analyticsPage__outletContainer {
@@ -113,7 +122,8 @@
 }
 
 .analyticsPage__analysis__Box {
-  margin: 10px auto;
+  margin-top: 30px;
+  /* margin: 10px auto; */
   min-height: 440px;
   position: relative;
 }
@@ -161,10 +171,23 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+.frequency_main_parent{
+  border: 1px solid #ffffff;
+  border-radius: 20px;
+  padding-top: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-left: 100px;
+  margin-top: 30px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
 .frequency_container {
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+  width: 80%;
 }
 
 .first_completion_section {

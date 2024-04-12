@@ -9,6 +9,8 @@ import {
 //   ResponsiveContainer,
 } from "recharts";
 
+import FrequencyStyle from './Analytics.module.css'
+
 const data = [
   {
     name: "",
@@ -57,13 +59,14 @@ const data = [
 const FrequencyChart = () => {
   return (
     <>
-      <div className="frequency_container">
-        <div className="first_completion_section">
+   <div className={FrequencyStyle.frequency_main_parent}>
+   <div className={FrequencyStyle.frequency_container}>
+        <div className={FrequencyStyle.first_completion_section}>
           <div>Assessment Completion Rate</div>
           <h5>85%</h5>
         </div>
 
-        <div className="second_completion_section">
+        <div className={FrequencyStyle.second_completion_section}>
           <div style={{ fontSize: "12px" }}>Skill Gap Analysis</div>
           <h5>20%</h5>
         </div>
@@ -71,7 +74,7 @@ const FrequencyChart = () => {
       <h4>Trend Analysis</h4>
       <div>Frequency</div>
       <AreaChart
-        width={800}
+        width={700}
         height={200}
         data={data}
         margin={{
@@ -97,6 +100,7 @@ const FrequencyChart = () => {
           fill="url(#colorUv)"
         />
       </AreaChart>
+    </div>
     </>
   );
 };

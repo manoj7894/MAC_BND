@@ -213,10 +213,11 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
                         Next
                       </Button>
                     </div>
+                    {/*
                     <div style={{ textAlign: "center", margin: "10px 0px" }}>
                       OR
                     </div>
-                    <ul className={hrLoginStyle.login_social_list}>
+                     <ul className={hrLoginStyle.login_social_list}>
                       <li className={hrLoginStyle.social_list_item}>
                         <img
                           src={google}
@@ -240,7 +241,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
                           className={hrLoginStyle.social_image}
                         />
                       </li>
-                    </ul>
+                    </ul> */}
                   </div>
                 </div>
               </div>

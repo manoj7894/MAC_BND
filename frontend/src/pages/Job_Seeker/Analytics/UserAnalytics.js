@@ -4,11 +4,11 @@ import clockICON from "../../../Assets/clockICON.jpg";
 import activeICON from "../../../Assets/ActiveICON.jpg";
 import callICON from "../../../Assets/callICON.png";
 import loginICON from "../../../Assets/loginICON.png";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink,useLocation, useNavigate } from "react-router-dom";
 import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import userAnalyticsStyle from "./Analytics.css";
+import userAnalyticsStyle from "./Analytics.module.css";
 
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
@@ -48,9 +48,10 @@ function UserAnalytics() {
     <>
       <div className={userAnalyticsStyle.analyticsPage__box}>
         <AnalyticsPageNavbar />
-        <div className={userAnalyticsStyle.analyticsPage__outletContainer}>
+        {/* <div className={userAnalyticsStyle.analyticsPage__outletContainer}>
           <Outlet />
-        </div>
+        </div> */}
+        <AnalyticsReportComponent/>
       </div>
     </>
   );
@@ -61,20 +62,26 @@ export default UserAnalytics;
 function AnalyticsPageNavbar() {
   return (
     <nav className={userAnalyticsStyle.analyticsPage__navbar}>
-      <NavLink to={"/analytics/weekly"} className={userAnalyticsStyle.analyticsPage__navLInks}>
+      <NavLink to={"/analytics/weekly"} className={({ isActive }) =>
+                  isActive ? userAnalyticsStyle.active : userAnalyticsStyle.analyticsPage__navLInks
+                }>
         Weekly
       </NavLink>
-      <NavLink to={"/analytics/monthly"} className={userAnalyticsStyle.analyticsPage__navLInks}>
+      <NavLink to={"/analytics/monthly"} className={({ isActive }) =>
+                  isActive ? userAnalyticsStyle.active : userAnalyticsStyle.analyticsPage__navLInks
+                }>
         Monthly
       </NavLink>
-      <NavLink to={"/analytics/yearly"} className={userAnalyticsStyle.analyticsPage__navLInks}>
+      <NavLink to={"/analytics/yearly"} className={({ isActive }) =>
+                  isActive ? userAnalyticsStyle.active : userAnalyticsStyle.analyticsPage__navLInks
+                }>
         Yearly
       </NavLink>
     </nav>
   );
 }
 
-export function AnalyticsReportComponent() {
+function AnalyticsReportComponent() {
   const dummyData = [
     {
       name: "Jan",
@@ -134,11 +141,11 @@ export function AnalyticsReportComponent() {
             Success rate
           </span>
         </div>
-        <div style={{ height: "400px" }}>
+        <div style={{ height: "400px", width:'80%', marginLeft:'69px', marginTop:'20px' }}>
           <ResponsiveContainer>
             <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} />
-              <YAxis />
+              <XAxis dataKey={"name"} axisLine={false} tickLine={false} />
+              <YAxis axisLine={false} tickLine={false}/>
               <Bar dataKey={"value"} fill="#00296B" barSize={35} />
             </BarChart>
           </ResponsiveContainer>
@@ -153,7 +160,7 @@ export function AnalyticsReportComponent() {
           <span className={userAnalyticsStyle.analysisBox__header__secondaryText}>20 views</span>
         </div>
 
-        <div className={userAnalyticsStyle.spline_chart_design}>
+        <div className={userAnalyticsStyle.spline_chart_design} style={{height:'400px', width:'80%', marginLeft:'100px'}}>
           <ResponsiveContainer>
             <SplineChart />
             {/* <BarChart data={dummyData}>
@@ -172,11 +179,11 @@ export function AnalyticsReportComponent() {
             Success rate
           </span>
         </div>
-        <div style={{ height: "400px" }}>
+        <div style={{height:'400px', width:'80%', marginLeft:'100px', marginTop:'30px'}}>
           <ResponsiveContainer>
             <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} />
-              <YAxis />
+              <XAxis dataKey={"name"}  axisLine={false} tickLine={false} />
+              <YAxis  axisLine={false} tickLine={false} />
               <Bar dataKey={"value"} fill="#00296B" barSize={35} />
             </BarChart>
           </ResponsiveContainer>
@@ -191,11 +198,11 @@ export function AnalyticsReportComponent() {
           </span>
         </div>
 
-        <div style={{ height: "400px" }}>
+        <div style={{height:'400px', width:'80%', marginLeft:'100px', marginTop:'30px'}}>
           <ResponsiveContainer>
             <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} />
-              <YAxis />
+            <XAxis dataKey={"name"}  axisLine={false} tickLine={false} />
+              <YAxis  axisLine={false} tickLine={false} />
               <Bar dataKey={"value"} fill="#00296B" barSize={35} />
             </BarChart>
           </ResponsiveContainer>
@@ -208,7 +215,7 @@ export function AnalyticsReportComponent() {
           <span className={userAnalyticsStyle.analysisBox__header__secondaryText}>20 views</span>
         </div>
 
-        <div className={userAnalyticsStyle.spline_chart_design}>
+        <div>
           <ResponsiveContainer>
             <FrequencyChart />
           </ResponsiveContainer>
@@ -294,7 +301,7 @@ function AnalyticsPageCarousel() {
           <div
             key={data.cardID}
             className={userAnalyticsStyle.AnalyticsPageCarousel_Card}
-            style={{ backgroundColor: `${data.cardBG}` }}
+            style={{ backgroundColor: `${data.cardBG}`, marginLeft:'35px' }}
           >
             <h1 className={userAnalyticsStyle.AnalyticsPageCarousel_CardTitle}>
               <img
