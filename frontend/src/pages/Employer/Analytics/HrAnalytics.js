@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React from "react";
 import mailICON from "../../../Assets/mailICON.jpg";
 import clockICON from "../../../Assets/clockICON.jpg";
 import activeICON from "../../../Assets/ActiveICON.jpg";
@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis,Tooltip, Legend, ResponsiveContainer } from 'recha
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
-import { Line } from "react-chartjs-2";
+// import { Line } from "react-chartjs-2";
 import hrAnalyticStyle from './HRAnalytics.module.css'
 
 const dummyData = [
