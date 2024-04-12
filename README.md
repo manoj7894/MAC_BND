@@ -9,7 +9,7 @@ The history of detail changes will be available here from now on.
 5. modified link in navbar for login and signup.
 6. Attached signup form of hr through link in user signup.
 
-Date: 09-04-2024
+## Date: 09-04-2024
 
 1. HR Analytics page completed.
 2. Code pushed to github
@@ -17,15 +17,15 @@ Date: 09-04-2024
    branch and pushed it.
 4. To see HR Analytic page go to route hr-analytic.
 
-Date: 10-04-2024
+## Date: 10-04-2024
 
 1. Creating a plan of action.
 
-Date : 11-04-2024
+## Date : 11-04-2024
 
 ## EID HOLIDAY
 
-Date: 12-04-2024
+## Date: 12-04-2024
 
 1. Merged the code of HR Analytics and User Analytics in new code.
 2. Fixed forgot password and reset password of both user and hr.
