@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import toast from 'react-hot-toast';
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -78,7 +78,7 @@ const Signup = () => {
     // Check if the current step requires the resume
     if (formData.step === 1) {
       if (!formData.resume) {
-        toast.warning("Please upload your resume");
+        toast.error("Please upload your resume");
         return;
       } else {
         toast.success("Resume Uploaded Sucessfully");
@@ -94,12 +94,12 @@ const Signup = () => {
         !formData.password ||
         !formData.conf_password
       ) {
-        toast.warning("Please fill in all required fields");
+        toast.error("Please fill in all required fields");
         return;
       }
       // Check if passwords match
       if (formData.password !== formData.conf_password) {
-        toast.warning("Passwords do not match");
+        toast.error("Passwords do not match");
         return;
       } else {
         toast.success("Personal Details Successfully filled");
@@ -115,10 +115,10 @@ const Signup = () => {
         !formData.country ||
         !formData.state
       ) {
-        toast.warning("Please fill in all required fields");
+        toast.error("Please fill in all required fields");
         return;
       } else if (!/^\d{10}$/.test(formData.phone_number)) {
-        toast.warning("Phone number must contain exactly 10 digits");
+        toast.error("Phone number must contain exactly 10 digits");
         return;
       } else {
         // Calculate age from date of birth
@@ -135,7 +135,7 @@ const Signup = () => {
 
         // Check if age is at least 18
         if (age < 18) {
-          toast.warning("You must be at least 18 years old to sign up");
+          toast.error("You must be at least 18 years old to sign up");
           return;
         }
 
@@ -152,7 +152,7 @@ const Signup = () => {
         !formData.course_start_date ||
         !formData.course_end_date
       ) {
-        toast.warning("Please fill in all required fields");
+        toast.error("Please fill in all required fields");
         return;
       }
 
@@ -162,14 +162,14 @@ const Signup = () => {
 
       // Check if start date is greater than end date
       if (startDate >= endDate) {
-        toast.warning("Start date must be greater than end date");
+        toast.error("Start date must be greater than end date");
         return;
       }
 
       // Check if difference between start and end date is at least one year
       const oneYear = 1000 * 60 * 60 * 24 * 365; // milliseconds in one year
       if (endDate - startDate < oneYear) {
-        toast.warning(
+        toast.error(
           "Difference between start and end date must be at least one year"
         );
         return;
@@ -215,10 +215,10 @@ const Signup = () => {
       // Handle error response
       if (error.response) {
         console.error("Error:", error.response.data);
-        toast.warning("Internal Server Error");
+        toast.error("Internal Server Error");
       } else {
         console.error("Error:", error.message);
-        toast.warning("Network Error");
+        toast.error("Network Error");
       }
     }
   };
@@ -704,7 +704,6 @@ const Signup = () => {
           </div>
         )}
       </div>
-      <ToastContainer />
     </>
   );
 };

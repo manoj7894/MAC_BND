@@ -41,7 +41,7 @@ const LoginPage = lazy(() =>
 );
 const Signup = lazy(() => import("../pages/Auth/Signup/UserSignup/UserSignup"));
 const HrLogin = lazy(() => import("../pages/Auth/Login/HrLogin/HrLogin"));
-const ResetPassword = lazy(() =>import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword"));
+const ResetPassword = lazy(() => import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword"));
 const ForgotPassword = lazy(() =>
   import("../pages/Auth/Password/User/ResetPassword/ResetPassword")
 );
@@ -54,26 +54,24 @@ const HrForgotPassword = lazy(() =>
 //! These All Files are imported for the Auth Routes
 
 function AppRoute() {
-   // const {pathaname} = useLocation();
-   const navigateTO = useNavigate();
-   const { token, userType } = useSelector(
-     (state) => state.Assessment.currentUser
-   );
- 
-   useEffect(() => {
-     if (!token) {
-       navigateTO("/user-login");
-     }
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [token]);
+  const navigateTO = useNavigate();
+  const { token, userType } = useSelector(
+    (state) => state.Assessment.currentUser
+  );
+
+  useEffect(() => {
+    if (!token) {
+      navigateTO("/user-login");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [token]);
   return (
     <>
       {token && userType === "user" && <JobSeekerRoutes />}
-
-      {/* Change the route to Hr Recruiter */}
+      {/* Change the route to Hr */}
       {token && userType === "employee" && <EmployerRoutes />}
       {!token && !userType && <AuthRouter />}
-      
+
     </>
   );
 }
@@ -105,23 +103,24 @@ function JobSeekerRoutes() {
 function EmployerRoutes() {
   return (
     <Routes>
-      <Route path='/recruiter' element={<Suspense><MainContainer /></Suspense>}>
-        <Route path='/recruiter/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
-        <Route path='/recruiter/create_post' element={<Suspense><CreatePost /></Suspense>} />
-        <Route path='/recruiter/employees' element={<Suspense><Employees /></Suspense>}>
-          <Route path='/recruiter/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
-          <Route path='/recruiter/employees/on time' element={<Suspense><OnTime /></Suspense>} />
-          <Route path='/recruiter/employees/absent' element={<Suspense><Absent /></Suspense>} />
-          <Route path='/recruiter/employees/late arrivals' element={<Suspense><LateArrivals /></Suspense>} />
-          <Route path='/recruiter/employees/leave requests' element={<Suspense><LeaveRequests /></Suspense>} />
+      <Route path='/' element={<Suspense><MainContainer /></Suspense>}>
+        <Route path='/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
+        <Route path='/create_post' element={<Suspense><CreatePost /></Suspense>} />
+        <Route path='/employees' element={<Suspense><Employees /></Suspense>}>
+          <Route path='/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
+          <Route path='/employees/on_time' element={<Suspense><OnTime /></Suspense>} />
+          <Route path='/employees/absent' element={<Suspense><Absent /></Suspense>} />
+          <Route path='/employees/late_arrivals' element={<Suspense><LateArrivals /></Suspense>} />
+          <Route path='/employees/leave_requests' element={<Suspense><LeaveRequests /></Suspense>} />
         </Route>
-        <Route path='/recruiter/payroll' element={<Suspense><Payroll /></Suspense>} />
-        <Route path='/recruiter/analytics' element={<Suspense><HRAnalytics /></Suspense>} />
-        <Route path='/recruiter/candidates' element={<Suspense><Candidates /></Suspense>} />
-        <Route path='/recruiter/interview_scheduled' element={<Suspense><InterviewScheduled /></Suspense>} />
-        <Route path='/recruiter/chatbot' element={<Suspense><Chatbot /></Suspense>} />
-        <Route path='/recruiter/Setting' element={<Suspense><Setting /></Suspense>} />
+        <Route path='/payroll' element={<Suspense><Payroll /></Suspense>} />
+        <Route path='/analytics' element={<Suspense><HRAnalytics /></Suspense>} />
+        <Route path='/candidates' element={<Suspense><Candidates /></Suspense>} />
+        <Route path='/interview_scheduled' element={<Suspense><InterviewScheduled /></Suspense>} />
+        <Route path='/chatbot' element={<Suspense><Chatbot /></Suspense>} />
+        <Route path='/Setting' element={<Suspense><Setting /></Suspense>} />
       </Route>
+      <Route path='/*' element={<Suspense><MainContainer /></Suspense>} />
     </Routes>
   )
 }
