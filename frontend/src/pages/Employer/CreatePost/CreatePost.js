@@ -1,6 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
 import pages from '../Pages.module.css';
 import toast from "react-hot-toast";
 import axios from "axios"
@@ -116,20 +114,10 @@ export default function CreatePost() {
     <div className={pages.__create_Post_Page}>
       <header className={pages.__create_Post_Header}>
         <h1 style={{ fontSize: '30px' }}>Create Post</h1>
-        {/* <div className={pages.__dropdown}>
-          <button className={pages.__dropBtn}>Choose Visibility :</button>
-          <div className={pages.__dropdown_content}>
-            <li>Latest</li>
-            <li>Name</li>
-            <li>City</li>
-          </div>
-        </div> */}
       </header>
 
       <div className={pages.__postDetails}>
         <div className={pages.__imgContainer}>
-          {/* <FontAwesomeIcon className={pages.__postImg} icon={faImage} /> */}
-
           <img className={pages.__previewImg} src={post.jobPoster} alt="preview img"
             onError={(e) => {
               e.target.src = `${noImg}`
