@@ -1,18 +1,7 @@
 const jobCollection = require("../model/Job.Model");
 
 const create = async (req, res) => {
-
   // ! Saptarsi will made this one API for creating job post
-  // try {
-  //   const mongooseResponse = await jobCollection.create({
-  //     ...req.body,
-  //     createdAt: Date.now()
-  //   });
-  //   return res.send(mongooseResponse)
-  // } catch (error) {
-  //   res.status(500).json({ error, success: false });
-  // }
-
 };
 
 const get = async (req, res) => {
