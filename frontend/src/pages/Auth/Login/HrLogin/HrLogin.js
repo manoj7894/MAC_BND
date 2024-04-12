@@ -37,7 +37,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/user?email=${formData.email}`
+          `http://localhost:8080/api/hr/get-hr?email=${formData.email}`
         );
         const userData = response.data;
         setName(userData.name);

@@ -73,7 +73,7 @@ function SideNavbar() {
     dispatch(handleUserLogOut());
     toast.success(`${name} Logged out !!`)
     setTimeout(() => {
-      navigateTO("/user-login")
+      navigateTO("/login")
     }, 1000);
   }
   return (
