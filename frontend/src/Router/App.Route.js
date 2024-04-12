@@ -30,7 +30,7 @@ const Absent = lazy(() => import("../pages/Employer/Employees/Absent.js"));
 const LateArrivals = lazy(() => import("../pages/Employer/Employees/LateArrivals.js"));
 const LeaveRequests = lazy(() => import("../pages/Employer/Employees/LeaveRequests.js"));
 const Payroll = lazy(() => import("../pages/Employer/Payroll/Payroll.js"));
-const HRAnalytics = lazy(() => import("../pages/Employer/Analytics/HRAnalytics.js"));
+const HRAnalytics = lazy(() => import("../pages/Employer/Analytic/HrAnalytics.js"));
 const Candidates = lazy(() => import("../pages/Employer/Candidates/Candidates.js"));
 const InterviewScheduled = lazy(() => import("../pages/Employer/InterviewScheduled/InterviewScheduled.js"));
 const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));

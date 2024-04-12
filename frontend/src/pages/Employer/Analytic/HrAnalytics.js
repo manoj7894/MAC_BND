@@ -8,7 +8,7 @@ import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 // import { Line } from "react-chartjs-2";
-import hrAnalyticStyle from './HRAnalytics.module.css'
+import hrAnalyticStyle from './HrAnalytics.module.css'
 
 const dummyData = [
   {
@@ -41,7 +41,7 @@ const dummyData = [
   },
 ];
 
-const HRAnalytics = () => {
+const HRAnalytic = () => {
   return (
     <>
       <div className={hrAnalyticStyle.hr_analytic_container}>
@@ -54,7 +54,7 @@ const HRAnalytics = () => {
   );
 };
 
-export default HRAnalytics;
+export default HRAnalytic;
 
 function HRAnalyticsPageCarousel() {
   const responsive = {
