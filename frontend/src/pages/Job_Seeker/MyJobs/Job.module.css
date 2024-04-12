@@ -59,7 +59,7 @@
 .company_job_profile {
   display: flex;
   align-items: center;
-  width: 40%;
+  width: 50%;
 }
 .company_job_profile img[alt="comp_logo"] {
   width: 80px;
@@ -104,7 +104,7 @@
   align-items: center;
 }
 .req_1 {
-  width: 9%;
+  width: 20%;
   display: flex;
   align-items: center;
 }
