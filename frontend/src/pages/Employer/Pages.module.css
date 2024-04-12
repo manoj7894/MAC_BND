@@ -1,10 +1,18 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
+p {
+    margin: 0 ;
+    padding: 0 ;
+}
+
 /* HR-Dashboard Page-------------------- */
-.__dashboard_Header,.__postImpression_Header,.__latest_Post_Header {
+.__dashboard_Header,
+.__postImpression_Header,
+.__latest_Post_Header {
     display: flex;
     justify-content: space-between;
 }
@@ -16,6 +24,7 @@
     cursor: pointer;
     color: chocolate;
 }
+
 .__dropBtn {
     background-color: rgb(50, 76, 246);
     color: white;
@@ -24,6 +33,7 @@
     border: none;
     border-radius: 5px;
 }
+
 .__dropdown_content {
     display: none;
     position: absolute;
@@ -32,19 +42,23 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
+
 .__dropdown_content li {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
+
 .__dropdown_content li:hover {
     background-color: #ddd;
     cursor: pointer;
 }
+
 .__dropdown:hover .__dropdown_content {
     display: block;
 }
+
 .__dropdown:hover .__dropBtn {
     background-color: #3e8e41;
 }
@@ -62,22 +76,26 @@
 .__posts {
     background: rgba(255, 192, 203, 0.479);
     width: 90%;
-    height: 170px;
+    min-height: 170px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 5px 5.4px 3.2px;
     cursor: pointer;
 }
 
 .__postLogo {
-    width: 2em;
-    object-fit: contain;
+    width: 45px;
+    height: 45px;
+    /* object-fit: contain; */
+    border-radius: 50%;
 }
 
 .__postTitle {
+    /* border: 1px solid red; */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: .5em 0;
+    gap: 20px;
 }
 
 .__btn_PostOpen {
@@ -185,7 +203,8 @@
     justify-content: center;
     align-items: center;
 }
-.__previewImg{
+
+.__previewImg {
     width: 100%;
     object-fit: contain;
     cursor: pointer;
@@ -298,18 +317,22 @@
 }
 
 @media screen and (max-width: 900px) {
-    .__postDetails{
+    .__postDetails {
         flex-direction: column;
         margin: 1em 0;
     }
-    .__imgContainer{
+
+    .__imgContainer {
         width: 90%;
         height: 350px;
     }
-    .__btn_Cancel,.__btn_Save{
+
+    .__btn_Cancel,
+    .__btn_Save {
         font-size: 18px;
     }
-    .__createPost_Form{
+
+    .__createPost_Form {
         width: 90%;
     }
 }

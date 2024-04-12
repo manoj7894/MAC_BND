@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import pages from '../Pages.module.css';
 import user from '../../../Assets/user.png'
 import friday from '../../../Assets/friday.jpg'
@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import axios from "axios"
 
 const responsive = {
   superLargeDesktop: {
@@ -41,6 +42,12 @@ const monthName = {
 }
 
 export default function HRDashboard() {
+  const [jobPost, setJobPost] = useState([])
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
+      .then(response => setJobPost(response.data.jobs))
+  }, [])
+
   const date = new Date();
   const day = date.getDate();
   const month = date.getMonth() + 1;
@@ -84,24 +91,31 @@ export default function HRDashboard() {
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px">
 
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                UX Designer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
+          {jobPost.length > 0 && jobPost.map((data) => {
+            return <div className={pages.__posts} key={data._id}>
+              <div className={pages.__postTitle}>
+                <img className={pages.__postLogo} src={data.jobPoster} alt='' />
+                <p>
+                  {data.jobTitle.slice(0,20)}...
+                  <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
+                </p>
+                <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
+              </div>
+              <div className={pages.__post_body}>
+                <span>{data.location}</span>
+                <span>{data.jobExperience}</span>
+              </div>
+              <div className={pages.__post_Footer}>
+                <span>45</span> applications
+              </div>
             </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>45</span> applications
-            </div>
-          </div>
+          })}
 
+          {/* {
+            console.log(jobPost)
+          } */}
+
+          {/* 
           <div className={pages.__posts}>
             <div className={pages.__postTitle}>
               <img className={pages.__postLogo} src={user} alt='' />
@@ -190,7 +204,7 @@ export default function HRDashboard() {
             <div className={pages.__post_Footer}>
               <span>10</span> applications
             </div>
-          </div>
+          </div> */}
         </Carousel>
       </div>
 

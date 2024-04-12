@@ -15,7 +15,8 @@ const create = async (req, res) => {
       salaryRange,
       skilRequired,
       employeeEmail,
-      jobExperience
+      jobExperience,
+      createdAt: Date.now(),
     };
     const mongooseRespoonse = await jobCollection.create(newPost)
     if (mongooseRespoonse) {
@@ -36,9 +37,23 @@ const create = async (req, res) => {
 
 };
 
+// const get = async (req, res) => {
+//   try {
+//     const jobs = await jobCollection.findById(req.params.id);
+
+//     if (jobs) {
+//       res.status(200).send({ jobs, success: true });
+//     } else {
+//       res.status(404).send({ jobs: "No job found", success: false });
+
+//     }
+//   } catch (error) {
+//     res.status(500).json({ error, success: false });
+//   }
+// };
 const get = async (req, res) => {
   try {
-    const jobs = await jobCollection.findById(req.params.id);
+    const jobs = await jobCollection.find({employeeEmail:req.params.email});
 
     if (jobs) {
       res.status(200).send({ jobs, success: true });

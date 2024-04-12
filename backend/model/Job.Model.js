@@ -38,6 +38,9 @@ const jobSchema = new mongoose.Schema(
         jobExperience: {
             type: String,
             required: true,
+        },
+        createdAt: {
+            type: Number,
         }
     }
 

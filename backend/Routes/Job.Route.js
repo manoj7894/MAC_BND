@@ -8,7 +8,7 @@ const { create, get, update, remove, getAll, } = require("../controller/Job.cont
 
 jobRoutes.post("/create-job", uploadPhoto, create);
 
-jobRoutes.get("/get-job/:id", get);
+jobRoutes.get("/get-job/:email", get);
 
 jobRoutes.get("/All-jobs", getAll);
 
