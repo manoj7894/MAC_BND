@@ -182,7 +182,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
                           cursor: "pointer",
                         }}
                       >
-                        Recruiter
+                        Employer
                       </span>
                     </div>
                     <div className={hrLoginStyle.sub_container3_styl1}>
