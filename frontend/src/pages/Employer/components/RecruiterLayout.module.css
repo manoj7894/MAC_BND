@@ -25,7 +25,6 @@
 
 /* Navbar Design-------------------------> */
 .__navbar_Page {
-    /* border: 1px solid red; */
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -70,8 +69,6 @@
 }
 
 .__nav_footer_actions {
-    /* border: 1px solid; */
-    /* height: 8em; */
     margin: 1em 0;
     display: flex;
     flex-direction: column;
@@ -166,6 +163,12 @@
 @media screen and (max-width: 950px) {
     .__navbar_Page {
       width: 100px;
+    }
+    .__navbar{
+        gap: 1em;
+    }
+    .__navbar_Links,.active{
+        margin: .3em 0;
     }
     .__btn_Logout {
       width: 3em;

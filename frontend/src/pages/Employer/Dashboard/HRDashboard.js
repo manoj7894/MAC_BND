@@ -10,7 +10,7 @@ import 'react-multi-carousel/lib/styles.css';
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
-    items: 5
+    items: 4
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -53,11 +53,11 @@ export default function HRDashboard() {
         <h2>Dashboard</h2>
         <div className={pages.__dropdown}>
           <button className={pages.__dropBtn}>Sort By :</button>
-          <ul className={pages.__dropdown_content}>
+          <div className={pages.__dropdown_content}>
             <li>Latest</li>
             <li>Name</li>
             <li>City</li>
-          </ul>
+          </div>
         </div>
       </header>
 
@@ -70,11 +70,11 @@ export default function HRDashboard() {
         <Carousel className={pages.__post_Section}
           swipeable={true}
           draggable={true}
-          showDots={true}
+          showDots={false}
           responsive={responsive}
           ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          autoPlay={true}
+          infinite={false}
+          autoPlay={false}
           autoPlaySpeed={2000}
           keyBoardControl={true}
           customTransition="all .5"
@@ -89,7 +89,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 UX Designer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -107,7 +107,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 Product Designer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -125,7 +125,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 IOS Developer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -143,7 +143,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 UX Designer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -161,7 +161,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 IOS Developer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>
@@ -179,7 +179,7 @@ export default function HRDashboard() {
               <img className={pages.__postLogo} src={user} alt='' />
               <p>
                 Product Designer
-                <span style={{ fontSize: "13px", display:'block' }}>Posted 2 days ago</span>
+                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
               </p>
               <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
             </div>

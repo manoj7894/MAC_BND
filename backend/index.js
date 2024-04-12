@@ -32,7 +32,7 @@ app.use("/api/hr", HrRoutes);
 
 //!  Auth Related  Routes and import
 const jobRoutes = require("./Routes/Job.Route");
-app.use("api/jobs", jobRoutes);
+app.use("/api/jobs", jobRoutes);
 //!  Auth Related  Routes and import
 
 const Port = process.env.Port;
