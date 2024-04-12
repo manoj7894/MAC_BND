@@ -113,9 +113,9 @@ const Applied = () => {
                       class="fa-solid fa-money-check-dollar"
                       style={{ color: "#067418" }}
                     ></i>
-                    <span style={{ fontWeight: "bold" }}>{item.salaryRange}K</span>
+                    <span style={{ fontWeight: "bold" }}>{item.salaryRange}</span>
                     <span style={{ color: "#9595b4", fontSize: 12 }}>
-                      /Month
+                      /CTC
                     </span>
                   </div>
                   <div className={JobStyle.apply_box}>
