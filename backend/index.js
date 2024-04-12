@@ -1,5 +1,5 @@
 const express = require("express");
-const ConnectDb = require("./config/config");
+const ConnectDb = require('./Config/config.js');
 const app = express();
 app.use(express.json());
 
@@ -32,11 +32,20 @@ app.use("/api/hr", HrRoutes);
 
 //!  Auth Related  Routes and import
 const jobRoutes = require("./Routes/Job.Route");
-app.use("api/jobs", jobRoutes);
+app.use("/api/jobs", jobRoutes);
 //!  Auth Related  Routes and import
 
 const Port = process.env.Port;
 
+
+// const HrUser = require("./model/users/HrUserModel.js")
+// const user = require("./model/users/UserModel.js")
+//  async function getHr (){
+// let response = await HrUser.find({});
+// // let response = await user.find({});
+// console.log(response)
+// }
+// getHr();
 app.listen(Port, async () => {
   try {
     await ConnectDb();
