@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import DashBoardStyle from "./Dashboard.module.css";
+import DashBoardStyle from "./DashboardMain.module.css";
 import data from "./MatchedJob";
 
 export default function JobSeekerSwiper() {
