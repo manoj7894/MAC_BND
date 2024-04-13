@@ -1,6 +1,6 @@
 .selection {
-    height: 10vh;
-    width: 60vw;
+    height: 9vh;
+    width: 58vw;
     border: 2px solid black;
     margin-left: 1vw;
     margin-top: 5vh;
@@ -11,9 +11,9 @@
 
 .Select {
     position: relative;
-    top: 2vh;
+    top: 1.5vh;
     display: flex;
-    width: 15vw;
+    width: 18vw;
     height: 6vh;
     border-radius: 35px;
     padding: 10px;

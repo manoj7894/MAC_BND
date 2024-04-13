@@ -1,14 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react';
 import { GrNotes } from "react-icons/gr";
-import ResumeCss from './MyResume.module.css'
-import image from './img.png'
+import ResumeCss from './MyResume.module.css';
+import image from './img.png';
 
 function MyResume() {
+  const [showMyresume, setShowMyresume] = useState(true);
+  const [showPreviousResume, setShowPreviousResume] = useState(false);
+
   return (
     <div>
       <div className={ResumeCss.upperSelection}>
-        <p className={ResumeCss.button1}><GrNotes />My Resume</p>
-        <p className={ResumeCss.button1}><GrNotes />Previous Resume</p>
+        <p className={ResumeCss.button1} onClick={() => { setShowMyresume(true); setShowPreviousResume(false); }}>
+          <GrNotes /> My Resume
+        </p>
+        <p className={ResumeCss.button1} onClick={() => { setShowMyresume(false); setShowPreviousResume(true); }}>
+          <GrNotes /> Previous Resume
+        </p>
       </div>
 
       <button className={ResumeCss.Update_resumeBtn}>Update Your Resume</button>
@@ -20,8 +27,10 @@ function MyResume() {
 
       <button className={ResumeCss.resume_btn}>Check your resume score</button>
 
+      {showMyresume && <h1>My resume data</h1>}
+      {showPreviousResume && <h1>Previous resume data</h1>}
     </div>
-  )
+  );
 }
 
-export default MyResume
+export default MyResume;
