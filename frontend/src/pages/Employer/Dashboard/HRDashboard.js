@@ -6,6 +6,7 @@ import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import axios from "axios"
+import { format } from 'date-fns';
 
 const responsive = {
   superLargeDesktop: {
@@ -25,30 +26,18 @@ const responsive = {
     items: 1
   }
 };
-const monthName = {
-  1: "January",
-  2: "February",
-  3: "March",
-  4: "April",
-  5: "May",
-  6: "June",
-  7: "July",
-  8: "August",
-  9: "September",
-  10: "October",
-  11: "November",
-  12: "December"
-}
 
 export default function HRDashboard() {
   const [jobPost, setJobPost] = useState([])
   const [sortedJob, setSortedJob] = useState([])
   const [selectedSort, setSelectedSort] = useState('Sort By')
-  const date = new Date();
-  const day = date.getDate();
-  const month = date.getMonth() + 1;
-  const year = date.getFullYear();
-  const formattedDate = `${day} ${monthName[month]}, ${year}`;
+
+  const formattedDate = (timestamp) => {
+    if (!timestamp) {
+      return 'N/A';
+    }
+    return format(new Date(timestamp), 'do MMMM, yyyy');
+  };
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
@@ -155,7 +144,7 @@ export default function HRDashboard() {
                     <p className={pages.__user_Post_info}>{jobs.jobDescription}</p>
                   </div>
                   <footer className={pages.__user_Post_Footer}>
-                    <h6 className={pages.__user_Post_Timestamp}>{formattedDate}</h6>
+                    <h6 className={pages.__user_Post_Timestamp}>{formattedDate(jobs.createdAt)}</h6>
                     <button className={pages.__btn_Repost}>Repost</button>
                   </footer>
                 </div>
