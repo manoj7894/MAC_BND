@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import pages from '../Pages.module.css';
 import user from '../../../Assets/user.png'
-import friday from '../../../Assets/friday.jpg'
+// import friday from '../../../Assets/friday.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import Carousel from 'react-multi-carousel';
@@ -43,9 +43,15 @@ const monthName = {
 
 export default function HRDashboard() {
   const [jobPost, setJobPost] = useState([])
+  const [sortedJob, setSortedJob] = useState([])
+
   useEffect(() => {
     axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
-      .then(response => setJobPost(response.data.jobs))
+      .then(response => {
+        setJobPost(response.data.jobs)
+        const sorted = response.data.jobs.toSorted((a, b) => b.createdAt - a.createdAt);
+        setSortedJob(sorted);
+      })
   }, [])
 
   const date = new Date();
@@ -79,7 +85,6 @@ export default function HRDashboard() {
           draggable={true}
           showDots={false}
           responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
           infinite={false}
           autoPlay={false}
           autoPlaySpeed={2000}
@@ -90,121 +95,25 @@ export default function HRDashboard() {
           removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
           dotListClass="custom-dot-list-style"
           itemClass="carousel-item-padding-40-px">
-
-          {jobPost.length > 0 && jobPost.map((data) => {
-            return <div className={pages.__posts} key={data._id}>
-              <div className={pages.__postTitle}>
-                <img className={pages.__postLogo} src={data.jobPoster} alt='' />
-                <p>
-                  {data.jobTitle.slice(0,20)}...
-                  <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-                </p>
-                <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
+          {
+            jobPost.length > 0 && jobPost.map((data) => {
+              return <div className={pages.__posts} key={data._id}>
+                <div className={pages.__postTitle}>
+                  <img className={pages.__postLogo} src={data.jobPoster} alt='' />
+                  <p>
+                    {data.jobTitle.slice(0, 20)}...
+                    <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
+                  </p>
+                  <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
+                </div>
+                <div className={pages.__post_body}>
+                  <span>{data.location}</span>
+                  <span>{data.jobExperience}</span>
+                </div>
+                <div className={pages.__post_Footer}> <span>45</span> applications  </div>
               </div>
-              <div className={pages.__post_body}>
-                <span>{data.location}</span>
-                <span>{data.jobExperience}</span>
-              </div>
-              <div className={pages.__post_Footer}>
-                <span>45</span> applications
-              </div>
-            </div>
-          })}
-
-          {/* {
-            console.log(jobPost)
-          } */}
-
-          {/* 
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                Product Designer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
-            </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>10</span> applications
-            </div>
-          </div>
-
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                IOS Developer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
-            </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>102</span> applications
-            </div>
-          </div>
-
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                UX Designer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
-            </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>40</span> applications
-            </div>
-          </div>
-
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                IOS Developer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
-            </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>102</span> applications
-            </div>
-          </div>
-
-          <div className={pages.__posts}>
-            <div className={pages.__postTitle}>
-              <img className={pages.__postLogo} src={user} alt='' />
-              <p>
-                Product Designer
-                <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
-              </p>
-              <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
-            </div>
-            <div className={pages.__post_body}>
-              <span>Bengaluru</span>
-              <span>3 years exp.</span>
-            </div>
-            <div className={pages.__post_Footer}>
-              <span>10</span> applications
-            </div>
-          </div> */}
+            })
+          }
         </Carousel>
       </div>
 
@@ -215,27 +124,33 @@ export default function HRDashboard() {
         </header>
 
         <section className={pages.__latestPosts}>
+          {
+            sortedJob.map((jobs) => {
+              return (
+                <div className={pages.__user_Post} key={jobs._id}>
+                  <header className={pages.__user_Post_Header}>
+                    <img className={pages.__user_PostImg} src={user} alt="" />
+                    <div>
+                      <h3 style={{ fontSize: '20px' }}>{localStorage.name}</h3>
+                      <span className={pages.__user_Position}>HR Executive</span>
+                    </div>
+                  </header>
 
-          <div className={pages.__user_Post}>
-            <header className={pages.__user_Post_Header}>
-              <img className={pages.__user_PostImg} src={user} alt="" />
-              <div>
-                <h3 style={{ fontSize: '20px' }}>Sakshita Patel</h3>
-                <span className={pages.__user_Position}>HR Executive</span>
-              </div>
-            </header>
-
-            <div className={pages.__user_Post_body}>
-              <img className={pages.__latestPosts_Img} src={friday} alt="" />
-              <p className={pages.__user_Post_info}>Hey everyone, it's that time of the week again - FRIDAY! 🚀 Let's take a breather from the code and embrace some fun vibes. Here are a few ways to celebrate the end of the week.</p>
-            </div>
-            <footer className={pages.__user_Post_Footer}>
-              <h6 className={pages.__user_Post_Timestamp}>{formattedDate}</h6>
-              <button className={pages.__btn_Repost}>Repost</button>
-            </footer>
-          </div>
-
+                  <div className={pages.__user_Post_body}>
+                    <img className={pages.__latestPosts_Img} src={jobs.jobPoster} alt="" />
+                    <p className={pages.__user_Post_info}>{jobs.jobDescription}</p>
+                  </div>
+                  <footer className={pages.__user_Post_Footer}>
+                    <h6 className={pages.__user_Post_Timestamp}>{formattedDate}</h6>
+                    <button className={pages.__btn_Repost}>Repost</button>
+                  </footer>
+                </div>
+              )
+            })
+          }
         </section>
+
+
       </div>
 
     </div>

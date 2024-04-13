@@ -20,8 +20,7 @@ export default function CreatePost() {
   const [selectedImg, setSelectedImg] = useState(null);
   const handleOnChange = (e) => {
     if (e.target.name === "jobPoster") {
-      console.log(e.target.name);
-      if (e.target.files[0].type.split("/")[0] === "image") {
+      if (e.target?.files[0]?.type.split("/")[0] === "image") {
         setPost({ ...post, [e.target.name]: URL.createObjectURL(e.target.files[0]) });
         setSelectedImg(e.target.files[0]);
       } else {
@@ -122,8 +121,9 @@ export default function CreatePost() {
             onError={(e) => {
               e.target.src = `${noImg}`
               e.onError = null
-            }} />
-          <label htmlFor="">drop your image here or <span style={{color:"blue", fontWeight:"700", cursor:"pointer"}} onClick={(e)=> imgRef.current.click()}>browse</span></label>
+            }}
+          />
+          <label htmlFor="">drop your image here or <span style={{ color: "blue", fontWeight: "700", cursor: "pointer" }} onClick={(e) => imgRef.current.click()}>browse</span></label>
           <input type="file" accept='image/*' ref={imgRef} hidden name='jobPoster' onChange={handleOnChange} />
         </div>
 
