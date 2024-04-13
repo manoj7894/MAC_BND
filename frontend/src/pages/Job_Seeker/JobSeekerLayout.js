@@ -18,6 +18,9 @@ function JobSeekerLayout() {
       pathname === "/" ||
       (pathname !== "/assessment" &&
         pathname !== "/analytics" &&
+        pathname !== "/analytics/weekly" &&
+        pathname !== "/analytics/monthly" &&
+        pathname !== "/analytics/yearly" &&
         pathname !== "/myjobs" &&
         pathname !== "/myresume" &&
         pathname !== "/application" &&

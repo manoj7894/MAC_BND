@@ -11,7 +11,8 @@ const InstructionPage = lazy(() => import("../pages/Job_Seeker/Assessment/Instru
 const SelfAssessmentPage = lazy(() => import("../pages/Job_Seeker/Assessment/SelfAssessmentPage.js"));
 const AssessmentResult = lazy(() => import("../pages/Job_Seeker/Assessment/AssessmentResult.js"));
 const ChatBot = lazy(() => import("../pages/Job_Seeker/Chatbot/ChatBot.js"));
-const Analytics = lazy(() => import("../pages/Job_Seeker/Analysis/Analysis.js"));
+const Analytics = lazy(() => import("../pages/Job_Seeker/Analytics/UserAnalytics.js"));
+const AnalyticsReportComponent = lazy(() => import("../pages/Job_Seeker/Analytics/UserAnalytics.js"));
 const MYJobs = lazy(() => import("../pages/Job_Seeker/MyJobs/MyJobs.js"));
 const MYResume = lazy(() => import("../pages/Job_Seeker/MyResume/MyResume.js"));
 const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js"));
@@ -29,7 +30,7 @@ const Absent = lazy(() => import("../pages/Employer/Employees/Absent.js"));
 const LateArrivals = lazy(() => import("../pages/Employer/Employees/LateArrivals.js"));
 const LeaveRequests = lazy(() => import("../pages/Employer/Employees/LeaveRequests.js"));
 const Payroll = lazy(() => import("../pages/Employer/Payroll/Payroll.js"));
-const HRAnalytics = lazy(() => import("../pages/Employer/Analytics/HrAnalytics.js"));
+const HRAnalytics = lazy(() => import("../pages/Employer/Analytic/HrAnalytics.js"));
 const Candidates = lazy(() => import("../pages/Employer/Candidates/Candidates.js"));
 const InterviewScheduled = lazy(() => import("../pages/Employer/InterviewScheduled/InterviewScheduled.js"));
 const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
@@ -81,6 +82,9 @@ function JobSeekerRoutes() {
         <Route path="/assessment" element={<Suspense><Assessment /></Suspense>} />
         <Route path="/chatbot" element={<Suspense><ChatBot /></Suspense>} />
         <Route path="/analytics" element={<Suspense><Analytics /></Suspense>} />
+        <Route path="/analytics/weekly" element={<Suspense><AnalyticsReportComponent /></Suspense>} />
+        <Route path="/analytics/monthly" element={<Suspense><AnalyticsReportComponent /></Suspense>} />
+        <Route path="/analytics/yearly" element={<Suspense><AnalyticsReportComponent /></Suspense>} />
         <Route path="/myjobs" element={<Suspense><MYJobs /></Suspense>} />
         <Route path="/myresume" element={<Suspense><MYResume /></Suspense>} />
         <Route path="/application" element={<Suspense><Application /></Suspense>} />

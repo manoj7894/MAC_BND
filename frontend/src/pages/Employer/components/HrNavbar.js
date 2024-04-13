@@ -25,7 +25,7 @@ export default function HR_Navbar() {
     dispatch(handleUserLogOut());
     toast.success(`${name} Logged out !!`)
     setTimeout(() => {
-      navigateTO("/user-login")
+      navigateTO("/login")
     }, 1000);
   }
 
