@@ -17,6 +17,18 @@ p {
     justify-content: space-between;
 }
 
+/* se;ect----------- */
+.selectOption {
+    padding: .3em 1em;
+    border-radius: 20px;
+    outline: none;
+}
+
+.options {
+    background: transparent;
+    outline: none;
+}
+
 /* Dropdown button----------- */
 .__dropdown {
     position: relative;

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import pages from '../Pages.module.css';
 import user from '../../../Assets/user.png'
-// import friday from '../../../Assets/friday.jpg'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
 import Carousel from 'react-multi-carousel';
@@ -44,33 +43,51 @@ const monthName = {
 export default function HRDashboard() {
   const [jobPost, setJobPost] = useState([])
   const [sortedJob, setSortedJob] = useState([])
-
-  useEffect(() => {
-    axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
-      .then(response => {
-        setJobPost(response.data.jobs)
-        const sorted = response.data.jobs.toSorted((a, b) => b.createdAt - a.createdAt);
-        setSortedJob(sorted);
-      })
-  }, [])
-
+  const [selectedSort, setSelectedSort] = useState('Sort By')
   const date = new Date();
   const day = date.getDate();
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
   const formattedDate = `${day} ${monthName[month]}, ${year}`;
 
+  useEffect(() => {
+    axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
+      .then(response => {
+        setJobPost(response.data.jobs)
+        setSortedJob(response.data.jobs.toSorted((a, b) => a.createdAt - b.createdAt));
+      })
+  }, [])
+
+  const handleSortBy = (e) => {
+    setSelectedSort(e.target.value)
+    const sorted = [...jobPost]
+    setSortedJob(sorted);
+    switch (e.target.value) {
+      case 'latest':
+        sorted.sort((a, b) => b.createdAt - a.createdAt);
+        break;
+      case 'name':
+        sorted.sort((a, b) => a.jobTitle.localeCompare(b.jobTitle));
+        break;
+      case 'city':
+        sorted.sort((a, b) => a.location.localeCompare(b.location));
+        break;
+      default:
+        break;
+    }
+  }
+
   return (
     <div className={pages.__dashboard_Page}>
       <header className={pages.__dashboard_Header}>
         <h2>Dashboard</h2>
         <div className={pages.__dropdown}>
-          <button className={pages.__dropBtn}>Sort By :</button>
-          <div className={pages.__dropdown_content}>
-            <li>Latest</li>
-            <li>Name</li>
-            <li>City</li>
-          </div>
+          <select className={pages.selectOption} value={selectedSort} onChange={handleSortBy}>
+            <option className={pages.options} value="">Sort By</option>
+            <option value="latest">Latest</option>
+            <option value="name">Name</option>
+            <option value="city">City</option>
+          </select>
         </div>
       </header>
 
@@ -79,7 +96,6 @@ export default function HRDashboard() {
           <h3>Post Impressions</h3>
           <p className=''>see all</p>
         </header>
-
         <Carousel className={pages.__post_Section}
           swipeable={true}
           draggable={true}
@@ -110,7 +126,7 @@ export default function HRDashboard() {
                   <span>{data.location}</span>
                   <span>{data.jobExperience}</span>
                 </div>
-                <div className={pages.__post_Footer}> <span>45</span> applications  </div>
+                <div className={pages.__post_Footer}> <span>{data.totalApplication ? data.totalApplication : 0}</span> application(s)  </div>
               </div>
             })
           }
@@ -122,7 +138,6 @@ export default function HRDashboard() {
           <h3>Latest Post</h3>
           <p className=''>see all</p>
         </header>
-
         <section className={pages.__latestPosts}>
           {
             sortedJob.map((jobs) => {
@@ -135,7 +150,6 @@ export default function HRDashboard() {
                       <span className={pages.__user_Position}>HR Executive</span>
                     </div>
                   </header>
-
                   <div className={pages.__user_Post_body}>
                     <img className={pages.__latestPosts_Img} src={jobs.jobPoster} alt="" />
                     <p className={pages.__user_Post_info}>{jobs.jobDescription}</p>
@@ -149,10 +163,7 @@ export default function HRDashboard() {
             })
           }
         </section>
-
-
       </div>
-
     </div>
   )
 }
