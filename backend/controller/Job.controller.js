@@ -36,23 +36,24 @@ const create = async (req, res) => {
   }
 };
 
-// const get = async (req, res) => {
-//   try {
-//     const jobs = await jobCollection.findById(req.params.id);
+const getJobByID = async (req, res) => {
+  try {
+    const jobs = await jobCollection.findById(req.params.id);
+    if (jobs) {
+      res.status(200).send({ jobs, success: true });
+    } else {
+      res.status(404).send({ jobs: "No job found", success: false });
 
-//     if (jobs) {
-//       res.status(200).send({ jobs, success: true });
-//     } else {
-//       res.status(404).send({ jobs: "No job found", success: false });
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error, success: false });
+  }
+};
 
-//     }
-//   } catch (error) {
-//     res.status(500).json({ error, success: false });
-//   }
-// };
 const get = async (req, res) => {
   try {
-    const jobs = await jobCollection.find({employeeEmail:req.params.email});
+    const jobs = await jobCollection.find({ employeeEmail: req.params.email });
 
     if (jobs) {
       res.status(200).send({ jobs, success: true });
@@ -117,4 +118,5 @@ module.exports = {
   update,
   remove,
   getAll,
+  getJobByID
 };

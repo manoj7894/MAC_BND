@@ -4,11 +4,13 @@ const jobRoutes = require("express").Router();
 
 // uploadPhoto()
 
-const { create, get, update, remove, getAll, } = require("../controller/Job.controller");
+const { create, get, update, remove, getAll, getJobByID, } = require("../controller/Job.controller");
 
 jobRoutes.post("/create-job", uploadPhoto, create);
 
 jobRoutes.get("/get-job/:email", get);
+
+jobRoutes.get("/job/:id", getJobByID);
 
 jobRoutes.get("/All-jobs", getAll);
 
