@@ -41,32 +41,40 @@ export default function JobListDetailedView() {
     })
   }
 
-
   useEffect(() => {
-    setLoading(true)
-    axios.get("http://localhost:8080/api/jobs/All-jobs").then((response) => {
-      if (response.data.success) {
-        setAllJobData(response.data.jobs);
-        axios.get(`http://localhost:8080/api/jobs/job/${id}`).then((response) => {
-          if (response.data.success) {
-            setJobDetails(response.data.jobs);
-            setJobDetailsLoad(false)
-          } else {
-            setJobDetails([]);
-            setJobDetailsLoad(false)
-          }
-        })
-        setLoading(false)
-      } else {
-        setAllJobData([]);
-        setLoading(false)
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const [allJobsResponse, jobDetailsResponse] = await Promise.all([
+          axios.get("http://localhost:8080/api/jobs/All-jobs"),
+          axios.get(`http://localhost:8080/api/jobs/job/${id}`)
+        ]);
+
+        if (allJobsResponse.data.success) {
+          setAllJobData(allJobsResponse.data.jobs);
+        } else {
+          setAllJobData([]);
+        }
+
+        if (jobDetailsResponse.data.success) {
+          setJobDetails(jobDetailsResponse.data.jobs);
+        } else {
+          setJobDetails([]);
+        }
+
+        setLoading(false);
+      } catch (error) {
+        toast.error(`Server failed to load! Reload your page: ${error.message}`);
+        setLoading(false);
       }
-    }).catch((error) => {
-      toast.error(`Server failed to load! Reload your page : ${error.message}`);
-      setLoading(false)
-    })
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    };
+
+    fetchData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
   return (
     <div className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}>
