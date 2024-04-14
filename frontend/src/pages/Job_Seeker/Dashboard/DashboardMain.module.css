@@ -231,6 +231,17 @@
   font-weight: 600;
   font-family: inter;
 }
+.DashboardalreadyAppliedButton {
+  width: 50%;
+  height: 40px;
+  border: none;
+  background: linear-gradient(to right, #9595b4, #000012);
+  color: #fff;
+  border-radius: 5px;
+  font-size: 18px;
+  font-weight: 600;
+  font-family: inter;
+}
 
 .rec_company_job_title {
   font-family: inter;

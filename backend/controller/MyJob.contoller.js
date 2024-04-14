@@ -1,12 +1,100 @@
 const { savedJobCollection, appliedJobCollection } = require("../model/MyJob.model");
 
-const User = require("../model/users/UserModel");
 
+const createAppliedJob = async (req, res) => {
+    try {
+        const { _id, email, jobTitle,
+            employeeEmail,
+            jobPoster,
+            jobDescription,
+            employmentType,
+            location,
+            salaryRange,
+            skilRequired,
+            jobExperience,
+            createdAt } = req.body;
+        const mongooseResponse = await appliedJobCollection.create({
+            jobID: _id,
+            jobTitle: jobTitle,
+            jobPoster: jobPoster,
+            jobDescription: jobDescription,
+            employmentType: employmentType,
+            location: location,
+            salaryRange: salaryRange,
+            skilRequired: skilRequired,
+            employeeEmail: employeeEmail,
+            jobExperience: jobExperience,
+            createdAt: createdAt,
+            userEmail: email
+        });
+        if (mongooseResponse) {
+            res.status(200).json({
+                success: true,
+                msg: "Job applied Successfully",
+            })
+        } else {
+            res.status(400).json({
+                success: false,
+                msg: "Try again"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: `server failed! Try again ${error.message}`
+        })
+    }
 
+}
 
-const createAppliedJob = async (req, res) => { }
-const getAppliedJob = async (req, res) => { }
-const removeAppliedJob = async (req, res) => { }
+const getAppliedJob = async (req, res) => {
+    try {
+        const mongooseResponse = await appliedJobCollection.find({ userEmail: req.params.email })
+        if (mongooseResponse) {
+            res.status(200).json({
+                success: true,
+                appliedJob: mongooseResponse
+            })
+        } else {
+            res.status(404).json({
+                success: false,
+                appliedJob: mongooseResponse
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: `server failed! Try again ${error.message}`
+        })
+    }
+}
+
+const removeAppliedJob = async (req, res) => {
+    try {
+        const [email, jobId] = req.params.email.split("-")
+        const mongooseResponse = await appliedJobCollection.findOneAndDelete({
+            jobID: jobId,
+            userEmail: email,
+        });
+
+        if (mongooseResponse) {
+            res.status(200).json({
+                success: true,
+                msg: "Remove from saved collection successfull"
+            })
+        } else {
+            res.status(404).json({
+                success: false,
+                msg: "Job not found"
+            })
+        }
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: `server failed! Try again ${error.message}`
+        })
+    }
+}
 
 
 //! Saved job related controllers

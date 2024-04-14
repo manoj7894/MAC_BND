@@ -18,11 +18,11 @@ import axios from 'axios'
 import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
 import { useSelector, useDispatch } from "react-redux"
-import { handleSavedJob,handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
+import { handleSavedJob, handleRemoveSavedJob, handleAppliedJob } from "../../../Redux/ReduxSlice";
 
 
 export default function JobListDetailedView() {
-  const { email, savedJob } = useSelector((state) => state.Assessment.currentUser);
+  const { email, savedJob, appliedJob } = useSelector((state) => state.Assessment.currentUser);
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [jobDetails, setJobDetails] = useState([])
@@ -75,6 +75,27 @@ export default function JobListDetailedView() {
       toast.error(`server failed! Try again ${error.message}`);
     })
   }
+
+  const handleApplyButtonClick = (e, item) => {
+    e.preventDefault();
+    setJobDetailsLoad(true);
+    axios.post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
+      ...item, email
+    }).then((response) => {
+      if (response.data.success) {
+        toast.success(`${response.data.msg}`);
+        dispatch(handleAppliedJob(item._id));
+        setJobDetailsLoad(false);
+      } else {
+        toast.error(`${response.data.msg}`);
+        setJobDetailsLoad(false);
+      }
+    }).catch((error) => {
+      toast.error(`server failed! Try again ${error.message}`);
+      setJobDetailsLoad(false);
+    })
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -366,22 +387,28 @@ export default function JobListDetailedView() {
                         Submit your resume and portfolio showcasing your {jobDetails?.title} projects and experience.
                       </div>
                     </div>
-
                     <div className={UserDashBoardStyle.company_apply_button}>
-                      <button className={UserDashBoardStyle.company_apply_button_one}>
-                        APPLY
-                      </button>
-                    </div>
-
-                    <div className={UserDashBoardStyle.company_save_later_button} >
                       {
-                        savedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleRemoveSaveClick(e, jobDetails?._id)}>
-                          Remove save
-                        </button> : <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleSaveToLaterClick(e, jobDetails)}>
-                          SAVE FOR LATER
+                        appliedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.alreadyAppliedButton}>
+                          Already Applied
+                        </button> : <button className={UserDashBoardStyle.company_apply_button_one} onClick={(e) => handleApplyButtonClick(e, jobDetails)}>
+                          APPLY
                         </button>
                       }
                     </div>
+
+                    {
+                      appliedJob?.some((data) => data.jobID !== jobDetails?._id) && <div className={UserDashBoardStyle.company_save_later_button} >
+                        {
+                          savedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleRemoveSaveClick(e, jobDetails?._id)}>
+                            Remove save
+                          </button> : <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleSaveToLaterClick(e, jobDetails)}>
+                            SAVE FOR LATER
+                          </button>
+                        }
+                      </div>
+                    }
+
                   </>
                 }
               </div>

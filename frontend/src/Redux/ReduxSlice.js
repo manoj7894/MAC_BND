@@ -56,6 +56,13 @@ const ReduxSlice = createSlice({
       localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
     },
 
+    handleAppliedJob(state, action) {
+      state.currentUser.appliedJob.push({
+        jobID: action.payload
+      });
+      localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
+    },
+
     handleRemoveSavedJob(state, action) {
       let filteredData = state.currentUser.savedJob.filter((data) => data.jobID !== action.payload);
       state.currentUser.savedJob = filteredData
@@ -82,5 +89,6 @@ export const {
   handleUserLogOut,
   handleSavedJob,
   handleRemoveSavedJob,
+  handleAppliedJob,
 } = ReduxSlice.actions;
 export default ReduxSlice.reducer;

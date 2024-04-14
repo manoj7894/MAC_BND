@@ -17,9 +17,9 @@ import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 import { useSelector, useDispatch } from "react-redux"
-import { handleSavedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
+import { handleSavedJob, handleRemoveSavedJob, handleAppliedJob } from "../../../Redux/ReduxSlice";
 function Dashboard() {
-  const { email, savedJob } = useSelector((state) => state.Assessment.currentUser);
+  const { email, savedJob, appliedJob } = useSelector((state) => state.Assessment.currentUser);
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -163,41 +163,56 @@ function Dashboard() {
                           </span>
                         </div>
                         <div className={DashBoardStyle.rec_company_offer_apply}>
-                          <div className={DashBoardStyle.rec_company_offer_fav}>
 
-                            {
-                              savedJob?.some((data) => data.jobID === item?._id) ? <img
-                                src={fav_filled_icon}
-                                alt="Favorite Icon"
-                                className={
-                                  DashBoardStyle.rec_company_offer_fav_image
-                                }
-                                onClick={(e) => handleRemoveSaveClick(e, item?._id)}
-                              /> : <img
-                                src={fav_icon}
-                                alt="Favorite Icon"
-                                className={
-                                  DashBoardStyle.rec_company_offer_fav_image
-                                }
-                                onClick={(e) => handleSaveToLaterClick(e, item)}
-                              />
-                            }
+                          {
+                            appliedJob?.some((data) => data.jobID !== item?._id) && <div className={DashBoardStyle.rec_company_offer_fav}>
+                              {
+                                savedJob?.some((data) => data.jobID === item?._id) ? <img
+                                  src={fav_filled_icon}
+                                  alt="Favorite Icon"
+                                  className={
+                                    DashBoardStyle.rec_company_offer_fav_image
+                                  }
+                                  onClick={(e) => handleRemoveSaveClick(e, item?._id)}
+                                /> : <img
+                                  src={fav_icon}
+                                  alt="Favorite Icon"
+                                  className={
+                                    DashBoardStyle.rec_company_offer_fav_image
+                                  }
+                                  onClick={(e) => handleSaveToLaterClick(e, item)}
+                                />
+                              }
 
-                          </div>
+                            </div>
+                          }
+
                           <div
                             className={
                               DashBoardStyle.rec_company_offer_apply_button
                             }
                           >
-                            <button
-                              className={
-                                DashBoardStyle.rec_company_offer_apply_button_style
-                              }
-                              onClick={() => navigateTO(`/dashboard/${item._id}`)}
-                            >
-                              Apply
-                            </button>
+                            {
+                              appliedJob?.some((data) => data.jobID === item?._id) ? <button
+                                className={
+                                  DashBoardStyle.DashboardalreadyAppliedButton
+                                }
+                                onClick={() => navigateTO(`/dashboard/${item._id}`)}
+                              >
+                                Applied
+                              </button> : <button
+                                className={
+                                  DashBoardStyle.rec_company_offer_apply_button_style
+                                }
+                                onClick={() => navigateTO(`/dashboard/${item._id}`)}
+                              >
+                                Apply
+                              </button>
+                            }
+
                           </div>
+
+
                         </div>
                       </div>
 
