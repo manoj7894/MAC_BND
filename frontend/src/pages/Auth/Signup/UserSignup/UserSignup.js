@@ -204,9 +204,9 @@ const Signup = () => {
       );
 
       // Handle success response
-      const { token } = response.data;
+      const { token,  savedJob, appliedJob} = response.data;
 
-      dispatchTO(handleUserLogin({ token, email, name, userType }));
+      dispatchTO(handleUserLogin({ token, email, name, userType,savedJob, appliedJob}));
       toast.success(`Welcome ${name}`);
       setTimeout(() => {
         nav("/");

@@ -9,9 +9,9 @@ myJobRoutes.delete("/delete/apply-job/:id", removeAppliedJob);
 
 
 
-myJobRoutes.get("/get/save-job",createSavedJob);
-myJobRoutes.post("/create/save-job",getSavedJob);
+myJobRoutes.post("/create/save-job",createSavedJob);
+myJobRoutes.get("/get/save-job/:email",getSavedJob);
 myJobRoutes.delete("/delete/save-job/:id",removeSavedJob);
 
 
-module.exports = { myJobRoutes };
+module.exports = myJobRoutes;

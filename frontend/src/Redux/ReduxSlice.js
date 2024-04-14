@@ -12,6 +12,8 @@ const ReduxSlice = createSlice({
       userType: localStorage.getItem("userType")
         ? localStorage.getItem("userType")
         : "",
+      savedJob: localStorage.getItem("savedJob") ? (localStorage.getItem("savedJob")) : [],
+      appliedJob: localStorage.getItem("appliedJob") ? JSON.parse(localStorage.getItem("appliedJob")) : [],
     },
   },
   reducers: {
@@ -36,17 +38,32 @@ const ReduxSlice = createSlice({
       state.currentUser.email = action.payload.email;
       state.currentUser.name = action.payload.name;
       state.currentUser.userType = action.payload.userType;
+      state.currentUser.savedJob = action.payload.savedJob;
+      state.currentUser.appliedJob = action.payload.appliedJob;
 
       localStorage.setItem("token", state.currentUser.token);
       localStorage.setItem("email", state.currentUser.email);
       localStorage.setItem("name", state.currentUser.name);
       localStorage.setItem("userType", state.currentUser.userType);
+      localStorage.setItem("savedJob", state.currentUser.savedJob);
+      localStorage.setItem("appliedJob", state.currentUser.appliedJob);
     },
+
+    handleSavedJob(state, action) {
+      state.currentUser.savedJob.push({
+        jobID: action.payload
+      });
+      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+    },
+
+
     handleUserLogOut(state) {
       state.currentUser.token = "";
       state.currentUser.email = "";
       state.currentUser.name = "";
       state.currentUser.userType = "";
+      state.currentUser.savedJob = [];
+      state.currentUser.appliedJob =[];
 
       localStorage.clear()
     },
@@ -58,5 +75,6 @@ export const {
   handleClearResult,
   handleUserLogin,
   handleUserLogOut,
+  handleSavedJob,
 } = ReduxSlice.actions;
 export default ReduxSlice.reducer;

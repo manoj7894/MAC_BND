@@ -17,7 +17,6 @@ const getUser = async (req, res) => {
     }
     res.json({ name: user.name, email: user.email });
   } catch (error) {
-    console.error("Error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -46,6 +45,8 @@ const signUp = async (req, res) => {
       password: hashedPassword,
       name,
       resume: resumeFileName,
+      savedJob: [],
+      appliedJob: []
     });
     await newUser.save();
 
@@ -59,9 +60,10 @@ const signUp = async (req, res) => {
       name,
       email,
       resume: resumeFileName,
+      savedJob: [],
+      appliedJob: []
     });
   } catch (error) {
-    console.error("Error:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -83,16 +85,17 @@ const login = async (req, res) => {
     }
 
     const name = user.name;
-
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "2d",
     });
-    return res.status(201).json({
+    return res.status(200).json({
       message: `${name} you have successfully logged In`,
       token,
       name,
       email,
       userType: "user",
+      savedJob: user.userSavedJob,
+      appliedJob: user.userAppliedJob
     });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
@@ -157,24 +160,9 @@ const resetPassword = async (req, res) => {
 
     return res.status(200).json({ message: "Password Reset Successfully" });
   } catch (error) {
-    console.error("Error resetting password:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-// const forgotEmail =  async (req, res) => {
-//   const { contact_number } = req.body;
-
-//   try {
-//     const user = await User.findOne({ contact_number });
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-//     res.status(200).json({ email: user.email });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
 
 module.exports = { signUp, login, forgotPassword, resetPassword, getUser };

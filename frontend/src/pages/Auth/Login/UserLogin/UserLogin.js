@@ -35,7 +35,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
         const userData = response.data;
         setName(userData.name);
       } catch (error) {
-        console.error("Error:", error.response.data);
+        toast.error(`${error.message}`);
       }
     };
 
@@ -67,10 +67,6 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
         setName(userData.name);
         setFormData({ ...formData, step: formData.step + 1 });
       } catch (error) {
-        console.error(
-          "Error:",
-          error.response ? error.response.data : error.message
-        );
         toast.error("Email not registered.");
       }
     } else {
@@ -89,13 +85,12 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
         }
       );
 
-      const { name, email, token, userType } = response.data;
+      const { name, email, token, userType,savedJob,appliedJob } = response.data;
 
-      dispatchTO(handleUserLogin({ name, email, token, userType }));
+      dispatchTO(handleUserLogin({ name, email, token, userType,savedJob,appliedJob }));
       toast.success(`Welcome back, ${name}!`);
       nav("/");
     } catch (error) {
-      console.error("Error:", error.response.data);
       toast.error("Invalid Credential");
     }
   };

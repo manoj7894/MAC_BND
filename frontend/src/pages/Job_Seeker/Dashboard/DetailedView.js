@@ -17,7 +17,14 @@ import starLogo from "./images/star.png";
 import axios from 'axios'
 import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
+import { useSelector, useDispatch } from "react-redux"
+import { handleSavedJob } from "../../../Redux/ReduxSlice";
+
+
 export default function JobListDetailedView() {
+  const { email, savedJob } = useSelector((state) => state.Assessment.currentUser);
+  console.log(savedJob)
+  const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [jobDetails, setJobDetails] = useState([])
   const [jobDetailsLoad, setJobDetailsLoad] = useState(false)
@@ -25,7 +32,6 @@ export default function JobListDetailedView() {
   const { id } = useParams();
 
   const loadJobDetails = (e, jobID) => {
-    // e.preventDefault();
     setJobDetailsLoad(true)
     axios.get(`http://localhost:8080/api/jobs/job/${jobID}`).then((response) => {
       if (response.data.success) {
@@ -40,6 +46,24 @@ export default function JobListDetailedView() {
       setJobDetailsLoad(false)
     })
   }
+
+  const handleSaveToLaterClick = (e, jobID) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8080/api/user/My-jobs/create/save-job`, {
+      jobID, email
+    }).then((response) => {
+      console.log(response)
+      if (response.data.success) {
+        toast.success(`${response.data.msg}`);
+        dispatch(handleSavedJob(jobID))
+      } else {
+        toast.error(`${response.data.msg}`);
+      }
+    }).catch((error) => {
+      toast.error(`server failed! Try again ${error.message}`);
+    })
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -73,8 +97,6 @@ export default function JobListDetailedView() {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-
 
   return (
     <div className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}>
@@ -114,7 +136,7 @@ export default function JobListDetailedView() {
                                 UserDashBoardStyle.detail_company_job_time
                               }
                             >
-                              <CalculateTimeAgo  time={item.createdAt}/>
+                              <CalculateTimeAgo time={item.createdAt} />
                             </h6>
                             <div
                               className={UserDashBoardStyle.detail_company_offer}
@@ -340,8 +362,8 @@ export default function JobListDetailedView() {
                       </button>
                     </div>
 
-                    <div className={UserDashBoardStyle.company_save_later_button}>
-                      <button className={UserDashBoardStyle.company_apply_button_two}>
+                    <div className={UserDashBoardStyle.company_save_later_button} >
+                      <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleSaveToLaterClick(e, jobDetails?._id)}>
                         SAVE FOR LATER
                       </button>
                     </div>

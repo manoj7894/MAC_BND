@@ -5,7 +5,6 @@ import en from 'javascript-time-ago/locale/en.json'
 TimeAgo.addDefaultLocale(en);
 
 export function CalculateTimeAgo({ time }) {
-    console.log(time)
     return (
         <ReactTimeAgo date={time} locale='en-us' />
     )
