@@ -5,22 +5,13 @@ import toast from 'react-hot-toast';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import loginImage from "../../../../Assets/Login form Image.PNG";
-import google from "../../../../Assets/Google Logo.jpg";
-import linkedin from "../../../../Assets/linkedin logo.jpg";
-import apple from "../../../../Assets/Apple logo.jpg";
 import axios from "axios";
 import hrLoginStyle from "../Login.module.css";
-// import UserLogin from "../UserLogin/UserLogin";
 
 import { useDispatch } from "react-redux";
 import { handleUserLogin } from "../../../../Redux/ReduxSlice";
 function HrLogin({ toggleLoginType, isHRLogin }) {
   const dispatchTO = useDispatch();
-  // const [isHRLogin, setIsHRLogin] = useState(true);
-
-  // const toggleLoginType = () => {
-  //   setIsHRLogin(!isHRLogin);
-  // };
 
   const nav = useNavigate();
   const [formData, setFormData] = useState({
