@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
+import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 function Dashboard() {
   const [allJobsData, setAllJobData] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -105,7 +106,7 @@ function Dashboard() {
                               {item.jobTitle}
                             </h6>
                             <h6 className={DashBoardStyle.rec_company_job_time}>
-                              {item.createdAt}
+                              <CalculateTimeAgo time={item.createdAt}/>
                             </h6>
                           </div>
                         </div>

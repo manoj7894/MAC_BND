@@ -13,29 +13,12 @@ function JobSeekerLayout() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
 
-  // useEffect(() => {
-  //   if (
-  //     pathname === "/" ||
-  //     (pathname !== "/assessment" &&
-  //       pathname !== "/analytics" &&
-  //       pathname !== "/analytics/weekly" &&
-  //       pathname !== "/analytics/monthly" &&
-  //       pathname !== "/analytics/yearly" &&
-  //       pathname !== "/myjobs" &&
-  //       pathname !== "/myresume" &&
-  //       pathname !== "/chatbot" &&
-  //       pathname !== "/application" &&
-  //       pathname !== "/interviews" &&
-  //       pathname !== "/settings" &&
-  //       pathname !== "/job/" &&
-  //       pathname !== "/assessment-Instructions" &&
-  //       pathname !== "/assessment-test" &&
-  //       pathname !== "/assessment-result")
-  //   ) {
-  //     navigateTO("/dashboard");
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [pathname]);
+  useEffect(() => {
+    if (pathname === "/") {
+      navigateTO("/dashboard");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
 
   return (
     <section className={JobSeekerStyle.JobSeeker_Layout_Container}>

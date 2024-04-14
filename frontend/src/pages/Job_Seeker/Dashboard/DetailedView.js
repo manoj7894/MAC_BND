@@ -7,7 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
+import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 import fresherImage from "./images/mdi_book-education-outline.png";
 import drop from "./images/Vector.png";
 import fav_icon from "./images/favoutite.png";
@@ -114,7 +114,7 @@ export default function JobListDetailedView() {
                                 UserDashBoardStyle.detail_company_job_time
                               }
                             >
-                              {item.createdAt}
+                              <CalculateTimeAgo  time={item.createdAt}/>
                             </h6>
                             <div
                               className={UserDashBoardStyle.detail_company_offer}

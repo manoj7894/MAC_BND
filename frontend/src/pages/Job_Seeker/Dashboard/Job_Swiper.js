@@ -1,5 +1,5 @@
 import React from "react";
-
+import {CalculateTimeAgo} from "../../Common-Components/TimeAgo"
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -41,7 +41,7 @@ export default function JobSeekerSwiper({ allJobs }) {
                 ({item.employmentType})
               </h6>
               <h6 className={DashBoardStyle.company_apply}>
-                {item.createdAt}
+                <CalculateTimeAgo  time={item.createdAt}/>
                 <span className={DashBoardStyle.apply}> Apply </span>
               </h6>
             </div>
