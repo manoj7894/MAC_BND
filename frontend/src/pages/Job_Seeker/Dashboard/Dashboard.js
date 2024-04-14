@@ -6,6 +6,7 @@ import Col from "react-bootstrap/Col";
 import DashBoardStyle from "./DashboardMain.module.css";
 import JobSeekerSwiper from "./Job_Swiper";
 import fav_icon from "./images/favoutite.png";
+import fav_filled_icon from './images/Filled_favoutite.png'
 import money from "./images/money-stack.png";
 import location from "./images/ep_location.png";
 import fresherImage from "./images/mdi_book-education-outline.png";
@@ -15,7 +16,11 @@ import axios from 'axios'
 import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
+import { useSelector, useDispatch } from "react-redux"
+import { handleSavedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
 function Dashboard() {
+  const { email, savedJob } = useSelector((state) => state.Assessment.currentUser);
+  const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const navigateTO = useNavigate();
@@ -34,7 +39,40 @@ function Dashboard() {
       toast.error(`Server failed to load! Reload your page`);
       setLoading(false)
     })
-  }, [])
+  }, []);
+
+
+  const handleSaveToLaterClick = (e, item) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8080/api/user/My-jobs/create/save-job`, {
+      ...item, email
+    }).then((response) => {
+      if (response.data.success) {
+        toast.success(`${response.data.msg}`);
+        dispatch(handleSavedJob(item._id))
+      } else {
+        toast.error(`${response.data.msg}`);
+      }
+    }).catch((error) => {
+      toast.error(`server failed! Try again ${error.message}`);
+    })
+  }
+
+  const handleRemoveSaveClick = (e, jobId) => {
+    e.preventDefault();
+    axios.delete(`http://localhost:8080/api/user/My-jobs/delete/save-job/${email + '-' + jobId}`).then((response) => {
+      if (response.data.success) {
+        toast.success(`${response.data.msg}`);
+        dispatch(handleRemoveSavedJob(jobId))
+      } else {
+        toast.error(`${response.data.msg}`);
+      }
+    }).catch((error) => {
+      toast.error(`server failed! Try again ${error.message}`);
+    })
+  }
+
+
   return (
     <section className={DashBoardStyle.userDahboard_MainContainer} >
       {
@@ -72,7 +110,7 @@ function Dashboard() {
                     </div>
 
                     <div className={DashBoardStyle.matched_job}>
-                      <JobSeekerSwiper  allJobs={allJobsData}/>
+                      <JobSeekerSwiper allJobs={allJobsData} />
                     </div>
                   </div>
                 </Col>
@@ -106,7 +144,7 @@ function Dashboard() {
                               {item.jobTitle}
                             </h6>
                             <h6 className={DashBoardStyle.rec_company_job_time}>
-                              <CalculateTimeAgo time={item.createdAt}/>
+                              <CalculateTimeAgo time={item.createdAt} />
                             </h6>
                           </div>
                         </div>
@@ -126,13 +164,25 @@ function Dashboard() {
                         </div>
                         <div className={DashBoardStyle.rec_company_offer_apply}>
                           <div className={DashBoardStyle.rec_company_offer_fav}>
-                            <img
-                              src={fav_icon}
-                              alt="Favorite Icon"
-                              className={
-                                DashBoardStyle.rec_company_offer_fav_image
-                              }
-                            />
+
+                            {
+                              savedJob?.some((data) => data.jobID === item?._id) ? <img
+                                src={fav_filled_icon}
+                                alt="Favorite Icon"
+                                className={
+                                  DashBoardStyle.rec_company_offer_fav_image
+                                }
+                                onClick={(e) => handleRemoveSaveClick(e, item?._id)}
+                              /> : <img
+                                src={fav_icon}
+                                alt="Favorite Icon"
+                                className={
+                                  DashBoardStyle.rec_company_offer_fav_image
+                                }
+                                onClick={(e) => handleSaveToLaterClick(e, item)}
+                              />
+                            }
+
                           </div>
                           <div
                             className={

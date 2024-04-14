@@ -18,7 +18,7 @@ function MyJobs() {
             }
             onClick={() => setjobtype("applied")}
           >
-            <i class="fa-solid fa-suitcase"></i>Applied Jobs
+            <i className="fa-solid fa-suitcase"></i>Applied Jobs
           </div>
           <div
             className={
@@ -28,7 +28,7 @@ function MyJobs() {
             }
             onClick={() => setjobtype("saved")}
           >
-            <i class="fa-solid fa-suitcase"></i> Saved Jobs
+            <i className="fa-solid fa-suitcase"></i> Saved Jobs
           </div>
         </div>
 

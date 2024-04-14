@@ -12,7 +12,7 @@ const ReduxSlice = createSlice({
       userType: localStorage.getItem("userType")
         ? localStorage.getItem("userType")
         : "",
-      savedJob: localStorage.getItem("savedJob") ? (localStorage.getItem("savedJob")) : [],
+      savedJob: localStorage.getItem("savedJob") ? JSON.parse(localStorage.getItem("savedJob")) : [],
       appliedJob: localStorage.getItem("appliedJob") ? JSON.parse(localStorage.getItem("appliedJob")) : [],
     },
   },
@@ -56,6 +56,11 @@ const ReduxSlice = createSlice({
       localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
     },
 
+    handleRemoveSavedJob(state, action) {
+      let filteredData = state.currentUser.savedJob.filter((data) => data.jobID !== action.payload);
+      state.currentUser.savedJob = filteredData
+      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+    },
 
     handleUserLogOut(state) {
       state.currentUser.token = "";
@@ -63,7 +68,7 @@ const ReduxSlice = createSlice({
       state.currentUser.name = "";
       state.currentUser.userType = "";
       state.currentUser.savedJob = [];
-      state.currentUser.appliedJob =[];
+      state.currentUser.appliedJob = [];
 
       localStorage.clear()
     },
@@ -76,5 +81,6 @@ export const {
   handleUserLogin,
   handleUserLogOut,
   handleSavedJob,
+  handleRemoveSavedJob,
 } = ReduxSlice.actions;
 export default ReduxSlice.reducer;

@@ -35,10 +35,6 @@ const jobSchema = new mongoose.Schema(
                 type: String
             },
         ],
-        employeeEmail: {
-            type: String,
-            required: true,
-        },
         jobExperience: {
             type: String,
             required: true,
