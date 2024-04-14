@@ -47,6 +47,15 @@ export default function JobListDetailedView() {
     axios.get("http://localhost:8080/api/jobs/All-jobs").then((response) => {
       if (response.data.success) {
         setAllJobData(response.data.jobs);
+        axios.get(`http://localhost:8080/api/jobs/job/${id}`).then((response) => {
+          if (response.data.success) {
+            setJobDetails(response.data.jobs);
+            setJobDetailsLoad(false)
+          } else {
+            setJobDetails([]);
+            setJobDetailsLoad(false)
+          }
+        })
         setLoading(false)
       } else {
         setAllJobData([]);
@@ -56,6 +65,7 @@ export default function JobListDetailedView() {
       toast.error(`Server failed to load! Reload your page : ${error.message}`);
       setLoading(false)
     })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
