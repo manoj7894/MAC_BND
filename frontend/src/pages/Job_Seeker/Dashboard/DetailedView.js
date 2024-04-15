@@ -398,7 +398,7 @@ export default function JobListDetailedView() {
                     </div>
 
                     {
-                      appliedJob?.some((data) => data.jobID !== jobDetails?._id) && <div className={UserDashBoardStyle.company_save_later_button} >
+                      appliedJob?.every((data) => data.jobID !== jobDetails?._id) && <div className={UserDashBoardStyle.company_save_later_button} >
                         {
                           savedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleRemoveSaveClick(e, jobDetails?._id)}>
                             Remove save

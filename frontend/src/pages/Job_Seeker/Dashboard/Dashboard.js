@@ -165,7 +165,7 @@ function Dashboard() {
                         <div className={DashBoardStyle.rec_company_offer_apply}>
 
                           {
-                            appliedJob?.some((data) => data.jobID !== item?._id) && <div className={DashBoardStyle.rec_company_offer_fav}>
+                            appliedJob?.every((data) => data.jobID !== item?._id) && <div className={DashBoardStyle.rec_company_offer_fav}>
                               {
                                 savedJob?.some((data) => data.jobID === item?._id) ? <img
                                   src={fav_filled_icon}
