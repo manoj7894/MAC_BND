@@ -7,6 +7,10 @@ const createAppliedJob = async (req, res) => {
         const mongooseResponse = await appliedJobCollection.create({ jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
         });
         if (mongooseResponse) {
+            await savedJobCollection.findOneAndDelete({
+                jobID: _id,
+                userEmail: email,
+            });
             res.status(200).json({
                 success: true,
                 msg: "Job applied Successfully",
