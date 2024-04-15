@@ -10,11 +10,17 @@ p {
 }
 
 /* HR-Dashboard Page------------------------------------------------------------ */
+.__dashboard_Page {
+    position: relative;
+    min-height: 100%;
+}
+
 .__dashboard_Header,
 .__postImpression_Header,
 .__latest_Post_Header {
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 /* se;ect----------- */
@@ -81,7 +87,8 @@ p {
 }
 
 .__post_Section {
-    padding: 1em 1em 2em 1em;
+    height: 200px;
+    padding: 1em;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
@@ -198,6 +205,11 @@ p {
 }
 
 /* Create Post Page------------------------------------------------------------ */
+.__create_Post_Page {
+    position: relative;
+    min-height: 100%;
+}
+
 .__create_Post_Header {
     width: 100%;
     display: flex;
