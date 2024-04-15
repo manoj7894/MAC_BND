@@ -12,8 +12,8 @@ const ReduxSlice = createSlice({
       userType: localStorage.getItem("userType")
         ? localStorage.getItem("userType")
         : "",
-      savedJob: localStorage.getItem("savedJob") ? JSON.parse(localStorage.getItem("savedJob")) : [],
-      appliedJob: localStorage.getItem("appliedJob") ? JSON.parse(localStorage.getItem("appliedJob")) : [],
+      savedJob: localStorage.getItem("userType") !== "employee" ? JSON.parse(localStorage.getItem("savedJob")) : [],
+      appliedJob: localStorage.getItem("userType") !== "employee" ? JSON.parse(localStorage.getItem("appliedJob")) : [],
     },
   },
   reducers: {
@@ -38,15 +38,21 @@ const ReduxSlice = createSlice({
       state.currentUser.email = action.payload.email;
       state.currentUser.name = action.payload.name;
       state.currentUser.userType = action.payload.userType;
-      state.currentUser.savedJob = action.payload.savedJob;
-      state.currentUser.appliedJob = action.payload.appliedJob;
+      if (action.payload.userType !== "employee") {
+        state.currentUser.savedJob = action.payload.savedJob;
+        state.currentUser.appliedJob = action.payload.appliedJob;
+      }
 
       localStorage.setItem("token", state.currentUser.token);
       localStorage.setItem("email", state.currentUser.email);
       localStorage.setItem("name", state.currentUser.name);
       localStorage.setItem("userType", state.currentUser.userType);
-      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
-      localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
+
+      if (action.payload.userType !== "employee") {
+        localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+        localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
+      }
+
     },
 
     handleSavedJob(state, action) {

@@ -76,13 +76,15 @@
 }
 
 .__user_Info {
+    width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
     color: white;
 }
 
 .__user_Img {
-    width: 3em;
+    width: 3.3em;
     border: 1px solid black;
     border-radius: 50%;
     margin: 0 .5em;
@@ -91,12 +93,14 @@
 .__userSection {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    font-size: 20px;
 }
 
 .__btn_Edit_Profile {
     font-size: 10px;
-    padding: .5em;
-    margin: .2em 0;
+    padding: .5em 2em;
+    margin: .5em 0;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -169,16 +173,18 @@
     }
     .__navbar_Links,.active{
         margin: .3em 0;
+        padding-left: 2.5em;
     }
     .__btn_Logout {
       width: 3em;
       height: 30px;
+      font-size: 22px;
     }
     .__hide,  .__userSection,  .__logout_Text {
       display: none;
     }
     .__user_Img {
-      width: 30px;
+      width: 35px;
     }
     .__subContainer {
       width: calc(100vw - 100px);

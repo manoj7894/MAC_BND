@@ -8,6 +8,7 @@ import 'react-multi-carousel/lib/styles.css';
 import axios from "axios"
 import { format } from 'date-fns';
 import Loader from '../../Common-Components/Loaders/Loader';
+import { CalculateTimeAgo } from '../../Common-Components/TimeAgo';
 
 const responsive = {
   superLargeDesktop: {
@@ -49,6 +50,8 @@ export default function HRDashboard() {
         setSortedJob(response.data.jobs.toSorted((a, b) => a.createdAt - b.createdAt));
         setLoading(false)
       })
+    // axios.delete(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
+    // .then(response => {})
   }, [])
 
   const handleSortBy = (e) => {
@@ -113,7 +116,9 @@ export default function HRDashboard() {
                       <img className={pages.__postLogo} src={data.jobPoster} alt='' />
                       <p>
                         {data.jobTitle.slice(0, 15)}...
-                        <span style={{ fontSize: "13px", display: 'block' }}>Posted 2 days ago</span>
+                        <span style={{ fontSize: "13px", display: 'block' }}>
+                          <CalculateTimeAgo time={data.createdAt} />
+                        </span>
                       </p>
                       <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
                     </div>
