@@ -3,9 +3,12 @@ import pages from '../Pages.module.css';
 import toast from "react-hot-toast";
 import axios from "axios"
 import noImg from '../../../Assets/noImage.jpg';
+import Loader from '../../Common-Components/Loaders/Loader';
 
 export default function CreatePost() {
   const imgRef = useRef(null)
+  const [selectedImg, setSelectedImg] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [post, setPost] = useState({
     jobPoster: "",
     jobTitle: "",
@@ -17,7 +20,7 @@ export default function CreatePost() {
     jobExperience: "",
     employeeEmail: localStorage.getItem('email')
   })
-  const [selectedImg, setSelectedImg] = useState(null);
+
   const handleOnChange = (e) => {
     if (e.target.name === "jobPoster") {
       if (e.target?.files[0]?.type.split("/")[0] === "image") {
@@ -30,6 +33,7 @@ export default function CreatePost() {
       setPost({ ...post, [e.target.name]: e.target.value });
     }
   };
+
   const handleCreatePost = (e) => {
     e.preventDefault()
     if (post.jobPoster === "") {
@@ -59,11 +63,11 @@ export default function CreatePost() {
       formData.append("salaryRange", post.salaryRange);
       formData.append("skilRequired", post.skilRequired);
       formData.append("jobExperience", post.jobExperience);
+      setLoading(true);
       axios.post("http://localhost:8080/api/jobs/create-job", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       })
         .then((response) => {
-          console.log(response)
           if (response.data.success) {
             toast.success("Post created successfully");
             setPost({
@@ -91,6 +95,7 @@ export default function CreatePost() {
             });
             setSelectedImg(null);
           }
+          setLoading(false);
         })
         .catch((err) => {
           toast.error(`${err.message}`);
@@ -111,59 +116,60 @@ export default function CreatePost() {
 
   return (
     <div className={pages.__create_Post_Page}>
-      <header className={pages.__create_Post_Header}>
-        <h1 style={{ fontSize: '30px' }}>Create Post</h1>
-      </header>
+      {
+        loading ? <Loader /> : <>
+          <header className={pages.__create_Post_Header}>
+            <h1 style={{ fontSize: '30px' }}>Create Post</h1>
+          </header>
 
-      <div className={pages.__postDetails}>
-        <div className={pages.__imgContainer}>
-          <img className={pages.__previewImg} src={post.jobPoster} alt="preview img"
-            onError={(e) => {
-              e.target.src = `${noImg}`
-              e.onError = null
-            }}
-          />
-          <label htmlFor="">drop your image here or <span style={{ color: "blue", fontWeight: "700", cursor: "pointer" }} onClick={(e) => imgRef.current.click()}>browse</span></label>
-          <input type="file" accept='image/*' ref={imgRef} hidden name='jobPoster' onChange={handleOnChange} />
-        </div>
-
-        <form className={pages.__createPost_Form} onSubmit={(e) => e.preventDefault()}>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Job Title</label> <br />
-            <input type="text" name='jobTitle' value={post.jobTitle} className={pages.__inputs} onChange={handleOnChange} />
+          <div className={pages.__postDetails}>
+            <div className={pages.__imgContainer}>
+              <img className={pages.__previewImg} src={post.jobPoster} alt="preview img"
+                onError={(e) => {
+                  e.target.src = `${noImg}`
+                  e.onError = null
+                }}
+              />
+              <label htmlFor="">drop your image here or <span style={{ color: "blue", fontWeight: "700", cursor: "pointer" }} onClick={(e) => imgRef.current.click()}>browse</span></label>
+              <input type="file" accept='image/*' ref={imgRef} hidden name='jobPoster' onChange={handleOnChange} />
+            </div>
+            <form className={pages.__createPost_Form} onSubmit={(e) => e.preventDefault()}>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Job Title</label> <br />
+                <input type="text" name='jobTitle' value={post.jobTitle} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Job Description</label> <br />
+                <input type="text" name='jobDescription' value={post.jobDescription} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Employment Type</label> <br />
+                <input type="text" name='employmentType' value={post.employmentType} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Location</label> <br />
+                <input type="text" name='location' value={post.location} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Salary Range (INR)</label> <br />
+                <input type="text" name='salaryRange' value={post.salaryRange} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Skill Required</label> <br />
+                <input type="text" name='skilRequired' value={post.skilRequired} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+              <div className={pages.__input_Grps}>
+                <label htmlFor="">Job Experince</label> <br />
+                <input type="text" name='jobExperience' value={post.jobExperience} className={pages.__inputs} onChange={handleOnChange} />
+              </div>
+            </form>
           </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Job Description</label> <br />
-            <input type="text" name='jobDescription' value={post.jobDescription} className={pages.__inputs} onChange={handleOnChange} />
+          <div className={pages.__buttons}>
+            <button className={pages.__btn_Cancel}>Cancel</button>
+            <button className={pages.__btn_Save} onClick={handleCreatePost}>Post</button>
           </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Employment Type</label> <br />
-            <input type="text" name='employmentType' value={post.employmentType} className={pages.__inputs} onChange={handleOnChange} />
-          </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Location</label> <br />
-            <input type="text" name='location' value={post.location} className={pages.__inputs} onChange={handleOnChange} />
-          </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Salary Range (INR)</label> <br />
-            <input type="text" name='salaryRange' value={post.salaryRange} className={pages.__inputs} onChange={handleOnChange} />
-          </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Skill Required</label> <br />
-            <input type="text" name='skilRequired' value={post.skilRequired} className={pages.__inputs} onChange={handleOnChange} />
-          </div>
-          <div className={pages.__input_Grps}>
-            <label htmlFor="">Job Experince</label> <br />
-            <input type="text" name='jobExperience' value={post.jobExperience} className={pages.__inputs} onChange={handleOnChange} />
-          </div>
-        </form>
-      </div>
-
-      <div className={pages.__buttons}>
-        <button className={pages.__btn_Cancel}>Cancel</button>
-        <button className={pages.__btn_Save} onClick={handleCreatePost}>Save & Preview</button>
-      </div>
-
+        </>
+      }
     </div>
   )
 }
