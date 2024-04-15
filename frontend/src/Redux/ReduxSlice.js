@@ -45,8 +45,8 @@ const ReduxSlice = createSlice({
       localStorage.setItem("email", state.currentUser.email);
       localStorage.setItem("name", state.currentUser.name);
       localStorage.setItem("userType", state.currentUser.userType);
-      localStorage.setItem("savedJob", state.currentUser.savedJob);
-      localStorage.setItem("appliedJob", state.currentUser.appliedJob);
+      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+      localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
     },
 
     handleSavedJob(state, action) {

@@ -1,5 +1,7 @@
 const { savedJobCollection, appliedJobCollection } = require("../model/MyJob.model");
 const jobCollection = require("../model/Job.Model");
+const User = require("../model/users/UserModel");
+
 const createAppliedJob = async (req, res) => {
     try {
         const { _id, email, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt } = req.body;
@@ -8,19 +10,25 @@ const createAppliedJob = async (req, res) => {
             jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
         });
 
-        // update the jobo collection applicationCount by 1 everytime any user applied for jobs
+        // update the jobo collection applicationCount by 1 and also update the applidBy data in collection with user emailID everytime any user applied for jobs
         const updateJobCollection = await jobCollection.updateOne({ _id }, {
+            $push: { appliedBy: { userEmail: email } },
             $inc: { totalApplication: 1 },
         });
+
+
         if (mongooseResponse && updateJobCollection.acknowledged) {
             await savedJobCollection.findOneAndDelete({
                 jobID: _id,
                 userEmail: email,
             });
+            await User.updateOne({ email }, {
+                $push: { userAppliedJob: { jobID: _id } },
+            });
             res.status(200).json({
                 success: true,
                 msg: "Job applied Successfully",
-            })
+            });
         } else {
             res.status(400).json({
                 success: false,
@@ -89,16 +97,7 @@ const removeAppliedJob = async (req, res) => {
 //! Saved job related controllers
 const createSavedJob = async (req, res) => {
     try {
-        const { _id, email, jobTitle,
-            employeeEmail,
-            jobPoster,
-            jobDescription,
-            employmentType,
-            location,
-            salaryRange,
-            skilRequired,
-            jobExperience,
-            createdAt } = req.body;
+        const { _id, email, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt } = req.body;
         const mongooseResponse = await savedJobCollection.create({
             jobID: _id,
             jobTitle: jobTitle,
@@ -114,6 +113,9 @@ const createSavedJob = async (req, res) => {
             userEmail: email
         });
         if (mongooseResponse) {
+            await User.updateOne({ email }, {
+                $push: { userSavedJob: { jobID: _id } },
+            });
             res.status(200).json({
                 success: true,
                 msg: "Job saved Successfully",

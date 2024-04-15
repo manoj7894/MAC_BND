@@ -45,7 +45,14 @@ const jobSchema = new mongoose.Schema(
         totalApplication: {
             type: Number,
             default: 0,
-        }
+        },
+        appliedBy: [
+            {
+                userEmail: {
+                    type: String,
+                }
+            }
+        ]
     }
 
 );
