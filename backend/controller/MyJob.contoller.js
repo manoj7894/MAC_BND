@@ -1,12 +1,18 @@
 const { savedJobCollection, appliedJobCollection } = require("../model/MyJob.model");
-
-
+const jobCollection = require("../model/Job.Model");
 const createAppliedJob = async (req, res) => {
     try {
         const { _id, email, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt } = req.body;
-        const mongooseResponse = await appliedJobCollection.create({ jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
+
+        const mongooseResponse = await appliedJobCollection.create({
+            jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
         });
-        if (mongooseResponse) {
+
+        // update the jobo collection applicationCount by 1 everytime any user applied for jobs
+        const updateJobCollection = await jobCollection.updateOne({ _id }, {
+            $inc: { totalApplication: 1 },
+        });
+        if (mongooseResponse && updateJobCollection.acknowledged) {
             await savedJobCollection.findOneAndDelete({
                 jobID: _id,
                 userEmail: email,

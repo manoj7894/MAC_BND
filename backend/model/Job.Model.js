@@ -41,6 +41,10 @@ const jobSchema = new mongoose.Schema(
         },
         createdAt: {
             type: Number,
+        },
+        totalApplication: {
+            type: Number,
+            default: 0,
         }
     }
 
