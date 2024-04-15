@@ -6,6 +6,10 @@ const createAppliedJob = async (req, res) => {
     try {
         const { _id, email, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt } = req.body;
 
+        // Current USER
+        const mongooseUser = await User.findOne({ email: email });
+
+        // add the applied job appliedjobCollection
         const mongooseResponse = await appliedJobCollection.create({
             jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
         });
@@ -24,6 +28,7 @@ const createAppliedJob = async (req, res) => {
             });
             await User.updateOne({ email }, {
                 $push: { userAppliedJob: { jobID: _id } },
+                userSavedJob: mongooseUser.userSavedJob.filter((data) => data.jobID !== _id)
             });
             res.status(200).json({
                 success: true,
