@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const jobSchema = new mongoose.Schema(
+const myJobSchema = new mongoose.Schema(
     {
-        jobTitle: {
+        jobID: {
             type: String,
             required: true,
         },
-        employeeEmail: {
+        jobTitle: {
             type: String,
             required: true,
         },
@@ -35,6 +35,10 @@ const jobSchema = new mongoose.Schema(
                 type: String
             },
         ],
+        employeeEmail: {
+            type: String,
+            required: true,
+        },
         jobExperience: {
             type: String,
             required: true,
@@ -42,22 +46,13 @@ const jobSchema = new mongoose.Schema(
         createdAt: {
             type: Number,
         },
-        totalApplication: {
-            type: Number,
-            default: 0,
+        userEmail: {
+            type: String,
+            required: true,
         },
-        appliedBy: [
-            {
-                userEmail: {
-                    type: String,
-                }
-            }
-        ]
     }
-
 );
+const appliedJobCollection = mongoose.model('appliedJob', myJobSchema);
+const savedJobCollection = mongoose.model('savedJob', myJobSchema);
 
-
-const jobCollection = mongoose.model('jobs', jobSchema);
-
-module.exports = jobCollection;
+module.exports = { appliedJobCollection, savedJobCollection };

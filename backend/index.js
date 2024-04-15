@@ -30,22 +30,19 @@ app.use("/api/hr", HrRoutes);
 //!  Auth Related  Routes and import
 
 
-//!  Auth Related  Routes and import
+//!  JObs (HR) Related  Routes and import
 const jobRoutes = require("./Routes/Job.Route");
 app.use("/api/jobs", jobRoutes);
-//!  Auth Related  Routes and import
+//!  JObs (HR) Related  Routes and import
+
+
+//!  MyJobs (JobSeeker) Related  Routes and import
+const myJobRoutes = require("./Routes/MyJob.Route");
+app.use("/api/user/My-jobs", myJobRoutes);
+//!  MyJobs (JobSeeker) Related  Routes and import
 
 const Port = process.env.Port;
 
-
-// const HrUser = require("./model/users/HrUserModel.js")
-// const user = require("./model/users/UserModel.js")
-//  async function getHr (){
-// let response = await HrUser.find({});
-// // let response = await user.find({});
-// console.log(response)
-// }
-// getHr();
 app.listen(Port, async () => {
   try {
     await ConnectDb();

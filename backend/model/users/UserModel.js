@@ -16,17 +16,26 @@ const userSchema = new mongoose.Schema({
   conf_password: {
     type: String,
   },
-  // contact_number:{
-  //   type:Number,
-  //   unique:true,
-  //   required:true
-  // },
   resume: {
-    type: String 
+    type: String
   },
   userType: {
     type: String,
   },
+  userAppliedJob: [
+    {
+      jobID: {
+        type: String,
+      }
+    }
+  ],
+  userSavedJob: [
+    {
+      jobID: {
+        type: String,
+      }
+    }
+  ],
 });
 
 const User = mongoose.model("User", userSchema);
