@@ -3,29 +3,8 @@ const { savedJobCollection, appliedJobCollection } = require("../model/MyJob.mod
 
 const createAppliedJob = async (req, res) => {
     try {
-        const { _id, email, jobTitle,
-            employeeEmail,
-            jobPoster,
-            jobDescription,
-            employmentType,
-            location,
-            salaryRange,
-            skilRequired,
-            jobExperience,
-            createdAt } = req.body;
-        const mongooseResponse = await appliedJobCollection.create({
-            jobID: _id,
-            jobTitle: jobTitle,
-            jobPoster: jobPoster,
-            jobDescription: jobDescription,
-            employmentType: employmentType,
-            location: location,
-            salaryRange: salaryRange,
-            skilRequired: skilRequired,
-            employeeEmail: employeeEmail,
-            jobExperience: jobExperience,
-            createdAt: createdAt,
-            userEmail: email
+        const { _id, email, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt } = req.body;
+        const mongooseResponse = await appliedJobCollection.create({ jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email
         });
         if (mongooseResponse) {
             res.status(200).json({

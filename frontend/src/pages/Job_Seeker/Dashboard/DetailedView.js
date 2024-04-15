@@ -85,6 +85,7 @@ export default function JobListDetailedView() {
       if (response.data.success) {
         toast.success(`${response.data.msg}`);
         dispatch(handleAppliedJob(item._id));
+        dispatch(handleRemoveSavedJob(item._id));
         setJobDetailsLoad(false);
       } else {
         toast.error(`${response.data.msg}`);

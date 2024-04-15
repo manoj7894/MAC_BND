@@ -4,7 +4,7 @@ const { createAppliedJob, getAppliedJob, removeAppliedJob, createSavedJob, getSa
 
 myJobRoutes.post("/create/apply-job", createAppliedJob);
 myJobRoutes.get("/get/apply-job/:email", getAppliedJob);
-myJobRoutes.delete("/delete/apply-job/:id", removeAppliedJob);
+myJobRoutes.delete("/delete/apply-job/:email", removeAppliedJob);
 
 
 
