@@ -1,7 +1,11 @@
 import React from "react";
 
 function Interview() {
-  return <div>InterVIEW</div>;
+  return (
+    <>
+    <div>InterVIEW</div>
+    </>
+  );
 }
 
 export default Interview;

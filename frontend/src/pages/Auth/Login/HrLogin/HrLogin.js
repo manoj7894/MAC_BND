@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import loginImage from "../../../../Assets/Login form Image.PNG";
 import axios from "axios";
 import hrLoginStyle from "../Login.module.css";
-
 import { useDispatch } from "react-redux";
 import { handleUserLogin } from "../../../../Redux/ReduxSlice";
+
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+
 function HrLogin({ toggleLoginType, isHRLogin }) {
   const dispatchTO = useDispatch();
 
@@ -28,7 +30,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     const fetchUserData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/hr/get-hr?email=${formData.email}`
+          `${baseUrl}/hr/get-hr?email=${formData.email}`
         );
         const userData = response.data;
         setName(userData.name);
@@ -59,7 +61,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     if (formData.email) {
       try {
         const response = await axios.get(
-          `http://localhost:8080/api/hr/get-hr?email=${formData.email}`
+          `${baseUrl}/hr/get-hr?email=${formData.email}`
         );
         const userData = response.data;
         setName(userData.name);
@@ -79,13 +81,9 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/hr/login",
-        formData,
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
+      const response = await axios.post(`${baseUrl}/hr/login`, formData, {
+        headers: { "Content-Type": "application/json" },
+      });
 
       const { name, email, token } = response.data;
 

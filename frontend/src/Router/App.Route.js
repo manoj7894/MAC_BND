@@ -33,6 +33,7 @@ const Payroll = lazy(() => import("../pages/Employer/Payroll/Payroll.js"));
 const HRAnalytics = lazy(() => import("../pages/Employer/Analytic/HrAnalytics.js"));
 const Candidates = lazy(() => import("../pages/Employer/Candidates/Candidates.js"));
 const InterviewScheduled = lazy(() => import("../pages/Employer/InterviewScheduled/InterviewScheduled.js"));
+const CreateInterview = lazy(() => import("../pages/Employer/InterviewScheduled/CreateInterview.js"));
 const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
 const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
 
@@ -116,6 +117,7 @@ function EmployerRoutes() {
         <Route path='/analytics' element={<Suspense><HRAnalytics /></Suspense>} />
         <Route path='/candidates' element={<Suspense><Candidates /></Suspense>} />
         <Route path='/interview_scheduled' element={<Suspense><InterviewScheduled /></Suspense>} />
+        <Route path='/schedule-interview' element={<Suspense><CreateInterview /></Suspense>} />
         <Route path='/chatbot' element={<Suspense><Chatbot /></Suspense>} />
         <Route path='/Setting' element={<Suspense><Setting /></Suspense>} />
       </Route>

@@ -29,6 +29,13 @@ const HrRoutes = require("./Routes/HrRoutes");
 app.use("/api/hr", HrRoutes);
 //!  Auth Related  Routes and import
 
+//! Interview Schedule Related Routes and import
+const codingQuestionRouter = require('./Routes/InterviewScheduleRoutes/CodingRoundRoute')
+app.use('/api/coding',codingQuestionRouter)
+
+const AptitudeQuestionRouter = require('./Routes/InterviewScheduleRoutes/AptitudeRoundRoute')
+app.use('/api/aptitude',AptitudeQuestionRouter)
+//! Interview Schedule Related Routes and import
 
 //!  JObs (HR) Related  Routes and import
 const jobRoutes = require("./Routes/Job.Route");
