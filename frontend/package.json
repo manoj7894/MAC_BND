@@ -21,6 +21,7 @@
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.2",
     "date-fns": "^3.6.0",
+    "dotenv": "^16.4.5",
     "javascript-time-ago": "^2.5.9",
     "node": "^18.20.1",
     "pdfjs": "^2.5.3",

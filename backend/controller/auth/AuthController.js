@@ -106,7 +106,10 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
+    console.log("Email received:", email);
     const user = await User.findOne({ email });
+    console.log("User found:", user);
+
 
     if (!user) {
       return res.json({ message: "User is not registered" });
@@ -115,6 +118,9 @@ const forgotPassword = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "5m",
     });
+
+    console.log("Token generated:", token);
+
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -131,13 +137,17 @@ const forgotPassword = async (req, res) => {
       html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`,
     };
 
+    console.log("Mail options:", mailOptions);
+
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.error("Error sending email:", error);
         return res.json({
           status: true,
           message: "Error occured while sending an email",
         });
       } else {
+        console.log("Email sent successfully:", info);
         return res.json({ status: true, message: "email sent" });
       }
     });
