@@ -6,6 +6,8 @@ import "./ForgotPassword.css";
 import toast from 'react-hot-toast';
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+
 function ForgotPassword() {
   const [email, setEmail] = useState("");
   const nav = useNavigate()
@@ -17,7 +19,7 @@ function ForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/forgot-password", {
+      const response = await axios.post(`${baseUrl}/forgot-password`, {
         email,
       });
   

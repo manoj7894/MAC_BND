@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { Button, Col, Row, Form } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,9 @@ import axios from "axios";
 import signupStyle from "../Signup.module.css";
 import { useDispatch } from "react-redux";
 import { handleUserLogin } from "../../../../Redux/ReduxSlice";
+
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+
 const Signup = () => {
   const dispatchTO = useDispatch();
   const [formData, setFormData] = useState({
@@ -194,7 +197,7 @@ const Signup = () => {
       formDataToSend.append("userType", userType);
 
       const response = await axios.post(
-        "http://localhost:8080/api/signup",
+        `${baseUrl}/signup`,
         formDataToSend,
         {
           headers: {
@@ -204,9 +207,11 @@ const Signup = () => {
       );
 
       // Handle success response
-      const { token } = response.data;
+      const { token, savedJob, appliedJob } = response.data;
 
-      dispatchTO(handleUserLogin({ token, email, name, userType }));
+      dispatchTO(
+        handleUserLogin({ token, email, name, userType, savedJob, appliedJob })
+      );
       toast.success(`Welcome ${name}`);
       setTimeout(() => {
         nav("/");

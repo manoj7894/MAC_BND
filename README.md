@@ -1,10 +1,19 @@
 The history of detail changes will be available here from now on.
 
+## Date: 15-04-2024
+1. Completed create functionality of coding round question.
+2. Also the edit and delete functionality of coding round completed.
+3. Everything is storing and updating perfectly in database.
+4. Completed create functionality of aptitude round question.
+5. All these functionalities are completed with respect to admin section.
+
+## Date: 14-04-2024
+1. Sunday Holiday
+
 ## Date: 13-04-2024
 
 1. Completed toggle fuctionality for interview scheduled page.
 2. Completed pre-assesment and interviews page. 
-
 
 ## Date: 12-04-2024
 

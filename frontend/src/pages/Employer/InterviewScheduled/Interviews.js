@@ -1,4 +1,5 @@
 import React from "react";
+import {useNavigate} from 'react-router-dom'
 import { Table, Image } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import tableImage from "../../../Assets/tableImage.PNG";
@@ -6,6 +7,9 @@ import InterviewStyle from "./InterviewScheduled.module.css"
 
 const Interviews = () => {
   // Define the data for each row
+
+  const nav = useNavigate()
+
   const rowData = [
     {
       name: "Charlie Kristen",
@@ -16,6 +20,10 @@ const Interviews = () => {
       score: "50/100",
     },
   ];
+
+  const handleInterview = ()=>{
+    nav('/schedule-interview')
+  }
 
   const rows = Array.from({ length: 12 }, (_, index) => (
     <tr key={index}>
@@ -46,6 +54,7 @@ const Interviews = () => {
             fontSize: "12px",
             padding:"5px"
           }}
+          onClick={handleInterview}
         >
           Schedule Interview
         </button>

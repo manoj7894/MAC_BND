@@ -1,5 +1,5 @@
 const express = require("express");
-const ConnectDb = require("./config/config");
+const ConnectDb = require('./Config/config.js');
 const app = express();
 app.use(express.json());
 
@@ -29,11 +29,24 @@ const HrRoutes = require("./Routes/HrRoutes");
 app.use("/api/hr", HrRoutes);
 //!  Auth Related  Routes and import
 
+//! Interview Schedule Related Routes and import
+const codingQuestionRouter = require('./Routes/InterviewScheduleRoutes/CodingRoundRoute')
+app.use('/api/coding',codingQuestionRouter)
 
-//!  Auth Related  Routes and import
+const AptitudeQuestionRouter = require('./Routes/InterviewScheduleRoutes/AptitudeRoundRoute')
+app.use('/api/aptitude',AptitudeQuestionRouter)
+//! Interview Schedule Related Routes and import
+
+//!  JObs (HR) Related  Routes and import
 const jobRoutes = require("./Routes/Job.Route");
-app.use("api/jobs", jobRoutes);
-//!  Auth Related  Routes and import
+app.use("/api/jobs", jobRoutes);
+//!  JObs (HR) Related  Routes and import
+
+
+//!  MyJobs (JobSeeker) Related  Routes and import
+const myJobRoutes = require("./Routes/MyJob.Route");
+app.use("/api/user/My-jobs", myJobRoutes);
+//!  MyJobs (JobSeeker) Related  Routes and import
 
 const Port = process.env.Port;
 
