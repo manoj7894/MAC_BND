@@ -1,5 +1,6 @@
 import React from "react";
 import Interviewcss from "./Interview.module.css";
+import maleImage from '../../../Assets/Male-Image.png'
 import { IoStar } from "react-icons/io5";
 import { BsPersonVideo } from "react-icons/bs";
 import { GrTextAlignFull } from "react-icons/gr";
@@ -34,7 +35,7 @@ function Interview() {
         <div className={Interviewcss.uppercontainer_left}>
           <img
             className={Interviewcss.upper_cont_img}
-            src="https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png"
+            src={maleImage}
             alt="network-error"
           />
 
