@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   conf_password: {
     type: String,
@@ -21,9 +21,16 @@ const userSchema = new mongoose.Schema({
   //   unique:true,
   //   required:true
   // },
-  resume: {
-    type: String 
-  },
+  resume: [
+    {
+      filename: String,
+      path: String,
+      uploadedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   userType: {
     type: String,
   },

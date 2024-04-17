@@ -25,6 +25,7 @@ app.use("/api/questions", assesmentQuestionRouter);
 const userRoutes = require("./Routes/UserRoutes");
 app.use("/api", userRoutes);
 
+
 const HrRoutes = require("./Routes/HrRoutes");
 app.use("/api/hr", HrRoutes);
 //!  Auth Related  Routes and import
@@ -36,7 +37,10 @@ app.use("/api/jobs", jobRoutes);
 //!  Auth Related  Routes and import
 
 const Port = process.env.Port;
-
+// Resume Routes
+const ResumeRoutes = require("./Routes/ResumeRoutes.js");
+app.use('/resume',ResumeRoutes)
+app.use("/uploads", express.static("uploads"));
 
 // const HrUser = require("./model/users/HrUserModel.js")
 // const user = require("./model/users/UserModel.js")

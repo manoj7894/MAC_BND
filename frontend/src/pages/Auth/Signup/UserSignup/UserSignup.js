@@ -261,6 +261,7 @@ const Signup = () => {
                       <Form.Control
                         type="file"
                         name="resume"
+                        accept="application/pdf"
                         onChange={handleResumeChange}
                       />
                     </Col>
