@@ -14,89 +14,113 @@ import fav_icon from "./images/favoutite.png";
 import money from "./images/money-stack.png";
 import location from "./images/ep_location.png";
 import starLogo from "./images/star.png";
-import axios from 'axios'
+import axios from "axios";
 import toast from "react-hot-toast";
-import Loader from "../../Common-Components/Loaders/Loader"
-import { useSelector, useDispatch } from "react-redux"
-import { handleSavedJob, handleRemoveSavedJob, handleAppliedJob } from "../../../Redux/ReduxSlice";
-
+import Loader from "../../Common-Components/Loaders/Loader";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  handleSavedJob,
+  handleRemoveSavedJob,
+  handleAppliedJob,
+} from "../../../Redux/ReduxSlice";
 
 export default function JobListDetailedView() {
-  const { email, savedJob, appliedJob } = useSelector((state) => state.Assessment.currentUser);
+  const { email, savedJob, appliedJob } = useSelector(
+    (state) => state.Assessment.currentUser
+  );
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
-  const [jobDetails, setJobDetails] = useState([])
-  const [jobDetailsLoad, setJobDetailsLoad] = useState(false)
+  const [jobDetails, setJobDetails] = useState([]);
+  const [jobDetailsLoad, setJobDetailsLoad] = useState(false);
   const [IsLoading, setLoading] = useState(false);
   const { id } = useParams();
 
   const loadJobDetails = (e, jobID) => {
-    setJobDetailsLoad(true)
-    axios.get(`http://localhost:8080/api/jobs/job/${jobID}`).then((response) => {
-      if (response.data.success) {
-        setJobDetails(response.data.jobs);
-        setJobDetailsLoad(false)
-      } else {
-        setJobDetails([]);
-        setJobDetailsLoad(false)
-      }
-    }).catch((error) => {
-      toast.error(`Check your internet connection and try again ${error.message}`);
-      setJobDetailsLoad(false)
-    })
-  }
+    setJobDetailsLoad(true);
+    axios
+      .get(`http://localhost:8080/api/jobs/job/${jobID}`)
+      .then((response) => {
+        if (response.data.success) {
+          setJobDetails(response.data.jobs);
+          setJobDetailsLoad(false);
+        } else {
+          setJobDetails([]);
+          setJobDetailsLoad(false);
+        }
+      })
+      .catch((error) => {
+        toast.error(
+          `Check your internet connection and try again ${error.message}`
+        );
+        setJobDetailsLoad(false);
+      });
+  };
 
   const handleSaveToLaterClick = (e, item) => {
     e.preventDefault();
-    axios.post(`http://localhost:8080/api/user/My-jobs/create/save-job`, {
-      ...item, email
-    }).then((response) => {
-      if (response.data.success) {
-        toast.success(`${response.data.msg}`);
-        dispatch(handleSavedJob(item._id))
-      } else {
-        toast.error(`${response.data.msg}`);
-      }
-    }).catch((error) => {
-      toast.error(`server failed! Try again ${error.message}`);
-    })
-  }
+    axios
+      .post(`http://localhost:8080/api/user/My-jobs/create/save-job`, {
+        ...item,
+        email,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(`${response.data.msg}`);
+          dispatch(handleSavedJob(item._id));
+        } else {
+          toast.error(`${response.data.msg}`);
+        }
+      })
+      .catch((error) => {
+        toast.error(`server failed! Try again ${error.message}`);
+      });
+  };
 
   const handleRemoveSaveClick = (e, jobId) => {
     e.preventDefault();
-    axios.delete(`http://localhost:8080/api/user/My-jobs/delete/save-job/${email + '-' + jobId}`).then((response) => {
-      if (response.data.success) {
-        toast.success(`${response.data.msg}`);
-        dispatch(handleRemoveSavedJob(jobId))
-      } else {
-        toast.error(`${response.data.msg}`);
-      }
-    }).catch((error) => {
-      toast.error(`server failed! Try again ${error.message}`);
-    })
-  }
+    axios
+      .delete(
+        `http://localhost:8080/api/user/My-jobs/delete/save-job/${
+          email + "-" + jobId
+        }`
+      )
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(`${response.data.msg}`);
+          dispatch(handleRemoveSavedJob(jobId));
+        } else {
+          toast.error(`${response.data.msg}`);
+        }
+      })
+      .catch((error) => {
+        toast.error(`server failed! Try again ${error.message}`);
+      });
+  };
 
   const handleApplyButtonClick = (e, item) => {
     e.preventDefault();
     setJobDetailsLoad(true);
-    axios.post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-      ...item, email
-    }).then((response) => {
-      if (response.data.success) {
-        toast.success(`${response.data.msg}`);
-        dispatch(handleAppliedJob(item._id));
-        dispatch(handleRemoveSavedJob(item._id));
+    axios
+      .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
+        ...item,
+        email,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(`${response.data.msg}`);
+          dispatch(handleAppliedJob(item._id));
+          dispatch(handleRemoveSavedJob(item._id));
+          setJobDetailsLoad(false);
+        } else {
+          toast.error(`${response.data.msg}`);
+          setJobDetailsLoad(false);
+        }
+      })
+      .catch((error) => {
+        toast.error(`server failed! Try again ${error.message}`);
         setJobDetailsLoad(false);
-      } else {
-        toast.error(`${response.data.msg}`);
-        setJobDetailsLoad(false);
-      }
-    }).catch((error) => {
-      toast.error(`server failed! Try again ${error.message}`);
-      setJobDetailsLoad(false);
-    })
-  }
-
+      });
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -104,7 +128,7 @@ export default function JobListDetailedView() {
       try {
         const [allJobsResponse, jobDetailsResponse] = await Promise.all([
           axios.get("http://localhost:8080/api/jobs/All-jobs"),
-          axios.get(`http://localhost:8080/api/jobs/job/${id}`)
+          axios.get(`http://localhost:8080/api/jobs/job/${id}`),
         ]);
 
         if (allJobsResponse.data.success) {
@@ -121,7 +145,9 @@ export default function JobListDetailedView() {
 
         setLoading(false);
       } catch (error) {
-        toast.error(`Server failed to load! Reload your page: ${error.message}`);
+        toast.error(
+          `Server failed to load! Reload your page: ${error.message}`
+        );
         setLoading(false);
       }
     };
@@ -132,21 +158,36 @@ export default function JobListDetailedView() {
   }, []);
 
   return (
-    <div className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}>
-      {
-        IsLoading ? <Loader /> : <Container>
-          <Row>
-            <Col xxl={3}>
+    <div
+      className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}
+    >
+      {IsLoading ? (
+        <Loader />
+      ) : (
+        <Container>
+          <Row className={UserDashBoardStyle.detailed_view_row_style}>
+            <Col xxl={3} xl={3} lg={3} md={4}>
               {allJobsData.map((item) => (
-                <NavLink to={`/dashboard/${item._id}`} className={UserDashBoardStyle.detailed_view_full_small} key={item._id} onClick={(e) => loadJobDetails(e, item._id)}>
+                <NavLink
+                  to={`/dashboard/${item._id}`}
+                  className={UserDashBoardStyle.detailed_view_full_small}
+                  key={item._id}
+                  onClick={(e) => loadJobDetails(e, item._id)}
+                >
                   <div className={UserDashBoardStyle.detailed_view_full}>
                     <div
                       className={`${UserDashBoardStyle.detail_list_view_full}
                    ${item._id === id && UserDashBoardStyle.selected}`}
                     >
                       <div className={UserDashBoardStyle.detail_list_view}>
-                        <div className={UserDashBoardStyle.detail_company_detail}>
-                          <div className={UserDashBoardStyle.detail_company_logo_Container}>
+                        <div
+                          className={UserDashBoardStyle.detail_company_detail}
+                        >
+                          <div
+                            className={
+                              UserDashBoardStyle.detail_company_logo_Container
+                            }
+                          >
                             <img
                               src={item.jobPoster}
                               alt={item.jobTitle}
@@ -155,7 +196,9 @@ export default function JobListDetailedView() {
                           </div>
 
                           <div
-                            className={UserDashBoardStyle.detail_company_job_desc}
+                            className={
+                              UserDashBoardStyle.detail_company_job_desc
+                            }
                           >
                             <h6
                               className={
@@ -172,7 +215,9 @@ export default function JobListDetailedView() {
                               <CalculateTimeAgo time={item.createdAt} />
                             </h6>
                             <div
-                              className={UserDashBoardStyle.detail_company_offer}
+                              className={
+                                UserDashBoardStyle.detail_company_offer
+                              }
                             >
                               <img
                                 src={money}
@@ -186,8 +231,7 @@ export default function JobListDetailedView() {
                                 className={
                                   UserDashBoardStyle.detail_company_logo_money_month
                                 }
-                              >
-                              </span>
+                              ></span>
                             </div>
                           </div>
                         </div>
@@ -271,7 +315,9 @@ export default function JobListDetailedView() {
                             alt={"drop"}
                             className={UserDashBoardStyle.detail_exp_logo_time}
                           />
-                          <h6 className={UserDashBoardStyle.detail_exp_name_time}>
+                          <h6
+                            className={UserDashBoardStyle.detail_exp_name_time}
+                          >
                             {item.employmentType}
                           </h6>
                         </div>
@@ -282,26 +328,37 @@ export default function JobListDetailedView() {
               ))}
             </Col>
 
-            <Col xxl={6}>
+            <Col xxl={6} xl={6} lg={6} md={5}>
               <div className={UserDashBoardStyle.detail_job_view_company_full}>
-
-                {
-                  jobDetailsLoad ? <Loader /> : <>
+                {jobDetailsLoad ? (
+                  <Loader />
+                ) : (
+                  <>
                     <div className={UserDashBoardStyle.detail_job_link_part}>
-                      <Link to="/dashboard" className={UserDashBoardStyle.close_button}>
+                      <Link
+                        to="/dashboard"
+                        className={UserDashBoardStyle.close_button}
+                      >
                         <IoCloseOutline />
                       </Link>
                     </div>
                     <div
                       className={UserDashBoardStyle.company_background_image}
-                      style={{ backgroundImage: `url(${jobDetails?.jobPoster})` }}
+                      style={{
+                        backgroundImage: `url(${jobDetails?.jobPoster})`,
+                      }}
                     >
-
-                      <div className={UserDashBoardStyle.detail_company_logo_user_Container}>
+                      <div
+                        className={
+                          UserDashBoardStyle.detail_company_logo_user_Container
+                        }
+                      >
                         <img
                           src={jobDetails?.jobPoster}
                           alt={jobDetails?.jobTitle}
-                          className={UserDashBoardStyle.detail_company_logo_user}
+                          className={
+                            UserDashBoardStyle.detail_company_logo_user
+                          }
                         />
                       </div>
                     </div>
@@ -317,11 +374,15 @@ export default function JobListDetailedView() {
                     <div className={UserDashBoardStyle.border_style}></div>
 
                     <div className={UserDashBoardStyle.company_description}>
-                      <div className={UserDashBoardStyle.company_description_title}>
+                      <div
+                        className={UserDashBoardStyle.company_description_title}
+                      >
                         Description
                       </div>
                       <div
-                        className={UserDashBoardStyle.company_description_requirement}
+                        className={
+                          UserDashBoardStyle.company_description_requirement
+                        }
                       >
                         {jobDetails?.jobDescription}
                       </div>
@@ -331,12 +392,23 @@ export default function JobListDetailedView() {
                         Skills Required
                       </div>
                       <div className={UserDashBoardStyle.company_skill_list}>
-                        <ul className={UserDashBoardStyle.company_skill_list_display}>
-                          {
-                            jobDetails?.skilRequired?.map((skill, index) => {
-                              return <li key={index} className={UserDashBoardStyle.company_skill_list_display_Item}>{skill}</li>
-                            })
+                        <ul
+                          className={
+                            UserDashBoardStyle.company_skill_list_display
                           }
+                        >
+                          {jobDetails?.skilRequired?.map((skill, index) => {
+                            return (
+                              <li
+                                key={index}
+                                className={
+                                  UserDashBoardStyle.company_skill_list_display_Item
+                                }
+                              >
+                                {skill}
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -351,71 +423,118 @@ export default function JobListDetailedView() {
                       </div>
                     </div>
 
-                    {
-                      jobDetails?.education && <div className={UserDashBoardStyle.company_education}>
-                        <div className={UserDashBoardStyle.company_education_title}>
+                    {jobDetails?.education && (
+                      <div className={UserDashBoardStyle.company_education}>
+                        <div
+                          className={UserDashBoardStyle.company_education_title}
+                        >
                           Education
                         </div>
 
-                        <div className={UserDashBoardStyle.company_education_offer}>
+                        <div
+                          className={UserDashBoardStyle.company_education_offer}
+                        >
                           {jobDetails?.education}
                         </div>
                       </div>
-                    }
+                    )}
 
-
-                    {jobDetails?.responsibilities && <div className={UserDashBoardStyle.company_responsibilities}>
+                    {jobDetails?.responsibilities && (
                       <div
-                        className={UserDashBoardStyle.company_responsibilities_title}
+                        className={UserDashBoardStyle.company_responsibilities}
                       >
-                        Responsibilities
-                      </div>
+                        <div
+                          className={
+                            UserDashBoardStyle.company_responsibilities_title
+                          }
+                        >
+                          Responsibilities
+                        </div>
 
-                      <div
-                        className={UserDashBoardStyle.company_responsibilities_offer}
-                      >
-                        {jobDetails?.responsibilities}
+                        <div
+                          className={
+                            UserDashBoardStyle.company_responsibilities_offer
+                          }
+                        >
+                          {jobDetails?.responsibilities}
+                        </div>
                       </div>
-                    </div>
-                    }
+                    )}
 
                     <div className={UserDashBoardStyle.company_how_apply}>
-                      <div className={UserDashBoardStyle.company_how_apply_title}>
+                      <div
+                        className={UserDashBoardStyle.company_how_apply_title}
+                      >
                         How To Apply
                       </div>
 
-                      <div className={UserDashBoardStyle.company_how_apply_offer}>
-                        Submit your resume and portfolio showcasing your {jobDetails?.title} projects and experience.
+                      <div
+                        className={UserDashBoardStyle.company_how_apply_offer}
+                      >
+                        Submit your resume and portfolio showcasing your{" "}
+                        {jobDetails?.title} projects and experience.
                       </div>
                     </div>
                     <div className={UserDashBoardStyle.company_apply_button}>
-                      {
-                        appliedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.alreadyAppliedButton}>
+                      {appliedJob?.some(
+                        (data) => data.jobID === jobDetails?._id
+                      ) ? (
+                        <button
+                          className={UserDashBoardStyle.alreadyAppliedButton}
+                        >
                           Already Applied
-                        </button> : <button className={UserDashBoardStyle.company_apply_button_one} onClick={(e) => handleApplyButtonClick(e, jobDetails)}>
+                        </button>
+                      ) : (
+                        <button
+                          className={
+                            UserDashBoardStyle.company_apply_button_one
+                          }
+                          onClick={(e) => handleApplyButtonClick(e, jobDetails)}
+                        >
                           APPLY
                         </button>
-                      }
+                      )}
                     </div>
 
-                    {
-                      appliedJob?.every((data) => data.jobID !== jobDetails?._id) && <div className={UserDashBoardStyle.company_save_later_button} >
-                        {
-                          savedJob?.some((data) => data.jobID === jobDetails?._id) ? <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleRemoveSaveClick(e, jobDetails?._id)}>
+                    {appliedJob?.every(
+                      (data) => data.jobID !== jobDetails?._id
+                    ) && (
+                      <div
+                        className={UserDashBoardStyle.company_save_later_button}
+                      >
+                        {savedJob?.some(
+                          (data) => data.jobID === jobDetails?._id
+                        ) ? (
+                          <button
+                            className={
+                              UserDashBoardStyle.company_apply_button_two
+                            }
+                            onClick={(e) =>
+                              handleRemoveSaveClick(e, jobDetails?._id)
+                            }
+                          >
                             Remove save
-                          </button> : <button className={UserDashBoardStyle.company_apply_button_two} onClick={(e) => handleSaveToLaterClick(e, jobDetails)}>
+                          </button>
+                        ) : (
+                          <button
+                            className={
+                              UserDashBoardStyle.company_apply_button_two
+                            }
+                            onClick={(e) =>
+                              handleSaveToLaterClick(e, jobDetails)
+                            }
+                          >
                             SAVE FOR LATER
                           </button>
-                        }
+                        )}
                       </div>
-                    }
-
+                    )}
                   </>
-                }
+                )}
               </div>
             </Col>
 
-            <Col xxl={3}>
+            <Col xxl={3} xl={3} lg={3} md={3}>
               <div className={UserDashBoardStyle.company_location_details}>
                 <div className={UserDashBoardStyle.company_location_map}>
                   <iframe
@@ -455,7 +574,9 @@ export default function JobListDetailedView() {
 
                       <div className={UserDashBoardStyle.company_summary_style}>
                         <div
-                          className={UserDashBoardStyle.company_summary_progress}
+                          className={
+                            UserDashBoardStyle.company_summary_progress
+                          }
                         >
                           <ul
                             className={
@@ -554,7 +675,9 @@ export default function JobListDetailedView() {
                               {jobDetails?.rating}
                             </div>
 
-                            <span className={UserDashBoardStyle.review_star_gap}>
+                            <span
+                              className={UserDashBoardStyle.review_star_gap}
+                            >
                               <img
                                 src={starLogo}
                                 alt={"starLogo"}
@@ -563,11 +686,15 @@ export default function JobListDetailedView() {
                             </span>
                           </div>
 
-                          <div className={UserDashBoardStyle.company_review_full}>
+                          <div
+                            className={UserDashBoardStyle.company_review_full}
+                          >
                             {jobDetails?.review} Reviews
                           </div>
 
-                          <div className={UserDashBoardStyle.company_review_rec}>
+                          <div
+                            className={UserDashBoardStyle.company_review_rec}
+                          >
                             {jobDetails?.recommended}%
                           </div>
 
@@ -587,7 +714,7 @@ export default function JobListDetailedView() {
             </Col>
           </Row>
         </Container>
-      }
+      )}
     </div>
   );
 }
