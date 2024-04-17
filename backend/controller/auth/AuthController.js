@@ -30,7 +30,7 @@ const getUser = async (req, res) => {
 const signUp = async (req, res) => {
   try {
     const { name, email, password, conf_password } = req.body;
-    const resumeFileName = req.file.filename;
+    const resumeFileName = req.file;
 
     // // Ensure passwords match
     // if (password !== conf_password) {

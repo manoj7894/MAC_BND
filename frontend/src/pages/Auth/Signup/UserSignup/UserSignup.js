@@ -232,6 +232,32 @@ const Signup = () => {
     nav("/user-login");
   };
 
+  const [stillWorking, setStillWorking] = useState(false);
+ 
+   // Function to calculate the duration between start and end date in months
+   const calculateDuration = () => {
+    if (formData.company_start_date) {
+      const startDate = new Date(formData.company_start_date);
+      const endDate = stillWorking ? new Date() : new Date(formData.company_end_date);
+      const diffTime = Math.abs(endDate - startDate);
+      const diffMonths = Math.ceil(diffTime / (1000 * 60 * 60 * 24 * 30)); // Assuming 30 days in a month for simplicity
+      return diffMonths;
+    }
+    return 0;
+  };
+
+// Function to format the duration in months
+const formatDurationMonths = (duration) => {
+  const lowerYear = Math.floor(duration / 12);
+  const upperYear = lowerYear + 1;
+  if (duration % 12 === 0) {
+    return `${lowerYear} year${lowerYear !== 1 ? 's' : ''}`;
+  } else {
+    return `${lowerYear} - ${upperYear} years`;
+  }
+};
+
+
   return (
     <>
       {/* first card */}
@@ -266,6 +292,7 @@ const Signup = () => {
                       <Form.Control
                         type="file"
                         name="resume"
+                        accept="application/pdf"
                         onChange={handleResumeChange}
                       />
                     </Col>
@@ -614,99 +641,124 @@ const Signup = () => {
         )}
 
         {formData.step === 5 && (
-          <div className={signupStyle.step_container}>
-            <div className={signupStyle.step_flex_container}>
-              <div className={signupStyle.step_1_part_1}>
-                <h1
-                  className={` ${signupStyle.kumar_one_regular} ${signupStyle.step_1_banner_heading_signup}`}
-                >
-                  WELCOME <br />
-                  BACK
-                </h1>
-                <div className={signupStyle.create_account_name_container}>
-                  <h3>Create an Account</h3>
-                  <div>
-                    To keep connected with us please signup <br /> with your
-                    personal info
-                  </div>
-                </div>
-              </div>
-              <div className={signupStyle.step_4_part_2}>
-                <h4>Experience (Optional)</h4>
-                <div>
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Job Title"
-                    name="job_title"
-                    onChange={handleChange}
-                    className={signupStyle.personal_input_field}
-                    required
-                  />
-
-                  <Form.Control
-                    type="text"
-                    placeholder="Enter Company"
-                    name="company"
-                    onChange={handleChange}
-                    className={signupStyle.personal_input_field}
-                    required
-                  />
-                </div>
-                <div className={signupStyle.education_date_container}>
-                  <div className={signupStyle.date_container}>
-                    <button className={signupStyle.date_buttons}>
-                      Start Date
-                    </button>
-                    <DatePicker
-                      name="company_start_date"
-                      dateFormat="dd/MM/yy"
-                      selected={formData.company_start_date}
-                      onChange={(date) =>
-                        setFormData({ ...formData, company_start_date: date })
-                      }
-                      className={signupStyle.education_detail_start_date}
-                      placeholderText="DD/MM/YY"
-                      minDate={new Date("1970-01-01")} // Set minimum date to 1970-01-01
-                      maxDate={new Date(currentYear, 11, 31)} // Set maximum date to the last day of the current year
-                      showYearDropdown
-                      scrollableYearDropdown
-                      yearDropdownItemNumber={44}
-                      required
-                    />
-                  </div>
-                  <div className={signupStyle.date_container}>
-                    <button className={signupStyle.date_buttons}>
-                      End Date
-                    </button>
-                    <DatePicker
-                      name="company_end_date"
-                      dateFormat="dd/MM/yy"
-                      selected={formData.company_end_date}
-                      onChange={(date) =>
-                        setFormData({ ...formData, company_end_date: date })
-                      }
-                      className={signupStyle.education_detail_start_date}
-                      placeholderText="DD/MM/YY"
-                      minDate={new Date("1970-01-01")} // Set minimum date to 1970-01-01
-                      maxDate={new Date(currentYear, 11, 31)} // Set maximum date to the last day of the current year
-                      showYearDropdown
-                      scrollableYearDropdown
-                      yearDropdownItemNumber={44}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={signupStyle.step_button_container}>
-                  <Button
-                    className={signupStyle.step_button}
-                    onClick={handleSubmit}
-                  >
-                    Create Account
-                  </Button>
-                </div>
-              </div>
+      <div className={signupStyle.step_container}>
+      <div className={signupStyle.step_flex_container}>
+        <div className={signupStyle.step_1_part_1}>
+          <h1 className={`${signupStyle.kumar_one_regular} ${signupStyle.step_1_banner_heading_signup}`}>
+            WELCOME <br />
+            BACK
+          </h1>
+          <div className={signupStyle.create_account_name_container}>
+            <h3>Create an Account</h3>
+            <div>
+              To keep connected with us please signup <br /> with your
+              personal info
             </div>
           </div>
+        </div>
+        <div className={signupStyle.step_4_part_2}>
+          <h4>Experience (Optional)</h4>
+          <div>
+            <Form.Control
+              type="text"
+              placeholder="Enter Job Title"
+              name="job_title"
+              onChange={handleChange}
+              className={signupStyle.personal_input_field}
+              required
+            />
+
+            <Form.Control
+              type="text"
+              placeholder="Enter Company"
+              name="company"
+              onChange={handleChange}
+              className={signupStyle.personal_input_field}
+              required
+            />
+          </div>
+          <div className={signupStyle.education_date_container}>
+            <div className={signupStyle.date_container}>
+              <button className={signupStyle.date_buttons}>
+                Start Date
+              </button>
+              <DatePicker
+                name="company_start_date"
+                dateFormat="dd/MM/yy"
+                selected={formData.company_start_date}
+                onChange={(date) =>
+                  setFormData({ ...formData, company_start_date: date })
+                }
+                className={signupStyle.education_detail_start_date}
+                placeholderText="DD/MM/YY"
+                minDate={new Date("1970-01-01")}
+                maxDate={new Date()}
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={44}
+                required
+              />
+            </div>
+            <div className={signupStyle.date_container}>
+              <button className={signupStyle.date_buttons}>
+                End Date
+              </button>
+              <DatePicker
+                name="company_end_date"
+                dateFormat="dd/MM/yy"
+                selected={formData.company_end_date}
+                onChange={(date) =>
+                  setFormData({ ...formData, company_end_date: date })
+                }
+                className={signupStyle.education_detail_start_date}
+                placeholderText="DD/MM/YY"
+                minDate={new Date("1970-01-01")}
+                maxDate={new Date()}
+                showYearDropdown
+                scrollableYearDropdown
+                yearDropdownItemNumber={44}
+                disabled={stillWorking}
+                required
+              />
+            </div>
+          </div>
+          <div>
+          <div>
+              <input
+                type="checkbox"
+                checked={stillWorking}
+                onChange={(e) => {
+                  setStillWorking(e.target.checked);
+                  if (e.target.checked) {
+                    setFormData({ ...formData, company_end_date: null });
+                  }
+                }}
+              />
+              <label style={{fontSize:'14px', paddingBottom:'10px', marginLeft:'10px'}}>Still Working</label>
+            </div>
+            <div>
+              <input
+                type="text"
+                value={formatDurationMonths(calculateDuration())}
+                readOnly
+                placeholder="experience"
+                className={signupStyle.personal_input_field}
+                style={{paddingLeft:'10px', paddingTop:'5px', paddingBottom:'5px',border:'1px solid grey'}}
+              />
+            </div>
+
+          </div>
+          <div className={signupStyle.step_button_container}>
+            <Button
+              className={signupStyle.step_button}
+              onClick={handleSubmit}
+            >
+              Create Account
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
         )}
       </div>
     </>

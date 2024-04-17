@@ -1,5 +1,12 @@
 The history of detail changes will be available here from now on.
 
+## Date: 17-04-2024
+1. Modification in sign up of job seeker added experience calculation part.
+2. Fixed some bugs of pre-assesment page.
+
+## Date: 16-04-2024
+1. Completed whole pre-assessment page with all functionalities.
+
 ## Date: 15-04-2024
 1. Completed create functionality of coding round question.
 2. Also the edit and delete functionality of coding round completed.
