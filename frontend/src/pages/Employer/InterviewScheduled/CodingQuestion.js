@@ -3,7 +3,6 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { Button, Form } from 'react-bootstrap';
 
-
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
 function CodingQuestion({ question}) {
@@ -30,6 +29,7 @@ function CodingQuestion({ question}) {
       });
       console.log(response.data); 
       setEditing(false);
+      window.location.reload()
       toast.success("Question Updated Successfully");
     } catch (error) {
       console.error('Error updating question:', error);
@@ -51,6 +51,7 @@ function CodingQuestion({ question}) {
       console.log(response.data); 
       // Update the state of questions by filtering out the deleted question
       setQuestions(questions.filter((question)=> questionId !== question._id ));
+      window.location.reload()
       toast.success("Question Deleted Successfully");
     } catch (error) {
       console.error('Error deleting question:', error);
@@ -84,6 +85,7 @@ function CodingQuestion({ question}) {
         </div>
       )}
     </div>
+    
   );
 }
 
