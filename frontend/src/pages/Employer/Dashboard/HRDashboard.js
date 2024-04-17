@@ -111,7 +111,7 @@ export default function HRDashboard() {
               itemClass="carousel-item-padding-40-px">
               {
                 jobPost.length > 0 && jobPost.map((data) => {
-                  return <div className={pages.__posts} key={data._id}>
+                  return <div className={pages.__posts} key={data._id} >
                     <div className={pages.__postTitle}>
                       <img className={pages.__postLogo} src={data.jobPoster} alt='' />
                       <p>
