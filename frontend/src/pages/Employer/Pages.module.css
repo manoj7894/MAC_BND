@@ -23,7 +23,7 @@ p {
     position: relative;
 }
 
-/* se;ect----------- */
+/* Select----------- */
 .selectOption {
     padding: .3em 1em;
     border-radius: 20px;
@@ -93,7 +93,7 @@ p {
 }
 
 .__posts {
-    background: rgba(255, 192, 203, 0.479);
+    background: whitesmoke;
     width: 90%;
     min-height: 170px;
     border-radius: 10px;
@@ -101,14 +101,9 @@ p {
     cursor: pointer;
 }
 
-.__posts:nth-child(even) {
-    background: green;
-}
-
 .__postLogo {
     width: 45px;
     height: 45px;
-    /* object-fit: contain; */
     border-radius: 50%;
 }
 
@@ -119,6 +114,7 @@ p {
     align-items: center;
     padding: .5em 0;
     gap: 20px;
+    font-weight: 500;
 }
 
 .__btn_PostOpen {
@@ -142,11 +138,12 @@ p {
 
 .__post_Footer {
     color: rgb(0, 166, 255);
+    font-size: 18px;
 }
 
 .__post_Footer span {
     font-size: 28px;
-    padding-left: .6em;
+    padding-left: 1em;
 }
 
 .__user_Post {
@@ -175,7 +172,7 @@ p {
 .__latestPosts_Img,
 .__user_Post_info {
     border: 1px solid grey;
-    width: 95%;
+    width: 100%;
     height: 400px;
     object-fit: contain;
     color: black;
@@ -267,6 +264,7 @@ p {
     height: 45px;
     font-size: 16px;
     border: none;
+    border-radius: 5px;
     outline: none;
     padding-left: 1em;
     margin: .2em 0;

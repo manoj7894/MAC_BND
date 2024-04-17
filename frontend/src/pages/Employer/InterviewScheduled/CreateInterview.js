@@ -19,7 +19,7 @@ function Interview() {
 
         <div className={Interviewcss.uppercontainer_left}>
 
-          <img className={Interviewcss.upper_cont_img} src='https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png'></img>
+          <img className={Interviewcss.upper_cont_img} src='https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png' alt=''></img>
 
           <div className={Interviewcss.uppercontainer_left1}>
             <p>Charle Kristen</p>
