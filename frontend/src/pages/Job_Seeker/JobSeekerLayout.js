@@ -14,22 +14,7 @@ function JobSeekerLayout() {
   const navigateTO = useNavigate();
 
   useEffect(() => {
-    if (
-      pathname === "/" ||
-      (pathname !== "/assessment" &&
-        pathname !== "/analytics" &&
-        pathname !== "/analytics/weekly" &&
-        pathname !== "/analytics/monthly" &&
-        pathname !== "/analytics/yearly" &&
-        pathname !== "/myjobs" &&
-        pathname !== "/myresume" &&
-        pathname !== "/application" &&
-        pathname !== "/interviews" &&
-        pathname !== "/settings" &&
-        pathname !== "/assessment-Instructions" &&
-        pathname !== "/assessment-test" &&
-        pathname !== "/assessment-result")
-    ) {
+    if (pathname === "/") {
       navigateTO("/dashboard");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

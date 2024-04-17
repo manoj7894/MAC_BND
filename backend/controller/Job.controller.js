@@ -1,12 +1,59 @@
+const { uploadonCloudinary } = require("../utility/cloudinary")
 const jobCollection = require("../model/Job.Model");
 
 const create = async (req, res) => {
-  // ! Saptarsi will made this one API for creating job post
+
+  try {
+    const result = await uploadonCloudinary(req.file.path);
+    const { jobTitle, jobDescription, employmentType, location, salaryRange, skilRequired, employeeEmail, jobExperience } = req.body;
+    const newPost = {
+      jobPoster: result.secure_url,
+      jobTitle,
+      jobDescription,
+      employmentType,
+      location,
+      salaryRange,
+      skilRequired,
+      employeeEmail,
+      jobExperience,
+      createdAt: Date.now(),
+    };
+    const mongooseRespoonse = await jobCollection.create(newPost)
+    if (mongooseRespoonse) {
+      res.status(200).json({
+        success: true,
+      })
+    }
+    else {
+      res.status(404).json({
+        success: false,
+      })
+    }
+    // res.json({ message: 'Post created successfully!', newPost });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating post' });
+  }
+};
+
+const getJobByID = async (req, res) => {
+  try {
+    const jobs = await jobCollection.findById(req.params.id);
+    if (jobs) {
+      res.status(200).send({ jobs, success: true });
+    } else {
+      res.status(404).send({ jobs: "No job found", success: false });
+
+    }
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error, success: false });
+  }
 };
 
 const get = async (req, res) => {
   try {
-    const jobs = await jobCollection.findById(req.params.id);
+    const jobs = await jobCollection.find({ employeeEmail: req.params.email });
 
     if (jobs) {
       res.status(200).send({ jobs, success: true });
@@ -71,4 +118,5 @@ module.exports = {
   update,
   remove,
   getAll,
+  getJobByID
 };

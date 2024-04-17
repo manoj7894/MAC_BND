@@ -35,10 +35,26 @@ const jobSchema = new mongoose.Schema(
                 type: String
             },
         ],
+        jobExperience: {
+            type: String,
+            required: true,
+        },
         createdAt: {
             type: Number,
-        }
-    },
+        },
+        totalApplication: {
+            type: Number,
+            default: 0,
+        },
+        appliedBy: [
+            {
+                userEmail: {
+                    type: String,
+                }
+            }
+        ]
+    }
+
 );
 
 

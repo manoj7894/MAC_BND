@@ -1,11 +1,16 @@
+const { uploadPhoto } = require("../middleware/fileUploadMiddleware")
+
 const jobRoutes = require("express").Router();
 
-const { create, get, update, remove, getAll, } = require("../controller/Job.controller");
-const upload = require("../middleware/fileUploadMiddleware")
+// uploadPhoto()
 
-jobRoutes.post("/create-job", create);
+const { create, get, update, remove, getAll, getJobByID, } = require("../controller/Job.controller");
 
-jobRoutes.get("/get-job/:id", get);
+jobRoutes.post("/create-job", uploadPhoto, create);
+
+jobRoutes.get("/get-job/:email", get);
+
+jobRoutes.get("/job/:id", getJobByID);
 
 jobRoutes.get("/All-jobs", getAll);
 
