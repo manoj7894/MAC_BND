@@ -73,7 +73,7 @@ function SideNavbar() {
     dispatch(handleUserLogOut());
     toast.success(`${name} Logged out !!`)
     setTimeout(() => {
-      navigateTO("/user-login")
+      navigateTO("/login")
     }, 1000);
   }
   return (
@@ -82,7 +82,7 @@ function SideNavbar() {
         <div className={navStyle.sidenavBar__AppLOGOBOX}>
           <h1 className={navStyle.sidenavBar__appLOGO}>
             <span className={navStyle.sidenavBar_DeskLOGO}>HRConnect Pro</span>{" "}
-            <span className={navStyle.sidenavBar_LOGO}>H C P</span>
+            <span className={navStyle.sidenavBar_LOGO}>HCP</span>
           </h1>
         </div>
 

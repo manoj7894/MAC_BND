@@ -1,9 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
-
 const url = 'mongodb+srv://test:rNLut0abgUA0l6Dk@auth.s3olf6s.mongodb.net/?retryWrites=true&w=majority&appName=Auth'
-
 
 async function ConnectDb() {
   try {

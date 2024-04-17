@@ -3,12 +3,14 @@ import { Button, Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../../../../../Assets/title_logo.png";
 import "./HrForgotPassword.css";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 import axios from "axios";
+
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
 function HrForgotPassword() {
   const [email, setEmail] = useState("");
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   const handleChange = (e) => {
     setEmail(e.target.value);
@@ -17,23 +19,22 @@ function HrForgotPassword() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8080/api/hr/forgot-password", {
+      const response = await axios.post(`${baseUrl}/hr/forgot-password`, {
         email,
       });
-  
+
       if (response.data.status) {
         toast.success("Check your email to reset your password");
-  
+
         setTimeout(() => {
-          nav('/login');
-        }, 1500); 
+          nav("/login");
+        }, 1500);
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       toast.error("Failed to initiate password reset. Please try again later.");
     }
   };
-  
 
   return (
     <>

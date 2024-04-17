@@ -1,12 +1,38 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-/* HR-Dashboard Page-------------------- */
-.__dashboard_Header,.__postImpression_Header,.__latest_Post_Header {
+
+p {
+    margin: 0;
+    padding: 0;
+}
+
+/* HR-Dashboard Page------------------------------------------------------------ */
+.__dashboard_Page {
+    position: relative;
+    min-height: 100%;
+}
+
+.__dashboard_Header,
+.__postImpression_Header,
+.__latest_Post_Header {
     display: flex;
     justify-content: space-between;
+    position: relative;
+}
+
+/* se;ect----------- */
+.selectOption {
+    padding: .3em 1em;
+    border-radius: 20px;
+    outline: none;
+}
+
+.options {
+    background: transparent;
+    outline: none;
 }
 
 /* Dropdown button----------- */
@@ -14,7 +40,9 @@
     position: relative;
     display: inline-block;
     cursor: pointer;
+    color: chocolate;
 }
+
 .__dropBtn {
     background-color: rgb(50, 76, 246);
     color: white;
@@ -23,6 +51,7 @@
     border: none;
     border-radius: 5px;
 }
+
 .__dropdown_content {
     display: none;
     position: absolute;
@@ -31,19 +60,23 @@
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
+
 .__dropdown_content li {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
 }
+
 .__dropdown_content li:hover {
     background-color: #ddd;
     cursor: pointer;
 }
+
 .__dropdown:hover .__dropdown_content {
     display: block;
 }
+
 .__dropdown:hover .__dropBtn {
     background-color: #3e8e41;
 }
@@ -54,30 +87,38 @@
 }
 
 .__post_Section {
-    padding: 1em 1em 2em 1em;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    height: 200px;
+    padding: 1em;
     box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 .__posts {
     background: rgba(255, 192, 203, 0.479);
-    width: 300px;
-    height: 170px;
+    width: 90%;
+    min-height: 170px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 5px 5.4px 3.2px;
     cursor: pointer;
 }
 
+.__posts:nth-child(even) {
+    background: green;
+}
+
 .__postLogo {
-    width: 2em;
-    object-fit: contain;
+    width: 45px;
+    height: 45px;
+    /* object-fit: contain; */
+    border-radius: 50%;
 }
 
 .__postTitle {
+    /* border: 1px solid red; */
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
     padding: .5em 0;
+    gap: 20px;
 }
 
 .__btn_PostOpen {
@@ -110,18 +151,17 @@
 
 .__user_Post {
     border: 1px solid rgba(128, 128, 128, 0.694);
-    border-radius: 30px;
+    border-radius: 15px;
     padding: 1em 3em;
+    margin-bottom: 1em;
 }
 
 .__user_Post_Header {
-    /* border: 1px solid red; */
     width: 250px;
     display: flex;
     align-items: center;
     gap: 1em;
     margin: 1em 0;
-    /* padding: -1em; */
 }
 
 .__user_PostImg {
@@ -146,7 +186,7 @@
 
 .__user_Post_info {
     height: auto;
-    padding: 0.5em 3em;
+    padding: 1em 3em;
     font-weight: 500;
 }
 
@@ -164,7 +204,12 @@
     align-items: center;
 }
 
-/* Create Post Page--------------------------- */
+/* Create Post Page------------------------------------------------------------ */
+.__create_Post_Page {
+    position: relative;
+    min-height: 100%;
+}
+
 .__create_Post_Header {
     width: 100%;
     display: flex;
@@ -186,6 +231,13 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.__previewImg {
+    width: 100%;
+    height: 95%;
+    object-fit: contain;
+    cursor: pointer;
 }
 
 .__postImg {
@@ -251,7 +303,7 @@
     transform: scale(.95);
 }
 
-/* Employee Page---------------------------- */
+/* Employee Page------------------------------------------------------------ */
 .__employee_ToggleNav {
     display: flex;
     justify-content: space-around;
@@ -292,4 +344,25 @@
 
 .__leaveReq_Table {
     margin: 2em 1em;
+}
+
+@media screen and (max-width: 900px) {
+    .__postDetails {
+        flex-direction: column;
+        margin: 1em 0;
+    }
+
+    .__imgContainer {
+        width: 90%;
+        height: 350px;
+    }
+
+    .__btn_Cancel,
+    .__btn_Save {
+        font-size: 18px;
+    }
+
+    .__createPost_Form {
+        width: 90%;
+    }
 }

@@ -6,6 +6,8 @@ import "./HrResetPassword.css";
 import toast from 'react-hot-toast';
 import axios from "axios";
 
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+
 function HrResetPassword() {
   const [formData, setFormData] = useState({
     email: "",
@@ -25,7 +27,7 @@ function HrResetPassword() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        `http://localhost:8080/api/hr/reset-password/${token}`,
+        `${baseUrl}/hr/reset-password/${token}`,
         {
           password,
         }
