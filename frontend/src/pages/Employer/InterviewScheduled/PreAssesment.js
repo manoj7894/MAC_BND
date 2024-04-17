@@ -4,6 +4,7 @@ import CodingQuestionForm from "./CodingQuestionForm";
 import CodingQuestion from "./CodingQuestion";
 import axios from "axios";
 import PreAssesmentStyle from "./InterviewScheduled.module.css";
+import toast from 'react-hot-toast';
 
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
@@ -72,7 +73,10 @@ const handleSubmit = async (event) => {
         question: newQuestion,
         options: options,
         correctAnswer: options[0], // Assuming correct answer is always the first option
-      });
+      }).then(resposne =>{
+        toast.success("Question Updated Successfully");
+        window.location.reload()
+      })
       // Logic to update the MCQ in state or refetch all MCQs
     } else {
       // If editingMCQId is not set, add a new MCQ
