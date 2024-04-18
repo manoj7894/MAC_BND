@@ -39,6 +39,7 @@ function Interview() {
             alt="network-error"
           />
 
+
           <div className={Interviewcss.uppercontainer_left1}>
             <p>Charle Kristen</p>
             <p>
