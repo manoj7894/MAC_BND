@@ -13,7 +13,6 @@ app.use(
   })
 );
 
-
 //!  Assessments Related  Routes and import
 const { assessmentRoute } = require("./routes/Assessment.Route");
 const assesmentQuestionRouter = require("./Routes/AssessmentQuestion.Route");
@@ -43,20 +42,16 @@ const jobRoutes = require("./Routes/Job.Route");
 app.use("/api/jobs", jobRoutes);
 //!  JObs (HR) Related  Routes and import
 
-
 const Port = process.env.Port;
 // Resume Routes
 const ResumeRoutes = require("./Routes/ResumeRoutes.js");
 app.use('/resume',ResumeRoutes)
 app.use("/uploads", express.static("uploads"));
 
-
 //!  MyJobs (JobSeeker) Related  Routes and import
 const myJobRoutes = require("./Routes/MyJob.Route");
 app.use("/api/user/My-jobs", myJobRoutes);
 //!  MyJobs (JobSeeker) Related  Routes and import
-
-const Port = process.env.Port;
 
 app.listen(Port, async () => {
   try {
