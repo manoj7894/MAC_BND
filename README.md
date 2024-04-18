@@ -1,5 +1,9 @@
 The history of detail changes will be available here from now on.
 
+## Date: 18-04-2024
+1. All bugs fixed of pre-assessment page.
+2. Sign up welcome back text adjusted in center.
+
 ## Date: 17-04-2024
 1. Modification in sign up of job seeker added experience calculation part.
 2. Fixed some bugs of pre-assesment page.
