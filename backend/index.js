@@ -1,4 +1,4 @@
-const express = require("express");
+const express = require("express")
 const ConnectDb = require('./Config/config.js');
 const app = express();
 app.use(express.json());
@@ -12,7 +12,6 @@ app.use(
     origin: "*",
   })
 );
-
 
 //!  Assessments Related  Routes and import
 const { assessmentRoute } = require("./routes/Assessment.Route");
@@ -40,7 +39,6 @@ const jobRoutes = require("./Routes/Job.Route");
 app.use("/api/jobs", jobRoutes);
 //!  JObs (HR) Related  Routes and import
 
-
 const Port = process.env.Port;
 // Resume Routes
 const ResumeRoutes = require("./Routes/ResumeRoutes.js");
@@ -52,8 +50,6 @@ app.use("/uploads", express.static("uploads"));
 const myJobRoutes = require("./Routes/MyJob.Route");
 app.use("/api/user/My-jobs", myJobRoutes);
 //!  MyJobs (JobSeeker) Related  Routes and import
-
-const Port = process.env.Port;
 
 app.listen(Port, async () => {
   try {
