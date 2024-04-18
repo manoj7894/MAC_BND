@@ -11,22 +11,44 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    // required: true,
   },
   conf_password: {
     type: String,
   },
+
   // contact_number:{
   //   type:Number,
   //   unique:true,
   //   required:true
   // },
-  resume: {
-    type: String 
-  },
+  resume: [
+    {
+      filename: String,
+      path: String,
+      uploadedAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ],
   userType: {
     type: String,
   },
+  userAppliedJob: [
+    {
+      jobID: {
+        type: String,
+      }
+    }
+  ],
+  userSavedJob: [
+    {
+      jobID: {
+        type: String,
+      }
+    }
+  ],
 });
 
 const User = mongoose.model("User", userSchema);

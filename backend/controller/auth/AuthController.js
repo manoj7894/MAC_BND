@@ -15,9 +15,9 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.json({ name: user.name, email: user.email });
+
+    res.json({ name: user.name, email: user.email, userAppliedJob : user.userAppliedJob,savedJob: user.userSavedJob, });
   } catch (error) {
-    console.error("Error:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
@@ -25,7 +25,7 @@ const getUser = async (req, res) => {
 const signUp = async (req, res) => {
   try {
     const { name, email, password, conf_password } = req.body;
-    const resumeFileName = req.file.filename;
+    const resumeFileName = req.file;
 
     // // Ensure passwords match
     // if (password !== conf_password) {
@@ -46,6 +46,8 @@ const signUp = async (req, res) => {
       password: hashedPassword,
       name,
       resume: resumeFileName,
+      savedJob: [],
+      appliedJob: []
     });
     await newUser.save();
 
@@ -59,9 +61,10 @@ const signUp = async (req, res) => {
       name,
       email,
       resume: resumeFileName,
+      savedJob: [],
+      appliedJob: []
     });
   } catch (error) {
-    console.error("Error:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -83,16 +86,17 @@ const login = async (req, res) => {
     }
 
     const name = user.name;
-
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "2d",
     });
-    return res.status(201).json({
+    return res.status(200).json({
       message: `${name} you have successfully logged In`,
       token,
       name,
       email,
       userType: "user",
+      savedJob: user.userSavedJob,
+      appliedJob: user.userAppliedJob
     });
   } catch (error) {
     return res.status(500).json({ message: "Internal Server Error" });
@@ -102,7 +106,10 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
+    console.log("Email received:", email);
     const user = await User.findOne({ email });
+    console.log("User found:", user);
+
 
     if (!user) {
       return res.json({ message: "User is not registered" });
@@ -111,6 +118,9 @@ const forgotPassword = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "5m",
     });
+
+    console.log("Token generated:", token);
+
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -127,13 +137,17 @@ const forgotPassword = async (req, res) => {
       html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`,
     };
 
+    console.log("Mail options:", mailOptions);
+
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
+        console.error("Error sending email:", error);
         return res.json({
           status: true,
           message: "Error occured while sending an email",
         });
       } else {
+        console.log("Email sent successfully:", info);
         return res.json({ status: true, message: "email sent" });
       }
     });
@@ -157,24 +171,9 @@ const resetPassword = async (req, res) => {
 
     return res.status(200).json({ message: "Password Reset Successfully" });
   } catch (error) {
-    console.error("Error resetting password:", error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
-// const forgotEmail =  async (req, res) => {
-//   const { contact_number } = req.body;
-
-//   try {
-//     const user = await User.findOne({ contact_number });
-//     if (!user) {
-//       return res.status(404).json({ message: 'User not found' });
-//     }
-//     res.status(200).json({ email: user.email });
-//   } catch (error) {
-//     console.error('Error:', error);
-//     res.status(500).json({ message: 'Internal server error' });
-//   }
-// };
 
 module.exports = { signUp, login, forgotPassword, resetPassword, getUser };

@@ -21,6 +21,15 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// Photo filter
+const photoFilter = (req, file, cb) => {
+  if (file.mimetype.includes('image/')) {
+    cb(null, true);
+  } else {
+    cb(new Error('Only PDF files are allowed'), false);
+  }
+};
+
 // Initialize multer upload
 const upload = multer({
   storage: storage,
@@ -28,6 +37,11 @@ const upload = multer({
   fileFilter: fileFilter
 }).single('resume');
 
-module.exports = upload;
+//upload photo
+const uploadPhoto = multer({
+  storage: storage,
+  limits: { fileSize: 2000000 }, // Limit file size to 2MB
+  fileFilter: photoFilter
+}).single('jobPoster');
 
-
+module.exports = { upload, uploadPhoto }

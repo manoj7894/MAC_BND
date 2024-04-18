@@ -16,7 +16,6 @@ export default function HR_Navbar() {
   const navigateTo = useNavigate()
   const [tabletView, setTabletView] = useState()
   const tabScreen = useMediaQuery({ maxWidth: 950 })
-
   const dispatch = useDispatch();
   const navigateTO = useNavigate()
   const { name } = useSelector((state) => state.Assessment.currentUser);
@@ -25,7 +24,7 @@ export default function HR_Navbar() {
     dispatch(handleUserLogOut());
     toast.success(`${name} Logged out !!`)
     setTimeout(() => {
-      navigateTO("/user-login")
+      navigateTO("/login")
     }, 1000);
   }
 

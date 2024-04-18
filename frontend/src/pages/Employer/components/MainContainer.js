@@ -22,6 +22,7 @@ export default function MainContainer() {
       pathname !== "/analytics" &&
       pathname !== "/candidates" &&
       pathname !== "/interview_scheduled" &&
+      pathname !== "/schedule-interview" &&
       pathname !== "/chatbot" &&
       pathname !== "/Setting"))
       navigateTo('/hr_dashboard')
