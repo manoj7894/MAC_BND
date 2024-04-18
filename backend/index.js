@@ -45,7 +45,6 @@ const ResumeRoutes = require("./Routes/ResumeRoutes.js");
 app.use('/resume',ResumeRoutes)
 app.use("/uploads", express.static("uploads"));
 
-
 //!  MyJobs (JobSeeker) Related  Routes and import
 const myJobRoutes = require("./Routes/MyJob.Route");
 app.use("/api/user/My-jobs", myJobRoutes);
