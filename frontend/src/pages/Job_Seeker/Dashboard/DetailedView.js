@@ -80,8 +80,7 @@ export default function JobListDetailedView() {
     e.preventDefault();
     axios
       .delete(
-        `http://localhost:8080/api/user/My-jobs/delete/save-job/${
-          email + "-" + jobId
+        `http://localhost:8080/api/user/My-jobs/delete/save-job/${email + "-" + jobId
         }`
       )
       .then((response) => {
@@ -226,7 +225,7 @@ export default function JobListDetailedView() {
                                   UserDashBoardStyle.detail_company_logo_money
                                 }
                               />
-                              {item.salaryRange}
+                              {item.salaryRange} LPA
                               <span
                                 className={
                                   UserDashBoardStyle.detail_company_logo_money_month
@@ -419,7 +418,7 @@ export default function JobListDetailedView() {
                       </div>
 
                       <div className={UserDashBoardStyle.company_salary_offer}>
-                        {jobDetails?.salaryRange}
+                        {jobDetails?.salaryRange} LPA
                       </div>
                     </div>
 
@@ -439,7 +438,7 @@ export default function JobListDetailedView() {
                       </div>
                     )}
 
-                    {jobDetails?.responsibilities && (
+                    {jobDetails?.responsibility && (
                       <div
                         className={UserDashBoardStyle.company_responsibilities}
                       >
@@ -456,7 +455,7 @@ export default function JobListDetailedView() {
                             UserDashBoardStyle.company_responsibilities_offer
                           }
                         >
-                          {jobDetails?.responsibilities}
+                          {jobDetails?.responsibility}
                         </div>
                       </div>
                     )}
@@ -471,8 +470,7 @@ export default function JobListDetailedView() {
                       <div
                         className={UserDashBoardStyle.company_how_apply_offer}
                       >
-                        Submit your resume and portfolio showcasing your{" "}
-                        {jobDetails?.title} projects and experience.
+                        {jobDetails?.howToApply}
                       </div>
                     </div>
                     <div className={UserDashBoardStyle.company_apply_button}>
@@ -499,36 +497,36 @@ export default function JobListDetailedView() {
                     {appliedJob?.every(
                       (data) => data.jobID !== jobDetails?._id
                     ) && (
-                      <div
-                        className={UserDashBoardStyle.company_save_later_button}
-                      >
-                        {savedJob?.some(
-                          (data) => data.jobID === jobDetails?._id
-                        ) ? (
-                          <button
-                            className={
-                              UserDashBoardStyle.company_apply_button_two
-                            }
-                            onClick={(e) =>
-                              handleRemoveSaveClick(e, jobDetails?._id)
-                            }
-                          >
-                            Remove save
-                          </button>
-                        ) : (
-                          <button
-                            className={
-                              UserDashBoardStyle.company_apply_button_two
-                            }
-                            onClick={(e) =>
-                              handleSaveToLaterClick(e, jobDetails)
-                            }
-                          >
-                            SAVE FOR LATER
-                          </button>
-                        )}
-                      </div>
-                    )}
+                        <div
+                          className={UserDashBoardStyle.company_save_later_button}
+                        >
+                          {savedJob?.some(
+                            (data) => data.jobID === jobDetails?._id
+                          ) ? (
+                            <button
+                              className={
+                                UserDashBoardStyle.company_apply_button_two
+                              }
+                              onClick={(e) =>
+                                handleRemoveSaveClick(e, jobDetails?._id)
+                              }
+                            >
+                              Remove save
+                            </button>
+                          ) : (
+                            <button
+                              className={
+                                UserDashBoardStyle.company_apply_button_two
+                              }
+                              onClick={(e) =>
+                                handleSaveToLaterClick(e, jobDetails)
+                              }
+                            >
+                              SAVE FOR LATER
+                            </button>
+                          )}
+                        </div>
+                      )}
                   </>
                 )}
               </div>
