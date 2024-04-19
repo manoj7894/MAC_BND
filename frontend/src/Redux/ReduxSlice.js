@@ -12,8 +12,14 @@ const ReduxSlice = createSlice({
       userType: localStorage.getItem("userType")
         ? localStorage.getItem("userType")
         : "",
-      savedJob: localStorage.getItem("userType") !== "employee" ? JSON.parse(localStorage.getItem("savedJob")) : [],
-      appliedJob: localStorage.getItem("userType") !== "employee" ? JSON.parse(localStorage.getItem("appliedJob")) : [],
+      savedJob:
+        localStorage.getItem("userType") !== "employee"
+          ? JSON.parse(localStorage.getItem("savedJob"))
+          : [],
+      appliedJob:
+        localStorage.getItem("userType") !== "employee"
+          ? JSON.parse(localStorage.getItem("appliedJob"))
+          : [],
     },
   },
   reducers: {
@@ -49,30 +55,46 @@ const ReduxSlice = createSlice({
       localStorage.setItem("userType", state.currentUser.userType);
 
       if (action.payload.userType !== "employee") {
-        localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
-        localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
+        localStorage.setItem(
+          "savedJob",
+          JSON.stringify(state.currentUser.savedJob)
+        );
+        localStorage.setItem(
+          "appliedJob",
+          JSON.stringify(state.currentUser.appliedJob)
+        );
       }
-
     },
 
     handleSavedJob(state, action) {
       state.currentUser.savedJob.push({
-        jobID: action.payload
+        jobID: action.payload,
       });
-      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+      localStorage.setItem(
+        "savedJob",
+        JSON.stringify(state.currentUser.savedJob)
+      );
     },
 
     handleAppliedJob(state, action) {
       state.currentUser.appliedJob.push({
-        jobID: action.payload
+        jobID: action.payload,
       });
-      localStorage.setItem("appliedJob", JSON.stringify(state.currentUser.appliedJob));
+      localStorage.setItem(
+        "appliedJob",
+        JSON.stringify(state.currentUser.appliedJob)
+      );
     },
 
     handleRemoveSavedJob(state, action) {
-      let filteredData = state.currentUser.savedJob.filter((data) => data.jobID !== action.payload);
-      state.currentUser.savedJob = filteredData
-      localStorage.setItem("savedJob", JSON.stringify(state.currentUser.savedJob));
+      let filteredData = state.currentUser.savedJob.filter(
+        (data) => data.jobID !== action.payload
+      );
+      state.currentUser.savedJob = filteredData;
+      localStorage.setItem(
+        "savedJob",
+        JSON.stringify(state.currentUser.savedJob)
+      );
     },
 
     handleUserLogOut(state) {
@@ -83,7 +105,7 @@ const ReduxSlice = createSlice({
       state.currentUser.savedJob = [];
       state.currentUser.appliedJob = [];
 
-      localStorage.clear()
+      localStorage.clear();
     },
   },
 });
