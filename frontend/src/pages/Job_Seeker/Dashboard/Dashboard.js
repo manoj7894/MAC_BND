@@ -97,7 +97,7 @@ function Dashboard() {
   const loadFilteredData = () => {
     let FilteredData = BestMatch.filter(
       (job) =>
-        FilterOptions?.JobType.some((data) => job.employmentType === data) ||
+        FilterOptions?.JobType.some((data) => job.employmentType.toLowerCase() === data.toLowerCase()) ||
         FilterOptions?.JobCategory.some(
           (data) => job.employmentType === data
         ) ||
