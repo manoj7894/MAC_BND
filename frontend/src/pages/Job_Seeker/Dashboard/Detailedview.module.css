@@ -19,9 +19,11 @@
 .selected {
   border-width: 3px;
   border-style: solid;
-  border-image: linear-gradient(90deg,
-      rgba(247, 151, 30, 1) 0%,
-      rgba(255, 210, 0, 1) 100%);
+  border-image: linear-gradient(
+    90deg,
+    rgba(247, 151, 30, 1) 0%,
+    rgba(255, 210, 0, 1) 100%
+  );
   border-image-slice: 1;
   border-radius: 10px !important;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -339,7 +341,7 @@
   margin-top: 30px;
   text-align: center;
 }
-.alreadyAppliedButton{
+.alreadyAppliedButton {
   width: 100%;
   height: 40px;
   border: 1px solid rgba(225, 220, 217, 1);
@@ -350,7 +352,6 @@
   font-size: 16px;
   background: linear-gradient(to right, #9595b4, #000012);
   pointer-events: none;
-
 }
 .company_apply_button_one {
   width: 100%;
@@ -461,4 +462,302 @@ li {
   color: rgba(0, 0, 0, 0.38);
   text-align: left;
   margin-left: 15px;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1299px) {
+  .detail_company_detail {
+    gap: 10px;
+  }
+
+  .detail_list_view {
+    padding: 5px;
+  }
+  .detail_company_job_title {
+    font-size: 13px;
+  }
+  .detail_company_offer {
+    font-size: 10px;
+  }
+
+  .detail_company_logo_Container {
+    width: 60px;
+    height: 35px !important;
+  }
+
+  .detail_company_offer_fav_image {
+    margin-bottom: 20px;
+  }
+
+  .detail_company_offer_apply_button_style {
+    font-size: 10px;
+  }
+  .detail_company_location_name {
+    font-size: 8px;
+  }
+  .company_background_image {
+    height: 250px;
+  }
+  .detail_company_logo_user_Container {
+    transform: translateX(-50%);
+  }
+  .company_title {
+    font-size: 20px;
+  }
+  .company_location {
+    font-size: 15px;
+  }
+  .company_description_title {
+    font-size: 20px;
+  }
+  .company_description_requirement {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+
+  .company_skill_title {
+    font-size: 20px;
+  }
+  .company_skill_list_display_Item {
+    font-size: 16px;
+  }
+  .company_salary_title {
+    font-size: 20px;
+  }
+  .company_salary_offer {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  .company_how_apply_title {
+    font-size: 20px;
+  }
+  .company_how_apply_offer {
+    margin-top: 10px;
+    font-size: 16px;
+  }
+  .company_review_title {
+    margin-top: 10px;
+  }
+  .company_summary_title {
+    margin-top: 10px;
+  }
+  .detail_company_location_details {
+    padding: 2px;
+  }
+  .company_location_map iframe {
+    height: 250px;
+  }
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .detail_company_detail {
+    gap: 10px;
+  }
+
+  .detail_list_view {
+    padding: 5px;
+  }
+  .detail_company_job_title {
+    font-size: 13px;
+  }
+  .detail_company_offer {
+    font-size: 10px;
+  }
+
+  .detail_company_logo_Container {
+    width: 60px;
+    height: 35px !important;
+  }
+
+  .detail_company_offer_fav_image {
+    margin-bottom: 20px;
+  }
+
+  .detail_company_offer_apply_button_style {
+    font-size: 10px;
+  }
+  .detail_company_location_name {
+    font-size: 8px;
+  }
+  .company_background_image {
+    height: 240px;
+  }
+  .detail_company_logo_user_Container {
+    transform: translateX(-50%);
+  }
+  .company_title {
+    font-size: 20px;
+    margin-top: 60px;
+  }
+  .company_location {
+    font-size: 15px;
+  }
+  .company_description_title {
+    font-size: 18px;
+  }
+  .company_description_requirement {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+
+  .company_skill_title {
+    font-size: 18px;
+  }
+  .company_skill_list_display_Item {
+    font-size: 15px;
+  }
+  .company_salary_title {
+    font-size: 18px;
+  }
+  .company_salary_offer {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+  .company_how_apply_title {
+    font-size: 18px;
+  }
+  .company_how_apply_offer {
+    margin-top: 10px;
+    font-size: 15px;
+  }
+  .company_review_title {
+    margin-top: 10px;
+  }
+  .company_summary_title {
+    margin-top: 10px;
+  }
+  .detail_company_location_details {
+    padding: 2px;
+  }
+  .company_location_map iframe {
+    height: 250px;
+  }
+
+  .company_apply_button {
+    margin-top: 20px;
+  }
+  .detail_exp_name_time {
+    font-size: 9px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .detail_company_detail {
+    gap: 10px;
+  }
+
+  .detail_list_view {
+    padding: 5px;
+  }
+  .detail_company_job_title {
+    font-size: 13px;
+  }
+  .detail_company_offer {
+    font-size: 10px;
+  }
+
+  .detail_company_logo_Container {
+    width: 60px;
+    height: 35px !important;
+  }
+
+  .detail_company_offer_fav_image {
+    margin-bottom: 20px;
+  }
+
+  .detail_company_offer_apply_button_style {
+    font-size: 10px;
+  }
+  .detail_company_location_name {
+    font-size: 8px;
+  }
+  .company_background_image {
+    height: 220px;
+    background-position: center center;
+  }
+  .detail_company_logo_user_Container {
+    transform: translateX(-50%);
+    width: 100px;
+    height: 100px;
+  }
+  .company_title {
+    font-size: 20px;
+    margin-top: 60px;
+  }
+  .company_location {
+    font-size: 15px;
+  }
+  .company_description_title {
+    font-size: 16px;
+  }
+  .company_description_requirement {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  .company_skill_title {
+    font-size: 16px;
+  }
+  .company_skill_list_display_Item {
+    font-size: 14px;
+  }
+  .company_salary_title {
+    font-size: 16px;
+  }
+  .company_salary_offer {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .company_how_apply_title {
+    font-size: 16px;
+  }
+  .company_how_apply_offer {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+  .company_review_title {
+    margin-top: 10px;
+  }
+  .company_summary_title {
+    margin-top: 10px;
+  }
+  .detail_company_location_details {
+    padding: 2px;
+  }
+  .company_location_map iframe {
+    height: 250px;
+  }
+
+  .company_apply_button {
+    margin-top: 20px;
+    font-size: 15px;
+  }
+  .detail_exp_name_time {
+    font-size: 9px;
+  }
+
+  li {
+    gap: 5px;
+  }
+  .review_star_gap {
+    width: 50%;
+  }
+
+  .company_review_Recommended {
+    padding-left: 1px;
+    font-size: 8px;
+  }
+  .company_review_rec {
+    font-size: 15px;
+  }
+  .company_review_full {
+    font-size: 10px;
+  }
+  .alreadyAppliedButton,
+  .company_apply_button_one,
+  .company_apply_button_two {
+    height: 35px;
+    font-size: 14px;
+  }
+  .company_save_later_button {
+    margin-top: 15px;
+  }
 }
