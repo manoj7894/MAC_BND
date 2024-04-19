@@ -250,7 +250,7 @@ const Signup = () => {
         toast.error("Internal Server Error");
       } else {
         console.error("Error:", error.message);
-        toast.error("Network Error");
+        toast.error(error.message);
       }
     }
   };
