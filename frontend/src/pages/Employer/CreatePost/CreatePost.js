@@ -140,12 +140,13 @@ export default function CreatePost() {
               </div>
               <div className={pages.__input_Grps}>
                 <label htmlFor="">Job Description</label> <br />
-                <input type="text" name='jobDescription' value={post.jobDescription} className={pages.__inputs} onChange={handleOnChange} />
+                {/* <input type="text" name='jobDescription' value={post.jobDescription} className={pages.__inputs} onChange={handleOnChange} /> */}
+                <textarea  type="text" name='jobDescription' value={post.jobDescription} className={pages.__inputs} onChange={handleOnChange} />
               </div>
               <div className={pages.__input_Grps}>
                 <label htmlFor="">Employment Type</label> <br />
                 <select className={pages.__createPost_Select} name='employmentType' id='employmentType' onChange={handleOnChange}>
-                  <option value="">Select your Empoyment Type</option>
+                  <option value="">Select your Employment Type</option>
                   <option value="part time">Part Time</option>
                   <option value="full time">Full Time</option>
                   <option value="contractual">Contractual</option>

@@ -1,11 +1,21 @@
-const { uploadonCloudinary } = require("../utility/cloudinary")
+const { uploadonCloudinary } = require("../utility/cloudinary");
+const { savedJobCollection, appliedJobCollection} = require("../model/MyJob.model");
 const jobCollection = require("../model/Job.Model");
+const User = require("../model/users/UserModel");
 
 const create = async (req, res) => {
-
   try {
     const result = await uploadonCloudinary(req.file.path);
-    const { jobTitle, jobDescription, employmentType, location, salaryRange, skilRequired, employeeEmail, jobExperience } = req.body;
+    const {
+      jobTitle,
+      jobDescription,
+      employmentType,
+      location,
+      salaryRange,
+      skilRequired,
+      employeeEmail,
+      jobExperience,
+    } = req.body;
     const newPost = {
       jobPoster: result.secure_url,
       jobTitle,
@@ -18,21 +28,20 @@ const create = async (req, res) => {
       jobExperience,
       createdAt: Date.now(),
     };
-    const mongooseRespoonse = await jobCollection.create(newPost)
+    const mongooseRespoonse = await jobCollection.create(newPost);
     if (mongooseRespoonse) {
       res.status(200).json({
         success: true,
-      })
-    }
-    else {
+      });
+    } else {
       res.status(404).json({
         success: false,
-      })
+      });
     }
     // res.json({ message: 'Post created successfully!', newPost });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error creating post' });
+    res.status(500).json({ message: "Error creating post" });
   }
 };
 
@@ -43,10 +52,8 @@ const getJobByID = async (req, res) => {
       res.status(200).send({ jobs, success: true });
     } else {
       res.status(404).send({ jobs: "No job found", success: false });
-
     }
   } catch (error) {
-    console.log(error)
     res.status(500).json({ error, success: false });
   }
 };
@@ -59,7 +66,6 @@ const get = async (req, res) => {
       res.status(200).send({ jobs, success: true });
     } else {
       res.status(404).send({ jobs: "No job found", success: false });
-
     }
   } catch (error) {
     res.status(500).json({ error, success: false });
@@ -71,8 +77,7 @@ const getAll = async (req, res) => {
     const mongooseResponse = await jobCollection.find({});
 
     if (mongooseResponse.length === 0) {
-
-      res.status(404).send({ job: "No job found", success: false });
+      res.status(200).send({ job: "No job found", success: false });
     } else {
       res.status(200).send({ jobs: mongooseResponse, success: true });
     }
@@ -96,16 +101,18 @@ const update = async (req, res) => {
 };
 
 const remove = async (req, res) => {
-
   try {
-    const data = await jobCollection.findByIdAndDelete(req.params.id);
+    let id = req.params.id;
+    const data = await jobCollection.findByIdAndDelete(id);
+    await User.updateMany({ $pull: { userSavedJob: { jobID: id } } });
+    await User.updateMany({ $pull: { userAppliedJob: { jobID: id } } });
+    await appliedJobCollection.deleteMany({ jobID: id });
+    await savedJobCollection.deleteMany({ jobID: id });
 
     if (data) {
-
       res.status(200).send({ job: data, success: true });
     } else {
       res.status(404).send({ job: "No job found", success: false });
-
     }
   } catch (error) {
     res.status(500).json({ error, success: false });
@@ -118,5 +125,5 @@ module.exports = {
   update,
   remove,
   getAll,
-  getJobByID
+  getJobByID,
 };

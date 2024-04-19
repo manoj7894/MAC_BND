@@ -16,38 +16,29 @@ const userSchema = new mongoose.Schema({
   conf_password: {
     type: String,
   },
-
-  // contact_number:{
-  //   type:Number,
-  //   unique:true,
-  //   required:true
-  // },
   resume: [
     {
       filename: String,
       path: String,
       uploadedAt: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
-  userType: {
-    type: String,
-  },
   userAppliedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
   userSavedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
 });
 
