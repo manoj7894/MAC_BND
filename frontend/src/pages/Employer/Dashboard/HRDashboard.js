@@ -113,8 +113,8 @@ export default function HRDashboard() {
               draggable={true}
               showDots={false}
               responsive={responsive}
-              infinite={false}
-              autoPlay={false}
+              infinite={true}
+              autoPlay={true}
               autoPlaySpeed={2000}
               keyBoardControl={true}
               customTransition="all .5"
@@ -138,7 +138,7 @@ export default function HRDashboard() {
                     </div>
                     <div className={pages.__post_body}>
                       <span>{data.location}</span>
-                      <span>{data.jobExperience}</span>
+                      <span>{data.jobExperience} years</span>
                     </div>
                     <div className={pages.__post_Footer}> <span>{data.totalApplication ? data.totalApplication : 0}</span> application(s)  </div>
                   </div>
