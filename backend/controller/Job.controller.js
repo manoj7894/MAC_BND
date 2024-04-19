@@ -78,7 +78,7 @@ const getAll = async (req, res) => {
     const mongooseResponse = await jobCollection.find({});
 
     if (mongooseResponse.length === 0) {
-      res.status(404).send({ job: "No job found", success: false });
+      res.status(200).send({ job: "No job found", success: false });
     } else {
       res.status(200).send({ jobs: mongooseResponse, success: true });
     }

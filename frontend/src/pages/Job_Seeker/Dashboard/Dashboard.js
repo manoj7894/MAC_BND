@@ -18,20 +18,22 @@ import Loader from "../../Common-Components/Loaders/Loader";
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  handleSavedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
+  handleSavedJob,
+  handleRemoveSavedJob,
+} from "../../../Redux/ReduxSlice";
 function Dashboard() {
   const { email, savedJob, appliedJob } = useSelector(
     (state) => state.Assessment.currentUser
   );
-
-  const [selectedSort, setSelectedSort] = useState("Sort By");
-  const { FilterOptions, SearchOptions } = useSelector((state) => state.Filter);
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [BestMatch, setBestmatch] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const navigateTO = useNavigate();
+  const [selectedSort, setSelectedSort] = useState("Sort By");
+  const { FilterOptions, SearchOptions } = useSelector((state) => state.Filter);
 
+  console.log(FilterOptions)
   useEffect(() => {
     setLoading(true);
     axios
@@ -78,8 +80,7 @@ function Dashboard() {
     e.preventDefault();
     axios
       .delete(
-        `http://localhost:8080/api/user/My-jobs/delete/save-job/${
-          email + "-" + jobId
+        `http://localhost:8080/api/user/My-jobs/delete/save-job/${email + "-" + jobId
         }`
       )
       .then((response) => {
@@ -96,7 +97,6 @@ function Dashboard() {
   };
 
   const loadFilteredData = () => {
-    // console.log(BestMatch.map((data)=> data.salaryRange))
     let FilteredData = BestMatch.filter(
       (job) =>
         FilterOptions?.JobType.some((data) => job.employmentType === data) ||
@@ -104,7 +104,10 @@ function Dashboard() {
           (data) => job.employmentType === data
         ) ||
         FilterOptions?.JobLevel.some((data) => job.jobExperience === data) ||
-        FilterOptions?.SalaryRange.some((data) => job.salaryRange === data)
+
+        FilterOptions.SalaryRange.some((data)=> {
+          return (Number(data.split("-")[0]) >= Number(job.salaryRange.split("-")[0])) && ( Number(data.split("-")[1]) <= Number(job.salaryRange.split("-")[1]))
+        })
     );
     setAllJobData(FilteredData);
   };
@@ -114,7 +117,7 @@ function Dashboard() {
       FilterOptions?.JobCategory?.length > 0 ||
       FilterOptions?.JobLevel?.length > 0 ||
       FilterOptions?.JobType?.length > 0 ||
-      FilterOptions?.salaryRange?.length > 0
+      FilterOptions?.SalaryRange.length >0
     ) {
       loadFilteredData();
     } else {
@@ -125,7 +128,7 @@ function Dashboard() {
     FilterOptions.JobCategory,
     FilterOptions.JobLevel,
     FilterOptions.JobType,
-    FilterOptions.salaryRange,
+    FilterOptions.SalaryRange,
   ]);
 
   useEffect(() => {
@@ -280,7 +283,7 @@ function Dashboard() {
                                   DashBoardStyle.rec_company_logo_money
                                 }
                               />
-                              {item.salaryRange}
+                              {item.salaryRange} LPA
                               <span
                                 className={
                                   DashBoardStyle.rec_company_logo_money_month
@@ -293,38 +296,38 @@ function Dashboard() {
                               {appliedJob?.every(
                                 (data) => data.jobID !== item?._id
                               ) && (
-                                <div
-                                  className={
-                                    DashBoardStyle.rec_company_offer_fav
-                                  }
-                                >
-                                  {savedJob?.some(
-                                    (data) => data.jobID === item?._id
-                                  ) ? (
-                                    <img
-                                      src={fav_filled_icon}
-                                      alt="Favorite Icon"
-                                      className={
-                                        DashBoardStyle.rec_company_offer_fav_image
-                                      }
-                                      onClick={(e) =>
-                                        handleRemoveSaveClick(e, item?._id)
-                                      }
-                                    />
-                                  ) : (
-                                    <img
-                                      src={fav_icon}
-                                      alt="Favorite Icon"
-                                      className={
-                                        DashBoardStyle.rec_company_offer_fav_image
-                                      }
-                                      onClick={(e) =>
-                                        handleSaveToLaterClick(e, item)
-                                      }
-                                    />
-                                  )}
-                                </div>
-                              )}
+                                  <div
+                                    className={
+                                      DashBoardStyle.rec_company_offer_fav
+                                    }
+                                  >
+                                    {savedJob?.some(
+                                      (data) => data.jobID === item?._id
+                                    ) ? (
+                                      <img
+                                        src={fav_filled_icon}
+                                        alt="Favorite Icon"
+                                        className={
+                                          DashBoardStyle.rec_company_offer_fav_image
+                                        }
+                                        onClick={(e) =>
+                                          handleRemoveSaveClick(e, item?._id)
+                                        }
+                                      />
+                                    ) : (
+                                      <img
+                                        src={fav_icon}
+                                        alt="Favorite Icon"
+                                        className={
+                                          DashBoardStyle.rec_company_offer_fav_image
+                                        }
+                                        onClick={(e) =>
+                                          handleSaveToLaterClick(e, item)
+                                        }
+                                      />
+                                    )}
+                                  </div>
+                                )}
 
                               <div
                                 className={
