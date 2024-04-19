@@ -32,9 +32,6 @@ const userSchema = new mongoose.Schema({
       }
     }
   ],
-  userType: {
-    type: String,
-  },
   userAppliedJob: [
     {
       jobID: {

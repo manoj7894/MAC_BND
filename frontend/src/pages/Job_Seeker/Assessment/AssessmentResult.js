@@ -11,7 +11,7 @@ function AssessmentResult() {
 
   const handleDoneButtonClick = (e) => {
     e.preventDefault();
-    navigateTO("/");
+    navigateTO("/assessment");
     dispatchTO(handleClearResult());
   };
 

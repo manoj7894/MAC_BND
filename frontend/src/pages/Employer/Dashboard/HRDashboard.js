@@ -113,8 +113,8 @@ export default function HRDashboard() {
               draggable={true}
               showDots={false}
               responsive={responsive}
-              infinite={false}
-              autoPlay={false}
+              infinite={true}
+              autoPlay={true}
               autoPlaySpeed={2000}
               keyBoardControl={true}
               customTransition="all .5"

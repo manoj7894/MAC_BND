@@ -167,7 +167,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
                       </span>
                     </div>
 
-                    <div className={LoginStyle.sub_container3_styl1}>LOGIN</div>
+                    {/* <div className={LoginStyle.sub_container3_styl1}>LOGIN</div> */}
                   </div>
                   <div className={LoginStyle.sub_container_style}>
                     <div className="email_form">
