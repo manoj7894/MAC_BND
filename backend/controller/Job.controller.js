@@ -54,7 +54,6 @@ const getJobByID = async (req, res) => {
       res.status(404).send({ jobs: "No job found", success: false });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error, success: false });
   }
 };
@@ -116,7 +115,6 @@ const remove = async (req, res) => {
       res.status(404).send({ job: "No job found", success: false });
     }
   } catch (error) {
-    console.log(error);
     res.status(500).json({ error, success: false });
   }
 };

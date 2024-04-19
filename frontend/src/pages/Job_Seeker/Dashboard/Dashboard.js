@@ -32,8 +32,6 @@ function Dashboard() {
   const navigateTO = useNavigate();
   const [selectedSort, setSelectedSort] = useState("Sort By");
   const { FilterOptions, SearchOptions } = useSelector((state) => state.Filter);
-
-  console.log(FilterOptions)
   useEffect(() => {
     setLoading(true);
     axios

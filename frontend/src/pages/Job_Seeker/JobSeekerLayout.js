@@ -92,9 +92,31 @@ function DashboardTopComponent({ CbToggle }) {
     Location: "",
   });
   const dispatch = useDispatch();
+
+  const recognition = new window.webkitSpeechRecognition(); // Initialize speech recognition
+
+  recognition.continuous = false; // Enable continuous listening
+  recognition.lang = "en-US"; // Set the language for speech recognition
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[event.results.length - 1][0].transcript;
+    setSearchOption({...searhOption, "searchText" :transcript});
+    setIsListening(false);
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
+  };
+
   const toggleMicListening = (e) => {
     e.preventDefault();
-    setIsListening(!isListening);
+    if (isListening) {
+      recognition.stop(); // Stop speech recognition if it's currently listening
+      setIsListening(false);
+    } else {
+      recognition.start(); // Start speech recognition
+      setIsListening(true);
+    }
   };
 
   const allCities = [
@@ -294,6 +316,7 @@ function DashboardTopComponent({ CbToggle }) {
               className={JobSeekerStyle.SearchInput}
               placeholder="Job tittle, keyword, company"
               onChange={handleSearchInputChange}
+              value={searhOption.searchText}
             />
           </div>
 
