@@ -17,10 +17,7 @@ const getUser = async (req, res) => {
     }
 
     res.json({
-      name: user.name,
-      email: user.email,
-      userAppliedJob: user.userAppliedJob,
-      savedJob: user.userSavedJob,
+      user
     });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });

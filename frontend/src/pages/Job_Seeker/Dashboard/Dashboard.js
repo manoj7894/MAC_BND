@@ -18,9 +18,7 @@ import Loader from "../../Common-Components/Loaders/Loader";
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  handleSavedJob,
-  handleRemoveSavedJob,
-} from "../../../Redux/ReduxSlice";
+  handleSavedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
 function Dashboard() {
   const { email, savedJob, appliedJob } = useSelector(
     (state) => state.Assessment.currentUser
