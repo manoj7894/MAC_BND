@@ -71,26 +71,23 @@ const userSchema = new mongoose.Schema({
       path: String,
       uploadedAt: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
-  userType: {
-    type: String,
-  },
   userAppliedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
   userSavedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
 });
 

@@ -91,7 +91,7 @@ const PreAssesment = () => {
   return (
     <>
       <div className={PreAssesmentStyle.aptitude_round_container}>
-        <div className={PreAssesmentStyle.rounds_heading}>Aptitude Round</div>
+        <div className={PreAssesmentStyle.rounds_heading}>MCQ Questions</div>
 
         <div className={PreAssesmentStyle.aptitude_heading_container}>
           <div
