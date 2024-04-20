@@ -15,7 +15,18 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+
+
+    res.json({
+      name: user.name,
+      email: user.email,
+      userAppliedJob: user.userAppliedJob,
+      savedJob: user.userSavedJob,
+      userDetails:user
+    });
+
     res.json({user});
+
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -70,10 +81,17 @@ const signUp = async (req, res) => {
       course_start_date,
       course_end_date,
       percentage,
+
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+
       job_title:req.body.job_title || null,
       company: req.body.company || null, 
       company_start_date: req.body.company_start_date || null,
       company_end_date: req.body.company_end_date || null,
+
       resume: resumeFileName,
       savedJob: [],
       appliedJob: [],

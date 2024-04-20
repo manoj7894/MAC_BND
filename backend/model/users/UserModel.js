@@ -55,6 +55,20 @@ const userSchema = new mongoose.Schema({
   },
   job_title: {
     type: String,
+    required: true
+  },
+  company: {
+    type: String,
+    required: true
+  },
+  company_start_date: {
+    type: Date,
+    required: true
+  },
+  company_end_date: {
+    type: Date,
+    required: true
+
   },
   company: {
     type: String,
@@ -64,6 +78,7 @@ const userSchema = new mongoose.Schema({
   },
   company_end_date: {
     type: Date,
+
   },
   resume: [
     {
@@ -75,6 +90,10 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  userType: {
+    type: String,
+  },
+
   userAppliedJob: [
     {
       jobID: {
