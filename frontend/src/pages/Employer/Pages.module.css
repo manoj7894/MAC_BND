@@ -101,6 +101,10 @@ p {
     cursor: pointer;
 }
 
+.activeCard {
+    background: rgba(255, 184, 0, 1);
+}
+
 .__postLogo {
     width: 45px;
     height: 45px;

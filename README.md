@@ -1,5 +1,10 @@
 The history of detail changes will be available here from now on.
 
+## Date: 19-04-2024
+1. Model changed of signup in backend.
+2. New logic added in signup controller.
+3. Made whole new user data store in database.
+
 ## Date: 18-04-2024
 1. All bugs fixed of pre-assessment page.
 2. Sign up welcome back text adjusted in center.
