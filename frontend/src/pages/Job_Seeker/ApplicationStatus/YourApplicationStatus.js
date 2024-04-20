@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import './YourApplicationStatus.css'
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
-function YourApplicationStatus() {
-
+function YourApplicationStatus(props) {
     const [stage, setStage] = useState("")
 
     const [count, setCount] = useState(4)
@@ -48,8 +48,8 @@ function YourApplicationStatus() {
                 </ul>
             </div>
             <div className='multi-button-status'>
-                <button>OK, GOT IT</button>
-                <button>Browse jobs at HRConnect</button>
+                <button onClick={props.toggleFunc}>OK, GOT IT</button>
+                <Link to="/dashboard"><button>Browse jobs at HRConnect</button></Link>
                 <p> HR Connect  is proud to be an equal opportunity workplace and is an affirmative action employer</p>
             </div>
         </div>
