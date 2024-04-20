@@ -18,6 +18,10 @@ function ApplicationStatus() {
         setPopUp(true)
     }
 
+    function handleClick2(){
+        setPopUp(false)
+    }
+
     console.log(popUp)
     return (
         <div>
@@ -100,7 +104,7 @@ function ApplicationStatus() {
                 </div>
             </div>
             {
-                popUp ? <div className={ApplicationCss.secondaryDiv}><YourApplicationStatus /></div> : null
+                popUp ? <div className={ApplicationCss.secondaryDiv}><YourApplicationStatus status = {popUp} toggleFunc = {handleClick2} /></div> : null
             }
         </div>
     )
