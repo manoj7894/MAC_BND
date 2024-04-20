@@ -6,16 +6,7 @@ const User = require("../model/users/UserModel");
 const create = async (req, res) => {
   try {
     const result = await uploadonCloudinary(req.file.path);
-    const {
-      jobTitle,
-      jobDescription,
-      employmentType,
-      location,
-      salaryRange,
-      skilRequired,
-      employeeEmail,
-      jobExperience,
-    } = req.body;
+    const { jobTitle, jobDescription, employmentType, location, salaryRange, skilRequired, employeeEmail, jobExperience, education, responsibility, howToApply } = req.body;
     const newPost = {
       jobPoster: result.secure_url,
       jobTitle,
@@ -26,6 +17,9 @@ const create = async (req, res) => {
       skilRequired,
       employeeEmail,
       jobExperience,
+      education, 
+      responsibility, 
+      howToApply,
       createdAt: Date.now(),
     };
     const mongooseRespoonse = await jobCollection.create(newPost);

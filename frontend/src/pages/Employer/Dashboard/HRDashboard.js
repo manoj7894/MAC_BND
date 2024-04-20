@@ -173,6 +173,12 @@ export default function HRDashboard() {
                         </span>
                         application(s)
                       </div>
+                      </p>
+                      <FontAwesomeIcon className={pages.__btn_PostOpen} icon={faArrowUpRightFromSquare} />
+                    </div>
+                    <div className={pages.__post_body}>
+                      <span>{data.location}</span>
+                      <span>{data.jobExperience} years</span>
                     </div>
                   );
                 })}
