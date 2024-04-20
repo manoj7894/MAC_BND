@@ -143,6 +143,7 @@ input{
   font-size: 30px;
   color: grey;
   margin-left: 20px;
+  cursor: pointer;
 }
 
 .__OutletContainer {

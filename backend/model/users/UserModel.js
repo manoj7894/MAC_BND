@@ -68,6 +68,17 @@ const userSchema = new mongoose.Schema({
   company_end_date: {
     type: Date,
     required: true
+
+  },
+  company: {
+    type: String,
+  },
+  company_start_date: {
+    type: Date,
+  },
+  company_end_date: {
+    type: Date,
+
   },
   resume: [
     {
@@ -75,27 +86,27 @@ const userSchema = new mongoose.Schema({
       path: String,
       uploadedAt: {
         type: Date,
-        default: Date.now
-      }
-    }
+        default: Date.now,
+      },
+    },
   ],
-
   userType: {
     type: String,
   },
+
   userAppliedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
   userSavedJob: [
     {
       jobID: {
         type: String,
-      }
-    }
+      },
+    },
   ],
 });
 
