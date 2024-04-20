@@ -19,6 +19,8 @@ const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/App
 const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
 const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
+const Profile_details = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
+
 //! These All Files are imported for the Employer Routes
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
@@ -92,6 +94,7 @@ function JobSeekerRoutes() {
         <Route path="/interviews" element={<Suspense><Interviews /></Suspense>} />
         <Route path="/settings" element={<Suspense><Settings /></Suspense>} />
         <Route path="/dashboard/:id" element={ <Suspense> <JobListDetailedView /> </Suspense> }/>
+        <Route path="/dashboard/profile_details" element={ <Suspense> <Profile_details /> </Suspense> }/>
       </Route>
       <Route path="/assessment-Instructions" element={<Suspense><InstructionPage /></Suspense>} />
       <Route path="/assessment-test" element={<Suspense><SelfAssessmentPage /></Suspense>} />

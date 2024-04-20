@@ -21,6 +21,7 @@ const getUser = async (req, res) => {
       email: user.email,
       userAppliedJob: user.userAppliedJob,
       savedJob: user.userSavedJob,
+      userDetails:user
     });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
@@ -29,7 +30,24 @@ const getUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password, conf_password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+    } = req.body;
     const resumeFileName = req.file;
 
     // // Ensure passwords match
@@ -50,6 +68,19 @@ const signUp = async (req, res) => {
       email,
       password: hashedPassword,
       name,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
       resume: resumeFileName,
       savedJob: [],
       appliedJob: [],
