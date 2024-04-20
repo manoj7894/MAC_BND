@@ -1,4 +1,3 @@
-
 import AppRoute from "./Router/App.Route";
 import { Toaster } from 'react-hot-toast';
 

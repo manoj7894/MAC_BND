@@ -62,7 +62,7 @@ export default function JobSeekerSwiper({ allJobs }) {
                   className={DashBoardStyle.company_logo}
                 />
               </div>
-              <h6 className={DashBoardStyle.company_title}>{item.jobTitle}</h6>
+              <h6 className={DashBoardStyle.company_title}>{item.jobTitle.slice(0, 15)}...</h6>
               <h6 className={DashBoardStyle.company_location}>
                 {item.location}
               </h6>
