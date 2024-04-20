@@ -22,7 +22,6 @@ const HrJobDetail = ({ jobId }) => {
 
   return (
     <>
-      <h1>HR Job Detail</h1>
       {job ? ( 
         <div key={job._id}>
           <h2>{job.jobTitle} needed.</h2>
