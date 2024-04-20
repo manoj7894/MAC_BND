@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import pages from "../Pages.module.css";
 import user from "../../../Assets/user.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUpRightFromSquare } from "@fortawesome/free-solid-svg-icons";
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import axios from "axios";
-import { format } from "date-fns";
-import Loader from "../../Common-Components/Loaders/Loader";
-import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
-import HrJobDetail from "./HrJobDetail";
+import { faArrowUpRightFromSquare, faTrash } from "@fortawesome/free-solid-svg-icons";
+import Carousel from 'react-multi-carousel';
+import 'react-multi-carousel/lib/styles.css';
+import axios from "axios"
+import { format } from 'date-fns';
+import Loader from '../../Common-Components/Loaders/Loader';
+import { CalculateTimeAgo } from '../../Common-Components/TimeAgo';
+import toast from "react-hot-toast";
 
 const responsive = {
   superLargeDesktop: { breakpoint: { max: 4000, min: 3000 }, items: 4 },
@@ -48,6 +48,16 @@ export default function HRDashboard() {
         setLoading(false);
       });
   }, []);
+  const loadJobPost = () => {
+    setLoading(true)
+    axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
+      .then(response => {
+        setJobPost(response.data.jobs)
+        setSortedJob(response.data.jobs.toSorted((a, b) => a.createdAt - b.createdAt));
+        setLoading(false)
+      })
+  }
+  useEffect(loadJobPost, [])
 
   const handleSortBy = (e) => {
     setSelectedSort(e.target.value);
@@ -73,9 +83,22 @@ export default function HRDashboard() {
     setSelectedJobId(jobId);
   };
 
+  const handleDelete = async (postID) => {
+    try {
+      await axios.delete(`http://localhost:8080/api/jobs/delete-job/${postID}`)
+        .then((response) => {
+          if (response.data.success) {
+            toast.success(`Job deleted successfully`)
+            loadJobPost()
+          }
+        })
+    } catch (err) {
+      console.error('Error deleting post:', err);
+    }
+  }
+
   return (
-<>
-<div className={pages.__dashboard_Page}>
+    <div className={pages.__dashboard_Page}>
       {loading ? (
         <Loader />
       ) : (
@@ -97,29 +120,13 @@ export default function HRDashboard() {
               </select>
             </div>
           </header>
-
+  
           <div className={pages.__post_Impression}>
             <header className={pages.__postImpression_Header}>
               <h3>Post Impressions</h3>
               <p className="">see all</p>
             </header>
-            <Carousel
-              className={pages.__post_Section}
-              swipeable={true}
-              draggable={true}
-              showDots={false}
-              responsive={responsive}
-              infinite={false}
-              autoPlay={false}
-              autoPlaySpeed={2000}
-              keyBoardControl={true}
-              customTransition="all .5"
-              transitionDuration={500}
-              containerClass="carousel-container"
-              removeArrowOnDeviceType={["tablet", "mobile", "desktop"]}
-              dotListClass="custom-dot-list-style"
-              itemClass="carousel-item-padding-40-px"
-            >
+            <Carousel>
               {jobPost.length > 0 &&
                 jobPost.map((data) => (
                   <div
@@ -148,10 +155,9 @@ export default function HRDashboard() {
                     </div>
                     <div className={pages.__post_body}>
                       <span>{data.location}</span>
-                      <span>{data.jobExperience}</span>
+                      <span>{data.jobExperience} years</span>
                     </div>
                     <div className={pages.__post_Footer}>
-                      {" "}
                       <span>
                         {data.totalApplication ? data.totalApplication : 0}
                       </span>{" "}
@@ -161,7 +167,7 @@ export default function HRDashboard() {
                 ))}
             </Carousel>
           </div>
-
+  
           {selectedJobId && (
             <div className={pages.__latest_Post}>
               <section className={pages.__latestPosts}>
@@ -169,58 +175,66 @@ export default function HRDashboard() {
               </section>
             </div>
           )}
-
-            {!selectedJobId && (
-              <div className={pages.__latest_Post}>
-                <header className={pages.__latest_Post_Header}>
-                  <h3>Latest Post</h3>
-                  <p className="">see all</p>
-                </header>
-                <section className={pages.__latestPosts}>
-                  {sortedJob.map((jobs) => (
-                    <div
-                      className={`${pages.__user_Post} ${
-                        selectedJobId === jobs._id ? pages.activeCard : ""
-                      }`}
-                      key={jobs._id}
-                      onClick={() => handleJobCardClick(jobs._id)}
-                    >
-                      <header className={pages.__user_Post_Header}>
-                        <img className={pages.__user_PostImg} src={user} alt="" />
-                        <div>
-                          <h3 style={{ fontSize: "20px" }}>
-                            {localStorage.name}
-                          </h3>
-                          <span className={pages.__user_Position}>
-                            HR Executive
-                          </span>
-                        </div>
-                      </header>
-                      <div className={pages.__user_Post_body}>
-                        <img
-                          className={pages.__latestPosts_Img}
-                          src={jobs.jobPoster}
-                          alt=""
-                        />
-                        <p className={pages.__user_Post_info}>
-                          {jobs.jobDescription}
-                        </p>
+  
+          {!selectedJobId && (
+            <div className={pages.__latest_Post}>
+              <header className={pages.__latest_Post_Header}>
+                <h3>Latest Post</h3>
+                <p className="">see all</p>
+              </header>
+              <section className={pages.__latestPosts}>
+                {sortedJob.map((jobs) => (
+                  <div
+                    className={`${pages.__user_Post} ${
+                      selectedJobId === jobs._id ? pages.activeCard : ""
+                    }`}
+                    key={jobs._id}
+                    onClick={() => handleJobCardClick(jobs._id)}
+                  >
+                    <header className={pages.__user_Post_Header}>
+                      <img
+                        className={pages.__user_PostImg}
+                        src={user}
+                        alt=""
+                      />
+                      <div>
+                        <h3 style={{ fontSize: "20px" }}>
+                          {localStorage.name}
+                        </h3>
+                        <span className={pages.__user_Position}>
+                          HR Executive
+                        </span>
                       </div>
-                      <footer className={pages.__user_Post_Footer}>
-                        <h6 className={pages.__user_Post_Timestamp}>
-                          {formattedDate(jobs.createdAt)}
-                        </h6>
-                        <button className={pages.__btn_Repost}>Repost</button>
-                      </footer>
+                      <FontAwesomeIcon
+                        icon={faTrash}
+                        title="delete post"
+                        className={pages.createPost_BtnDelete}
+                        onClick={() => handleDelete(jobs._id)}
+                      />
+                    </header>
+                    <div className={pages.__user_Post_body}>
+                      <img
+                        className={pages.__latestPosts_Img}
+                        src={jobs.jobPoster}
+                        alt=""
+                      />
+                      <p className={pages.__user_Post_info}>
+                        {jobs.jobDescription}
+                      </p>
                     </div>
-                  ))}
-                </section>
-              </div>
-            )}
+                    <footer className={pages.__user_Post_Footer}>
+                      <h6 className={pages.__user_Post_Timestamp}>
+                        {formattedDate(jobs.createdAt)}
+                      </h6>
+                      <button className={pages.__btn_Repost}>Repost</button>
+                    </footer>
+                  </div>
+                ))}
+              </section>
+            </div>
+          )}
         </>
       )}
     </div>
-</>
-
   );
-}
+  
