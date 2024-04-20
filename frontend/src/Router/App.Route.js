@@ -23,6 +23,7 @@ const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/Deta
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
 const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
+const PreviewCreatePost = lazy(()=> import("../pages/Employer/CreatePost/CreatePostPreview.js"));
 const Employees = lazy(() => import("../pages/Employer/Employees/Employees.js"));
 const Attendance = lazy(() => import("../pages/Employer/Employees/Attendance.js"));
 const OnTime = lazy(() => import("../pages/Employer/Employees/OnTime.js"));
@@ -106,6 +107,7 @@ function EmployerRoutes() {
       <Route path='/' element={<Suspense><MainContainer /></Suspense>}>
         <Route path='/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
         <Route path='/create_post' element={<Suspense><CreatePost /></Suspense>} />
+        <Route path='/create_post/:title' element={<Suspense><PreviewCreatePost /></Suspense>} />
         <Route path='/employees' element={<Suspense><Employees /></Suspense>}>
           <Route path='/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
           <Route path='/employees/on_time' element={<Suspense><OnTime /></Suspense>} />

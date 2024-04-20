@@ -4,11 +4,13 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import noImg from "../../../Assets/noImage.jpg";
 import Loader from "../../Common-Components/Loaders/Loader";
- 
+import { Link, useNavigate } from "react-router-dom";
+
 export default function CreatePost() {
   const imgRef = useRef(null);
   const [selectedImg, setSelectedImg] = useState(null);
   const [loading, setLoading] = useState(false);
+  const navigateTO = useNavigate()
   const [post, setPost] = useState({
     jobPoster: "",
     jobTitle: "",
@@ -23,7 +25,7 @@ export default function CreatePost() {
     howToApply: "",
     employeeEmail: localStorage.getItem("email"),
   });
- 
+
   const handleOnChange = (e) => {
     if (e.target.name === "jobPoster") {
       if (e.target?.files[0]?.type.split("/")[0] === "image") {
@@ -39,8 +41,110 @@ export default function CreatePost() {
       setPost({ ...post, [e.target.name]: e.target.value });
     }
   };
- 
-  const handleCreatePost = (e) => {
+
+  // const handleCreatePost = (e) => {
+  //   e.preventDefault();
+  //   if (post.jobPoster === "") {
+  //     toast((t) => (
+  //       <span>
+  //         Select an <b>image</b> for post
+  //       </span>
+  //     ));
+  //   } else if (
+  //     post.jobTitle === "" ||
+  //     post.jobDescription === "" ||
+  //     post.employmentType === "" ||
+  //     post.location === "" ||
+  //     post.salaryRange === "" ||
+  //     post.skilRequired === "" ||
+  //     post.jobExperience === "" ||
+  //     post.education === "" ||
+  //     post.responsibility === "" ||
+  //     post.howToApply === ""
+  //   ) {
+  //     toast("All Fields Required !!", {
+  //       style: {
+  //         borderRadius: "10px",
+  //         background: "#333",
+  //         color: "#fff",
+  //       },
+  //     });
+  //   } else {
+  //     const formData = new FormData();
+  //     formData.set("employeeEmail", localStorage.getItem("email"));
+  //     formData.append("jobPoster", selectedImg);
+  //     formData.append("jobTitle", post.jobTitle);
+  //     formData.append("jobDescription", post.jobDescription);
+  //     formData.append("employmentType", post.employmentType);
+  //     formData.append("location", post.location);
+  //     formData.append("salaryRange", post.salaryRange);
+  //     formData.append("skilRequired", post.skilRequired);
+  //     formData.append("jobExperience", post.jobExperience);
+  //     formData.append("education", post.education);
+  //     formData.append("responsibility", post.responsibility);
+  //     formData.append("howToApply", post.howToApply);
+  //     setLoading(true);
+  //     axios.post("http://localhost:8080/api/jobs/create-job", formData, {
+  //         headers: { "Content-Type": "multipart/form-data" },
+  //       })
+  //       .then((response) => {
+  //         if (response.data.success) {
+  //           toast.success("Post created successfully");
+  //           setPost({
+  //             jobPoster: "",
+  //             jobTitle: "",
+  //             jobDescription: "",
+  //             employmentType: "",
+  //             location: "",
+  //             salaryRange: "",
+  //             skilRequired: "",
+  //             jobExperience: "",
+  //             education: "",
+  //             responsibility: "",
+  //             howToApply: "",
+  //           });
+  //           setSelectedImg("");
+  //         } else {
+  //           toast.error("Try again");
+  //           setPost({
+  //             jobPoster: "",
+  //             jobTitle: "",
+  //             jobDescription: "",
+  //             employmentType: "",
+  //             location: "",
+  //             salaryRange: "",
+  //             skilRequired: "",
+  //             jobExperience: "",
+  //             education: "",
+  //             responsibility: "",
+  //             howToApply: "",
+  //           });
+  //           setSelectedImg(null);
+  //         }
+  //         setLoading(false);
+  //       })
+  //       .catch((err) => {
+  //         toast.error(`${err.message}`);
+  //         setPost({
+  //           jobPoster: "",
+  //           jobTitle: "",
+  //           jobDescription: "",
+  //           employmentType: "",
+  //           location: "",
+  //           salaryRange: "",
+  //           skilRequired: "",
+  //           jobExperience: "",
+  //           education: "",
+  //           responsibility: "",
+  //           howToApply: "",
+  //         });
+  //         setSelectedImg(null);
+  //       });
+  //     // console.log(formData);
+  //   }
+  // };
+
+  const handleSavePreviewClick = (e) => {
     e.preventDefault();
     if (post.jobPoster === "") {
       toast((t) => (
@@ -48,7 +152,8 @@ export default function CreatePost() {
           Select an <b>image</b> for post
         </span>
       ));
-    } else if (
+    }
+    else if (
       post.jobTitle === "" ||
       post.jobDescription === "" ||
       post.employmentType === "" ||
@@ -67,81 +172,13 @@ export default function CreatePost() {
           color: "#fff",
         },
       });
-    } else {
-      const formData = new FormData();
-      formData.set("employeeEmail", localStorage.getItem("email"));
-      formData.append("jobPoster", selectedImg);
-      formData.append("jobTitle", post.jobTitle);
-      formData.append("jobDescription", post.jobDescription);
-      formData.append("employmentType", post.employmentType);
-      formData.append("location", post.location);
-      formData.append("salaryRange", post.salaryRange);
-      formData.append("skilRequired", post.skilRequired);
-      formData.append("jobExperience", post.jobExperience);
-      formData.append("education", post.education);
-      formData.append("responsibility", post.responsibility);
-      formData.append("howToApply", post.howToApply);
-      setLoading(true);
-      axios.post("http://localhost:8080/api/jobs/create-job", formData, {
-          headers: { "Content-Type": "multipart/form-data" },
-        })
-        .then((response) => {
-          if (response.data.success) {
-            toast.success("Post created successfully");
-            setPost({
-              jobPoster: "",
-              jobTitle: "",
-              jobDescription: "",
-              employmentType: "",
-              location: "",
-              salaryRange: "",
-              skilRequired: "",
-              jobExperience: "",
-              education: "",
-              responsibility: "",
-              howToApply: "",
-            });
-            setSelectedImg("");
-          } else {
-            toast.error("Try again");
-            setPost({
-              jobPoster: "",
-              jobTitle: "",
-              jobDescription: "",
-              employmentType: "",
-              location: "",
-              salaryRange: "",
-              skilRequired: "",
-              jobExperience: "",
-              education: "",
-              responsibility: "",
-              howToApply: "",
-            });
-            setSelectedImg(null);
-          }
-          setLoading(false);
-        })
-        .catch((err) => {
-          toast.error(`${err.message}`);
-          setPost({
-            jobPoster: "",
-            jobTitle: "",
-            jobDescription: "",
-            employmentType: "",
-            location: "",
-            salaryRange: "",
-            skilRequired: "",
-            jobExperience: "",
-            education: "",
-            responsibility: "",
-            howToApply: "",
-          });
-          setSelectedImg(null);
-        });
-      // console.log(formData);
     }
-  };
- 
+    else {
+      navigateTO(`/create_post/${post.jobTitle}`, {state : {...post, selectedImg}});
+    }
+
+  }
+
   return (
     <div className={pages.__create_Post_Page}>
       {loading ? (
@@ -151,7 +188,7 @@ export default function CreatePost() {
           <header className={pages.__create_Post_Header}>
             <h1 style={{ fontSize: "30px" }}>Create Post</h1>
           </header>
- 
+
           <div className={pages.__postDetails}>
             <div className={pages.__imgContainer}>
               <img
@@ -315,8 +352,11 @@ export default function CreatePost() {
           </div>
           <div className={pages.__buttons}>
             <button className={pages.__btn_Cancel}>Cancel</button>
-            <button className={pages.__btn_Save} onClick={handleCreatePost}>
+            {/* <button className={pages.__btn_Save} onClick={handleCreatePost}>
               Post
+            </button> */}
+            <button className={pages.__btn_Save} onClick={handleSavePreviewClick}>
+              Save & Preview
             </button>
           </div>
         </>
