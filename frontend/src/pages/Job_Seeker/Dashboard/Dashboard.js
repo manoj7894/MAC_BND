@@ -105,6 +105,9 @@ function Dashboard() {
 
         FilterOptions.SalaryRange.some((data)=> {
           return (Number(data.split("-")[0]) >= Number(job.salaryRange.split("-")[0])) && ( Number(data.split("-")[1]) <= Number(job.salaryRange.split("-")[1]))
+        }) ||
+        FilterOptions.SalaryRange.some((data)=> {
+          return (Number(job.salaryRange.split("+")[0]) >= 15)
         })
     );
     setAllJobData(FilteredData);
