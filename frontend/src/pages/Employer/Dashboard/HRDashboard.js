@@ -10,7 +10,7 @@ import { format } from 'date-fns';
 import Loader from '../../Common-Components/Loaders/Loader';
 import { CalculateTimeAgo } from '../../Common-Components/TimeAgo';
 import toast from "react-hot-toast";
-
+ 
 const responsive = {
   superLargeDesktop: {
     breakpoint: { max: 4000, min: 3000 },
@@ -29,20 +29,20 @@ const responsive = {
     items: 1
   }
 };
-
+ 
 export default function HRDashboard() {
   const [jobPost, setJobPost] = useState([])
   const [sortedJob, setSortedJob] = useState([])
   const [selectedSort, setSelectedSort] = useState('Sort By')
   const [loading, setLoading] = useState(false)
-
+ 
   const formattedDate = (timestamp) => {
     if (!timestamp) {
       return 'N/A';
     }
     return format(new Date(timestamp), 'do MMMM, yyyy');
   };
-
+ 
   const loadJobPost = () => {
     setLoading(true)
     axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
@@ -53,7 +53,7 @@ export default function HRDashboard() {
       })
   }
   useEffect(loadJobPost, [])
-
+ 
   const handleSortBy = (e) => {
     setSelectedSort(e.target.value)
     const sorted = [...jobPost]
@@ -72,7 +72,7 @@ export default function HRDashboard() {
         break;
     }
   }
-
+ 
   const handleDelete = async (postID) => {
     try {
       await axios.delete(`http://localhost:8080/api/jobs/delete-job/${postID}`)
@@ -86,7 +86,7 @@ export default function HRDashboard() {
       console.error('Error deleting post:', err);
     }
   }
-
+ 
   return (
     <div className={pages.__dashboard_Page}>
       {
@@ -102,7 +102,7 @@ export default function HRDashboard() {
               </select>
             </div>
           </header>
-
+ 
           <div className={pages.__post_Impression}>
             <header className={pages.__postImpression_Header}>
               <h3>Post Impressions</h3>
@@ -127,7 +127,7 @@ export default function HRDashboard() {
                 jobPost.length > 0 && jobPost.map((data) => {
                   return <div className={pages.__posts} key={data._id} >
                     <div className={pages.__postTitle}>
-                      <img className={pages.__postLogo} src={data.jobPoster} alt='' />
+                      <img className={pages.__postLogo} src={data.jobPoster} alt={data.jobTitle}/>
                       <p>
                         {data.jobTitle.slice(0, 15)}...
                         <span style={{ fontSize: "13px", display: 'block' }}>
@@ -146,7 +146,7 @@ export default function HRDashboard() {
               }
             </Carousel>
           </div>
-
+ 
           <div className={pages.__latest_Post}>
             <header className={pages.__latest_Post_Header}>
               <h3>Latest Post</h3>
@@ -158,7 +158,7 @@ export default function HRDashboard() {
                   return (
                     <div className={pages.__user_Post} key={jobs._id}>
                       <header className={pages.__user_Post_Header}>
-                        <img className={pages.__user_PostImg} src={user} alt="" />
+                        <img className={pages.__user_PostImg} src={user} alt={jobs.jobTitle} />
                         <div>
                           <h3 style={{ fontSize: '20px' }}>{localStorage.name}</h3>
                           <span className={pages.__user_Position}>HR Executive</span>
@@ -166,7 +166,7 @@ export default function HRDashboard() {
                         <FontAwesomeIcon icon={faTrash} title='delete post' className={pages.createPost_BtnDelete} onClick={() => handleDelete(jobs._id)} />
                       </header>
                       <div className={pages.__user_Post_body}>
-                        <img className={pages.__latestPosts_Img} src={jobs.jobPoster} alt="" />
+                        <img className={pages.__latestPosts_Img} src={jobs.jobPoster} alt={jobs.jobTitle} />
                         <p className={pages.__user_Post_info}>{jobs.jobDescription}</p>
                       </div>
                       <footer className={pages.__user_Post_Footer}>

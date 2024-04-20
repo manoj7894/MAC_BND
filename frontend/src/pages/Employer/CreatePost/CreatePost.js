@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import noImg from "../../../Assets/noImage.jpg";
 import Loader from "../../Common-Components/Loaders/Loader";
-
+ 
 export default function CreatePost() {
   const imgRef = useRef(null);
   const [selectedImg, setSelectedImg] = useState(null);
@@ -23,7 +23,7 @@ export default function CreatePost() {
     howToApply: "",
     employeeEmail: localStorage.getItem("email"),
   });
-
+ 
   const handleOnChange = (e) => {
     if (e.target.name === "jobPoster") {
       if (e.target?.files[0]?.type.split("/")[0] === "image") {
@@ -39,7 +39,7 @@ export default function CreatePost() {
       setPost({ ...post, [e.target.name]: e.target.value });
     }
   };
-
+ 
   const handleCreatePost = (e) => {
     e.preventDefault();
     if (post.jobPoster === "") {
@@ -141,7 +141,7 @@ export default function CreatePost() {
       // console.log(formData);
     }
   };
-
+ 
   return (
     <div className={pages.__create_Post_Page}>
       {loading ? (
@@ -151,7 +151,7 @@ export default function CreatePost() {
           <header className={pages.__create_Post_Header}>
             <h1 style={{ fontSize: "30px" }}>Create Post</h1>
           </header>
-
+ 
           <div className={pages.__postDetails}>
             <div className={pages.__imgContainer}>
               <img
