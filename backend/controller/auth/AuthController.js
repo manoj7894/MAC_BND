@@ -15,13 +15,7 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
-    res.json({
-      name: user.name,
-      email: user.email,
-      userAppliedJob: user.userAppliedJob,
-      savedJob: user.userSavedJob,
-    });
+    res.json({user});
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -29,7 +23,24 @@ const getUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password, conf_password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+    } = req.body;
     const resumeFileName = req.file;
 
     // // Ensure passwords match
@@ -50,6 +61,19 @@ const signUp = async (req, res) => {
       email,
       password: hashedPassword,
       name,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title:req.body.job_title || null,
+      company: req.body.company || null, 
+      company_start_date: req.body.company_start_date || null,
+      company_end_date: req.body.company_end_date || null,
       resume: resumeFileName,
       savedJob: [],
       appliedJob: [],

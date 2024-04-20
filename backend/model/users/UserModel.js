@@ -11,17 +11,60 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    // required: true,
+    required: true,
   },
   conf_password: {
     type: String,
   },
-
-  // contact_number:{
-  //   type:Number,
-  //   unique:true,
-  //   required:true
-  // },
+  phone_number: {
+    type: Number,
+    unique: true,
+    required: true
+  },
+  dob: {
+    type: Date,
+    required: true
+  },
+  country: {
+    type: String,
+    required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  college: {
+    type: String,
+    required: true
+  },
+  course: {
+    type: String,
+    required: true
+  },
+  course_start_date: {
+    type: Date,
+    required: true
+  },
+  course_end_date: {
+    type: Date,
+    required: true
+  },
+  percentage: {
+    type: Number,
+    required: true
+  },
+  job_title: {
+    type: String,
+  },
+  company: {
+    type: String,
+  },
+  company_start_date: {
+    type: Date,
+  },
+  company_end_date: {
+    type: Date,
+  },
   resume: [
     {
       filename: String,
