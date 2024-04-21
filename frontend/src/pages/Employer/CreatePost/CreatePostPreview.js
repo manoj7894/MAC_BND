@@ -1,70 +1,118 @@
-import React from 'react'
+import React, { useState } from 'react'
 import pages from "../Pages.module.css";
 import { IoImageOutline } from "react-icons/io5";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import axios from 'axios';
+import Loader from "../../Common-Components/Loaders/Loader";
 function CreatePostPreview() {
+  const [loading, setLoading] = useState(false);
+  const navigateTO = useNavigate();
   const { title } = useParams();
   const { state } = useLocation();
-  console.log(state)
-
-  const handleCancleButtonClick = (e)=>{
+console.log(state)
+  const handleCancleButtonClick = (e) => {
     e.preventDefault();
-    window.history.back();
+    navigateTO("/create_post")
   }
+
+  const handleCreatePost = (e) => {
+    setLoading(true)
+    e.preventDefault();
+    const formData = new FormData();
+    formData.set("employeeEmail", localStorage.getItem("email"));
+    formData.append("jobPoster", state.selectedImg);
+    formData.append("jobTitle", state.jobTitle);
+    formData.append("jobDescription", state.jobDescription);
+    formData.append("employmentType", state.employmentType);
+    formData.append("location", state.location);
+    formData.append("salaryRange", state.salaryRange);
+    formData.append("skilRequired", state.skilRequired);
+    formData.append("jobExperience", state.jobExperience);
+    formData.append("education", state.education);
+    formData.append("responsibility", state.responsibility);
+    formData.append("howToApply", state.howToApply);
+    setLoading(true);
+    axios.post("http://localhost:8080/api/jobs/create-job", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    })
+      .then((response) => {
+        console.log(response)
+        if (response.data.success) {
+          toast.success("Post created successfully");
+          sessionStorage.clear()
+          setLoading(false);
+          navigateTO("/create_post")
+        } else {
+          toast.error("Try again");
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        toast.error(`${err.message}`);
+        setLoading(false)
+      });
+  };
+
   return (
     <div className={pages.__PostPreviewPage_Container}>
-      <h1 className={pages.__PostPreviewPage_heading}>Create Post</h1>
+      {
+        loading ? <Loader /> : <>
 
-      <div className={pages.__PostPreviewPage_PosterContainer}>
-        <img src={state?.jobPoster} alt={title} className={pages.__PostPreviewPage_Poster} />
-      </div>
+          <h1 className={pages.__PostPreviewPage_heading}>Create Post</h1>
 
-      <div className={pages.__PostPreviewPage_PosterName_Box}>
-        <span className={pages.__PostPreviewPage__imgUploaded}>
-          <IoImageOutline className={pages.__PostPreviewPage__imgICON} />
-          <span className={pages.__PostPreviewPage__imgUploadedText}>Image Uploaded</span>
-        </span>
-        <p className={pages.__PostPreviewPage_PosterName}>
-          {state?.selectedImg.name}
-        </p>
-      </div>
+          <div className={pages.__PostPreviewPage_PosterContainer}>
+            <img src={state?.jobPoster} alt={title} className={pages.__PostPreviewPage_Poster} />
+          </div>
 
-      <div className={pages.__PostPreviewPage_PostDescription_Box}>
-        <p className={pages.__PostPreviewPage_Description}>
-          {state?.jobDescription}
-        </p>
+          <div className={pages.__PostPreviewPage_PosterName_Box}>
+            <span className={pages.__PostPreviewPage__imgUploaded}>
+              <IoImageOutline className={pages.__PostPreviewPage__imgICON} />
+              <span className={pages.__PostPreviewPage__imgUploadedText}>Image Uploaded</span>
+            </span>
+            <p className={pages.__PostPreviewPage_PosterName}>
+              {state?.selectedImg?.name?.slice(0, 10)}
+            </p>
+          </div>
 
-        <p className={pages.__PostPreviewPage_Description}>
-          <strong>Responsibility: </strong>  {state?.responsibility}
-        </p>
+          <div className={pages.__PostPreviewPage_PostDescription_Box}>
+            <p className={pages.__PostPreviewPage_Description}>
+              {state?.jobDescription}
+            </p>
 
-        <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-          <strong>Skils: </strong>  <span> {state?.skilRequired}</span>
-        </p>
+            <p className={pages.__PostPreviewPage_Description}>
+              <strong>Responsibility: </strong>  {state?.responsibility}
+            </p>
 
-        <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-          <strong>Qualifications: </strong>  <span> {state?.education}</span>
-        </p>
+            <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
+              <strong>Skils: </strong>  <span> {state?.skilRequired}</span>
+            </p>
 
-        <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-          <strong>Experience: </strong>  <span> {state?.jobExperience} Years</span>
-        </p>
+            <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
+              <strong>Qualifications: </strong>  <span> {state?.education}</span>
+            </p>
 
-        <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-          <strong>Salary: </strong>  <span> {state?.salaryRange} LPA</span>
-        </p>
+            <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
+              <strong>Experience: </strong>  <span> {state?.jobExperience} Years</span>
+            </p>
 
-        <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-          <strong>Location: </strong>  <span> {state?.location}</span>
-        </p>
+            <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
+              <strong>Salary: </strong>  <span> {state?.salaryRange} LPA</span>
+            </p>
 
-      </div>
+            <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
+              <strong>Location: </strong>  <span> {state?.location}</span>
+            </p>
 
-      <div className={pages.__PostPreviewPage_ButtonContainer}>
-        <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCancleButtonClick}>Cancle</button>
-        <button type="button" className={pages.__PostPreviewPage_Buttons}>Post</button>
-      </div>
+          </div>
 
+          <div className={pages.__PostPreviewPage_ButtonContainer}>
+            <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCancleButtonClick}>Cancle</button>
+            <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCreatePost}>Post</button>
+          </div>
+
+        </>
+      }
     </div>
   )
 }
