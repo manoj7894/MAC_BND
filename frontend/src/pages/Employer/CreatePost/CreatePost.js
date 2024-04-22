@@ -2,12 +2,13 @@ import React, { useEffect, useRef, useState } from "react";
 import pages from "../Pages.module.css";
 import toast from "react-hot-toast";
 import noImg from "../../../Assets/noImage.jpg";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function CreatePost() {
   const imgRef = useRef(null);
   const [selectedImg, setSelectedImg] = useState(null);
-  const navigateTO = useNavigate()
+  const navigateTO = useNavigate();
+  const { state } = useLocation();
   const [post, setPost] = useState({
     jobPoster: "",
     jobTitle: "",
@@ -69,14 +70,12 @@ export default function CreatePost() {
       });
     }
     else {
-      sessionStorage.setItem("Post", JSON.stringify({ ...post, selectedImg }))
       navigateTO(`/create_post/${post.jobTitle}`, { state: { ...post, selectedImg } });
     }
   }
 
   const handleCancleClick = (e) => {
     e.preventDefault();
-    sessionStorage.clear()
     setPost({
       jobPoster: "",
       jobTitle: "",
@@ -94,11 +93,30 @@ export default function CreatePost() {
     setSelectedImg(null)
   }
 
+  const handleSetPreAssessmentButtonClick = (e) => {
+    e.preventDefault();
+    navigateTO(`/create_post/${post.jobTitle}`, { state: { ...post, selectedImg } });
+  }
+
   useEffect(() => {
-    if (sessionStorage.getItem("Post")) {
-      setPost(JSON.parse(sessionStorage.getItem("Post")));
+    if (state) {
+      setPost({
+        jobPoster: state?.jobPoster,
+        jobTitle: state?.jobTitle,
+        jobDescription: state?.jobDescription,
+        employmentType: state?.employmentType,
+        location: state?.location,
+        salaryRange: state?.salaryRange,
+        skilRequired: state?.skilRequired,
+        jobExperience: state?.jobExperience,
+        education: state?.education,
+        responsibility: state?.responsibility,
+        howToApply: state?.howToApply,
+        employeeEmail: state?.employeeEmail,
+      });
+      setSelectedImg(state?.selectedImg)
     }
-  }, []);
+  }, [state]);
 
   return (
     <div className={pages.__create_Post_Page}>
@@ -109,30 +127,14 @@ export default function CreatePost() {
       <div className={pages.__postDetails}>
 
         <div className={pages.__imgContainer}>
-          <img
-            className={pages.__previewImg}
-            src={post.jobPoster}
-            alt="preview img"
-            onError={(e) => {
-              e.target.src = `${noImg}`;
-              e.onError = null;
-            }}
-            onClick={(e) => imgRef.current.click()}
-          />
+          <img className={pages.__previewImg} src={post.jobPoster} alt="preview img" onError={(e) => { e.target.src = `${noImg}`; e.onError = null; }} onClick={(e) => imgRef.current.click()} />
           {
             !post.jobPoster && <p className={pages.__previewImgText}>
-            drop your image here or <span
-              style={{ color: "blue", fontWeight: "700", cursor: "pointer", marginLeft: "5px"}} onClick={(e) => imgRef.current.click()}> browse </span>
-          </p> 
+              drop your image here or <span
+                style={{ color: "blue", fontWeight: "700", cursor: "pointer", marginLeft: "5px" }} onClick={(e) => imgRef.current.click()}> browse </span>
+            </p>
           }
-          <input
-            type="file"
-            accept="image/*"
-            ref={imgRef}
-            hidden
-            name="jobPoster"
-            onChange={handleOnChange}
-          />
+          <input type="file" accept="image/*" ref={imgRef} hidden name="jobPoster" onChange={handleOnChange} />
         </div>
 
         <form
@@ -277,6 +279,10 @@ export default function CreatePost() {
               className={pages.__inputs}
               onChange={handleOnChange}
             />
+          </div>
+
+          <div className={pages.preAssessment_buttonContainer}>
+            <button type="button" className={pages.preAssessment_button} onClick={handleSetPreAssessmentButtonClick}>Set Pre-Assessment Questions</button>
           </div>
 
         </form>

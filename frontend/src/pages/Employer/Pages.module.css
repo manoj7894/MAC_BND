@@ -283,6 +283,20 @@ p {
     padding-left: .2em;
 }
 
+.preAssessment_buttonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.preAssessment_button{
+    border: none;
+    outline: none;
+    background-color: #FFB800;
+    padding: 0.5em 2em;
+    color: white;
+    border-radius: 10px;
+
+}
 .__inputs {
     width: 100%;
     height: 45px;

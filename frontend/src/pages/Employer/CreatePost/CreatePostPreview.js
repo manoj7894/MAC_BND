@@ -10,10 +10,10 @@ function CreatePostPreview() {
   const navigateTO = useNavigate();
   const { title } = useParams();
   const { state } = useLocation();
-console.log(state)
+
   const handleCancleButtonClick = (e) => {
     e.preventDefault();
-    navigateTO("/create_post")
+    navigateTO("/create_post", { state: { ...state } })
   }
 
   const handleCreatePost = (e) => {
@@ -37,7 +37,6 @@ console.log(state)
       headers: { "Content-Type": "multipart/form-data" },
     })
       .then((response) => {
-        console.log(response)
         if (response.data.success) {
           toast.success("Post created successfully");
           sessionStorage.clear()
