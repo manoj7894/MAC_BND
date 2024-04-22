@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import interview from './Interview.module.css'
-import no_interview from '../../../Assets/no_interview.png'
+import InterviewSchedule from './InterviewSchedule'
+import InterviewWithAI from './InterviewWithAI'
 import user from '../../../Assets/user.png'
 
 export default function Interviews() {
@@ -14,10 +15,10 @@ export default function Interviews() {
     <div className={interview.__interviewSchedule_Page}>
       <section className={interview.__left_Cont}>
         <div className={interview.__toogleContainer}>
-          <button className={interview.__btn_toggle} onClick={handleToggle}>Interview</button>
-          <button className={interview.__btn_toggle} onClick={handleToggle}>Interviews with AI</button>
+          <button className={`${interview.__btn_toggle} ${toggle ? interview.active : ''}`} onClick={handleToggle}>Interview</button>
+          <button className={`${interview.__btn_toggle} ${!toggle ? interview.active : ''}`} onClick={handleToggle}>Interviews with AI</button>
         </div>
-        {toggle ? <Interview /> : <InterviewsWithAI />}
+        {toggle ? <InterviewSchedule /> : <InterviewWithAI />}
       </section>
 
       <section className={interview.__right_Cont}>
@@ -50,16 +51,4 @@ export default function Interviews() {
       </section>
     </div>
   );
-}
-function Interview() {
-  return <div className={interview.__interview_Page}>
-    <h2 style={{ color: "grey" }}>No Interviews scheduled yet</h2>
-    <img className={no_interview} src={no_interview} alt="" />
-  </div>
-}
-
-function InterviewsWithAI() {
-  return <div className='__interviewWithAI_Page'>
-    <h2>Interviews with AI</h2>
-  </div>
 }

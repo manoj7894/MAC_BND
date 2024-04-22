@@ -16,6 +16,9 @@ import {
   handleSearchData,
 } from "../../Redux/ReduxFilterSlice";
 import { useDispatch } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRobot, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
+
 function JobSeekerLayout() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
@@ -58,7 +61,13 @@ function JobSeekerLayout() {
 
       <div className={JobSeekerStyle.LayoutContainer__RightSideContainer}>
         <header className={JobSeekerStyle.RightSideContainer__topHeaderContainer}>
-          <DashboardTopComponent CBOnchange={handleFilterOnchange} CbToggle={handleToogleFilter} />
+          {/* <DashboardTopComponent CBOnchange={handleFilterOnchange} CbToggle={handleToogleFilter} /> */}
+          {
+            pathname !== '/interviews' && <DashboardTopComponent CBOnchange={handleFilterOnchange} CbToggle={handleToogleFilter} />
+          }
+          {
+            pathname === '/interviews' && <InterviewTopNavbar />
+          }
         </header>
 
         <div className={JobSeekerStyle.__OutletContainer}>
@@ -76,7 +85,6 @@ function JobSeekerLayout() {
 export default JobSeekerLayout;
 
 // Topnavbar Components
-
 function DashboardTopComponent({ CbToggle }) {
   const [isListening, setIsListening] = useState(false);
   const [searhOption, setSearchOption] = useState({
@@ -92,7 +100,7 @@ function DashboardTopComponent({ CbToggle }) {
 
   recognition.onresult = (event) => {
     const transcript = event.results[event.results.length - 1][0].transcript;
-    setSearchOption({...searhOption, "searchText" :transcript});
+    setSearchOption({ ...searhOption, "searchText": transcript });
     setIsListening(false);
   };
 
@@ -361,4 +369,16 @@ function DashboardTopComponent({ CbToggle }) {
       </div>
     </div>
   );
+}
+
+function InterviewTopNavbar() {
+  return (
+    <div className={JobSeekerStyle.__interview_Top_Navbar}>
+      <span>
+        <FontAwesomeIcon className={JobSeekerStyle.robo} icon={faRobot} />
+        <span style={{color:"rgb(0, 255, 51)", paddingLeft:"1.5em", fontSize:"24px", fontWeight:"600"}}>Online</span>
+      </span>
+      <FontAwesomeIcon className={JobSeekerStyle.sound} icon={faVolumeHigh} />
+    </div>
+  )
 }
