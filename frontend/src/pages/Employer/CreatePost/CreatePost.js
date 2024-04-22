@@ -117,20 +117,14 @@ export default function CreatePost() {
               e.target.src = `${noImg}`;
               e.onError = null;
             }}
+            onClick={(e) => imgRef.current.click()}
           />
-          <p>
-            drop your image here or{" "}
-            <span
-              style={{
-                color: "blue",
-                fontWeight: "700",
-                cursor: "pointer",
-              }}
-              onClick={(e) => imgRef.current.click()}
-            >
-              browse
-            </span>
-          </p>
+          {
+            !post.jobPoster && <p className={pages.__previewImgText}>
+            drop your image here or <span
+              style={{ color: "blue", fontWeight: "700", cursor: "pointer", marginLeft: "5px"}} onClick={(e) => imgRef.current.click()}> browse </span>
+          </p> 
+          }
           <input
             type="file"
             accept="image/*"

@@ -238,13 +238,26 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-self: flex-start;
+    margin-top: 3em;
+    overflow: hidden;
+    position: relative;
 }
 
 .__previewImg {
-    width: 100%;
+    border-radius: 10px;
+    width: 95%;
     height: 95%;
-    object-fit: contain;
+    object-fit: cover;
     cursor: pointer;
+}
+.__previewImgText{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    text-align: center;
 }
 
 .__postImg {
