@@ -46,7 +46,7 @@ export default function Payroll() {
         <div className={PayrollStyle.payroll_outstanding_upcoming}>
           <Container>
             <Row>
-              <Col xxl={7}>
+              <Col xxl={7} xl={7} lg={7} md={7}>
                 {Data.map((value, index) => (
                   <div
                     className={PayrollStyle.payroll_outstanding_upcoming}
@@ -98,7 +98,7 @@ export default function Payroll() {
                 ))}
               </Col>
               {/* withdraw section full */}
-              <Col xxl={5}>
+              <Col xxl={5} xl={5} lg={5} md={5}>
                 <div className={PayrollStyle.withdraw_section}>
                   <div className={PayrollStyle.withdraw_title_icon}>
                     <div className={PayrollStyle.withdraw_title}>
@@ -156,7 +156,7 @@ export default function Payroll() {
           <div className={PayrollStyle.paypal_area_chart}>
             <Container>
               <Row>
-                <Col xxl={7}>
+                <Col xxl={7} xl={7} lg={7} md={7}>
                   {Data.map((pay, index) => (
                     <div className={PayrollStyle.area_chart_style_prop}>
                       <div
@@ -200,7 +200,7 @@ export default function Payroll() {
                     </div>
                   ))}
                 </Col>
-                <Col xxl={5}>
+                <Col xxl={5} xl={5} lg={5} md={5}>
                   <div className={PayrollStyle.payment_history_title_title}>
                     <div className={PayrollStyle.payment_history}>
                       <div className={PayrollStyle.payment_history_title}>
@@ -253,7 +253,7 @@ export default function Payroll() {
           <div className={PayrollStyle.paypal_area_chart}>
             <Container>
               <Row>
-                <Col xxl={7}>
+                <Col xxl={7} xl={7} lg={7} md={7}>
                   {Data.map((pay, index) => (
                     <div
                       className={PayrollStyle.paypal_area_chart_title}
@@ -295,7 +295,7 @@ export default function Payroll() {
                     <MapTwo />
                   </div>
                 </Col>
-                <Col xxl={5}>
+                <Col xxl={5} xl={5} lg={5} md={5}>
                   <div
                     className={PayrollStyle.payment_history_title_title_summary}
                   >
@@ -352,7 +352,7 @@ export default function Payroll() {
         {/* fourth part starts */}
         <Container>
           <Row>
-            <Col xxl={7}>
+            <Col xxl={7} xl={7} lg={8} md={8}>
               <div className={PayrollStyle.payment_history_title_title}>
                 <div className={PayrollStyle.payment_history}>
                   <div className={PayrollStyle.payment_history_title}>
@@ -408,7 +408,7 @@ export default function Payroll() {
                 ))}
               </div>
             </Col>
-            <Col xxl={5}>
+            <Col xxl={5} xl={5} lg={4} md={4}>
               <div
                 className={PayrollStyle.payroll_outstanding_upcoming_shell_two}
               >
@@ -502,7 +502,7 @@ export default function Payroll() {
         <div className={PayrollStyle.three_modal_box_full}>
           <Container>
             <Row>
-              <Col xxl={4}>
+              <Col xxl={4} xl={4} lg={4} md={4}>
                 {/* fifth part starts here */}
                 <div className={PayrollStyle.three_modal_box}>
                   {/* first box */}
@@ -521,7 +521,7 @@ export default function Payroll() {
                   </div>
                 </div>
               </Col>
-              <Col xxl={4}>
+              <Col xxl={4} xl={4} lg={4} md={4}>
                 <div className={PayrollStyle.three_modal_box}>
                   {/* first box */}
                   <div className={PayrollStyle.white_box}>
@@ -542,7 +542,7 @@ export default function Payroll() {
                 </div>
               </Col>
 
-              <Col xxl={4}>
+              <Col xxl={4} xl={4} lg={4} md={4}>
                 <div className={PayrollStyle.withdraw_section}>
                   <div className={PayrollStyle.withdraw_title_icon}>
                     <div className={PayrollStyle.withdraw_title}>
@@ -599,7 +599,7 @@ export default function Payroll() {
 
           <Container>
             <Row>
-              <Col xxl={8}>
+              <Col xxl={8} xl={8} lg={8} md={8}>
                 <div className={PayrollStyle.summary_last_full}>
                   <div className={PayrollStyle.summary_last}>
                     <div className={PayrollStyle.summary_title}>
@@ -670,7 +670,7 @@ export default function Payroll() {
                   </button>
                 </div>
               </Col>
-              <Col xxl={4}>
+              <Col xxl={4} xl={4} lg={4} md={4}>
                 <div className={PayrollStyle.payment_history_title_title_last}>
                   <div className={PayrollStyle.payment_history}>
                     <div className={PayrollStyle.payment_history_title}>
