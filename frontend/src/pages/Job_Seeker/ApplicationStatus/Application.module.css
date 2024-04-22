@@ -1,8 +1,8 @@
 .selection {
     height: 9vh;
-    width: 58vw;
+    width: 70%;
     border: 2px solid black;
-    margin-left: 1vw;
+    margin-left: 2%;
     margin-top: 5vh;
     border-radius: 35px;
     display: flex;
@@ -39,12 +39,11 @@
 
 /*--------company applied-------------------*/
 .company_applied {
-    height: 28vh;
-    width: 55vw;
+    /* height: 28vh; */
+    width: 70%;
     border: 2px solid black;
-    position: relative;
-    top: 10vh;
-    left: 3vw;
+    margin-left: 2%;
+    margin-top: 2%;
     border-radius: 25px;
     box-shadow: 0px 4px 4px grey;
     font-size: 18px;
@@ -54,7 +53,6 @@
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    margin-top: 3vh;
 }
 
 .Company_logo {
@@ -65,6 +63,7 @@
     display: flex;
     justify-content: center;
     padding: 10px;
+    margin-top: 2%;
 }
 
 .Clogo {
@@ -81,11 +80,13 @@
 .Product_Discription1 {
     font-size: 32px;
     font-weight: bold;
+    margin-bottom: 0px !important;
 }
 
 .Product_Discription2 {
     font-size: 20px;
     color: grey;
+    margin-bottom: 0px !important;
 }
 
 
@@ -143,10 +144,12 @@
     right: 0px;
     height: 100%;
     width: 18vw;
-    top: 14vh;
+    top: 0vh;
     display: flex;
     flex-direction: column;
     gap: 2vh;
+    margin-top: 2%;
+    margin-right: 2%;
 }
 
 .container_right1 {
@@ -194,6 +197,7 @@
     font-weight: 550;
     border-radius: 5px;
     border-color: rgb(177, 175, 175);
+    margin-bottom: 2%;
 }
 
 .experience {
@@ -207,4 +211,11 @@
     width: 12vw;
     padding: 10px;
     border-radius: 10px;
+}
+
+.secondaryDiv{
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    backdrop-filter: blur(15px);
 }
