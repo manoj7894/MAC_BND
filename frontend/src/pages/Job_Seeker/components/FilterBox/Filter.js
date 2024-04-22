@@ -369,15 +369,15 @@ function Filter({ handleOnChange, CbToggle }) {
                 onChange={handleOnChange}
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
-                checked={FilterOptions["SalaryRange"].includes("3-5")}
+                checked={FilterOptions["SalaryRange"].includes("2-3")}
                 id="SalaryRange1"
-                value="3-5"
+                value="2-3"
               />
               <label
                 htmlFor="SalaryRange1"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
-                3 - 5 Lakhs
+                2 - 3 LPA
               </label>
             </div>
 
@@ -387,15 +387,15 @@ function Filter({ handleOnChange, CbToggle }) {
                 onChange={handleOnChange}
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
-                checked={FilterOptions["SalaryRange"].includes("5-10")}
+                checked={FilterOptions["SalaryRange"].includes("3-5")}
                 id="SalaryRange2"
-                value="5-10"
+                value="3-5"
               />
               <label
                 htmlFor="SalaryRange2"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
-                5 - 10 Lakhs
+                3 - 5 LPA
               </label>
             </div>
 
@@ -405,15 +405,15 @@ function Filter({ handleOnChange, CbToggle }) {
                 onChange={handleOnChange}
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
-                checked={FilterOptions["SalaryRange"].includes("10-15")}
+                checked={FilterOptions["SalaryRange"].includes("5-7")}
                 id="SalaryRange3"
-                value="10-15"
+                value="5-7"
               />
               <label
                 htmlFor="SalaryRange3"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
-                10 - 15 Lakhs
+                5 - 7 LPA
               </label>
             </div>
 
@@ -423,18 +423,54 @@ function Filter({ handleOnChange, CbToggle }) {
                 onChange={handleOnChange}
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
-                checked={FilterOptions["SalaryRange"].includes("15-20")}
+                checked={FilterOptions["SalaryRange"].includes("7-9")}
                 id="SalaryRange4"
-                value="15-20"
+                value="7-9"
               />
               <label
                 htmlFor="SalaryRange4"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
-                15 - 20+ Lakhs
+                7 - 9 LPA
               </label>
             </div>
 
+
+            <div className={filterStyle.filterBox__formGroupRow}>
+              <input
+                type="checkbox"
+                onChange={handleOnChange}
+                className={filterStyle.filterBox__formGroupRow_CheckBOX}
+                name="SalaryRange"
+                checked={FilterOptions["SalaryRange"].includes("10-12")}
+                id="SalaryRange5"
+                value="10-12"
+              />
+              <label
+                htmlFor="SalaryRange5"
+                className={filterStyle.filterBox__formGroupRow_Label}
+              >
+                10 - 12 LPA
+              </label>
+            </div>
+
+            <div className={filterStyle.filterBox__formGroupRow}>
+              <input
+                type="checkbox"
+                onChange={handleOnChange}
+                className={filterStyle.filterBox__formGroupRow_CheckBOX}
+                name="SalaryRange"
+                checked={FilterOptions["SalaryRange"].includes("15")}
+                id="SalaryRange6"
+                value="15"
+              />
+              <label
+                htmlFor="SalaryRange6"
+                className={filterStyle.filterBox__formGroupRow_Label}
+              >
+                15+ LPA
+              </label>
+            </div>
           </div>
           
         </form>

@@ -16,12 +16,15 @@ const getUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    res.json({
-      name: user.name,
-      email: user.email,
-      userAppliedJob: user.userAppliedJob,
-      savedJob: user.userSavedJob,
-    });
+    // res.json({
+    //   name: user.name,
+    //   email: user.email,
+    //   userAppliedJob: user.userAppliedJob,
+    //   savedJob: user.userSavedJob,
+    //   userDetails:user
+    // });
+
+    res.json({ userDetails: user });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -29,13 +32,25 @@ const getUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password, conf_password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+    } = req.body;
     const resumeFileName = req.file;
-
-    // // Ensure passwords match
-    // if (password !== conf_password) {
-    //   return res.status(400).json({ message: 'Passwords do not match' });
-    // }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -50,6 +65,30 @@ const signUp = async (req, res) => {
       email,
       password: hashedPassword,
       name,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+
+      job_title: req.body.job_title || null,
+      company: req.body.company || null,
+      company_start_date: req.body.company_start_date || null,
+      company_end_date: req.body.company_end_date || null,
+      profileImage: req.body.profileImage || null,
+      biography: req.body.biography || null,
+      skills: req.body.skills || null,
+      note: req.body.note || null,
+
       resume: resumeFileName,
       savedJob: [],
       appliedJob: [],
@@ -111,9 +150,7 @@ const login = async (req, res) => {
 const forgotPassword = async (req, res) => {
   const { email } = req.body;
   try {
-    console.log("Email received:", email);
     const user = await User.findOne({ email });
-    console.log("User found:", user);
 
     if (!user) {
       return res.json({ message: "User is not registered" });
@@ -122,8 +159,6 @@ const forgotPassword = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "5m",
     });
-
-    console.log("Token generated:", token);
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -140,8 +175,6 @@ const forgotPassword = async (req, res) => {
       html: `<p>Click <a href="http://localhost:3000/reset-password/${token}">here</a> to reset your password.</p>`,
     };
 
-    console.log("Mail options:", mailOptions);
-
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
         console.error("Error sending email:", error);
@@ -150,7 +183,6 @@ const forgotPassword = async (req, res) => {
           message: "Error occured while sending an email",
         });
       } else {
-        console.log("Email sent successfully:", info);
         return res.json({ status: true, message: "email sent" });
       }
     });

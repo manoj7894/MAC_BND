@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams, Link, NavLink } from "react-router-dom";
 import UserDashBoardStyle from "./Detailedview.module.css";
 import { IoCloseOutline } from "react-icons/io5";
@@ -21,7 +21,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   handleSavedJob,
   handleRemoveSavedJob,
-  handleAppliedJob,
 } from "../../../Redux/ReduxSlice";
 
 export default function JobListDetailedView() {
@@ -29,6 +28,7 @@ export default function JobListDetailedView() {
     (state) => state.Assessment.currentUser
   );
   const dispatch = useDispatch();
+
   const [allJobsData, setAllJobData] = useState([]);
   const [jobDetails, setJobDetails] = useState([]);
   const [jobDetailsLoad, setJobDetailsLoad] = useState(false);
@@ -96,30 +96,30 @@ export default function JobListDetailedView() {
       });
   };
 
-  const handleApplyButtonClick = (e, item) => {
-    e.preventDefault();
-    setJobDetailsLoad(true);
-    axios
-      .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-        ...item,
-        email,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          toast.success(`${response.data.msg}`);
-          dispatch(handleAppliedJob(item._id));
-          dispatch(handleRemoveSavedJob(item._id));
-          setJobDetailsLoad(false);
-        } else {
-          toast.error(`${response.data.msg}`);
-          setJobDetailsLoad(false);
-        }
-      })
-      .catch((error) => {
-        toast.error(`server failed! Try again ${error.message}`);
-        setJobDetailsLoad(false);
-      });
-  };
+  // const handleApplyButtonClick = (e, item) => {
+  //   e.preventDefault();
+  //   setJobDetailsLoad(true);
+  //   axios
+  //     .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
+  //       ...item,
+  //       email,
+  //     })
+  //     .then((response) => {
+  //       if (response.data.success) {
+  //         toast.success(`${response.data.msg}`);
+  //         dispatch(handleAppliedJob(item._id));
+  //         dispatch(handleRemoveSavedJob(item._id));
+  //         setJobDetailsLoad(false);
+  //       } else {
+  //         toast.error(`${response.data.msg}`);
+  //         setJobDetailsLoad(false);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       toast.error(`server failed! Try again ${error.message}`);
+  //       setJobDetailsLoad(false);
+  //     });
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -156,9 +156,20 @@ export default function JobListDetailedView() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  
+    const targetRef = useRef(null);
+  
+    const scrollToTop = () => {
+      if (targetRef.current) {
+        targetRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+      // navigateTO('/dashboard/profile_details')
+    };
+
   return (
     <div
       className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}
+      ref={targetRef}
     >
       {IsLoading ? (
         <Loader />
@@ -404,7 +415,7 @@ export default function JobListDetailedView() {
                                   UserDashBoardStyle.company_skill_list_display_Item
                                 }
                               >
-                                {skill}
+                                {skill.name}
                               </li>
                             );
                           })}
@@ -483,14 +494,17 @@ export default function JobListDetailedView() {
                           Already Applied
                         </button>
                       ) : (
-                        <button
+                        <Link
                           className={
                             UserDashBoardStyle.company_apply_button_one
                           }
-                          onClick={(e) => handleApplyButtonClick(e, jobDetails)}
+                          to={'/dashboard/profile_details'}
+                          state={jobDetails}
+                          // onClick={(e) => handleApplyButtonClick(e, jobDetails)}
+                          onClick={()=>scrollToTop()}
                         >
                           APPLY
-                        </button>
+                        </Link>
                       )}
                     </div>
 

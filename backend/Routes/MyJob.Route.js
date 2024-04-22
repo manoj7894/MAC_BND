@@ -1,10 +1,11 @@
 
 const myJobRoutes = require("express").Router();
-const { createAppliedJob, getAppliedJob, removeAppliedJob, createSavedJob, getSavedJob, removeSavedJob } = require("../controller/MyJob.contoller")
+const { createAppliedJob, getAppliedJob, removeAppliedJob, createSavedJob, getSavedJob, removeSavedJob, getApplicantsForJob } = require("../controller/MyJob.contoller")
 
 myJobRoutes.post("/create/apply-job", createAppliedJob);
 myJobRoutes.get("/get/apply-job/:email", getAppliedJob);
 myJobRoutes.delete("/delete/apply-job/:email", removeAppliedJob);
+myJobRoutes.get('/job/:jobId/applicants', getApplicantsForJob);
 
 
 
