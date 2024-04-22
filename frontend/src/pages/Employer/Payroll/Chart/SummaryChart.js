@@ -1,6 +1,7 @@
 import * as React from "react";
 import Stack from "@mui/material/Stack";
 import { PieChart } from "@mui/x-charts/PieChart";
+import PayrollStyle from "../Payroll.module.css";
 
 const data = [
   { value: 400, color: "rgb(81, 198, 251)" },
@@ -15,6 +16,7 @@ export default function PieChartWithPaddingAngleTow() {
       justifyContent="center"
       alignItems="center"
       sx={{ marginTop: "60px" }}
+      className={PayrollStyle.finalchart}
     >
       <PieChart
         series={[

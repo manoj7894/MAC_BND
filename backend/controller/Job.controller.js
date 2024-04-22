@@ -3,10 +3,50 @@ const { savedJobCollection, appliedJobCollection} = require("../model/MyJob.mode
 const jobCollection = require("../model/Job.Model");
 const User = require("../model/users/UserModel");
 
+// const create = async (req, res) => {
+//   try {
+//     const result = await uploadonCloudinary(req.file.path);
+//     const { jobTitle, jobDescription, employmentType, location, salaryRange, skilRequired, employeeEmail, jobExperience, education, responsibility, howToApply } = req.body;
+//     const newPost = {
+//       jobPoster: result.secure_url,
+//       jobTitle,
+//       jobDescription,
+//       employmentType,
+//       location,
+//       salaryRange,
+//       skilRequired,
+//       employeeEmail,
+//       jobExperience,
+//       education, 
+//       responsibility, 
+//       howToApply,
+//       createdAt: Date.now(),
+//     };
+//     const mongooseRespoonse = await jobCollection.create(newPost);
+//     if (mongooseRespoonse) {
+//       res.status(200).json({
+//         success: true,
+//       });
+//     } else {
+//       res.status(404).json({
+//         success: false,
+//       });
+//     }
+//     // res.json({ message: 'Post created successfully!', newPost });
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Error creating post" });
+//   }
+// };
+
 const create = async (req, res) => {
   try {
     const result = await uploadonCloudinary(req.file.path);
     const { jobTitle, jobDescription, employmentType, location, salaryRange, skilRequired, employeeEmail, jobExperience, education, responsibility, howToApply } = req.body;
+
+    // Parse the skilRequired string into an array of objects
+    const skillArray = skilRequired.split(',').map((skill, index) => ({ name: skill.trim(), index }));
+
     const newPost = {
       jobPoster: result.secure_url,
       jobTitle,
@@ -14,7 +54,7 @@ const create = async (req, res) => {
       employmentType,
       location,
       salaryRange,
-      skilRequired,
+      skilRequired: skillArray, // Use the parsed skill array
       employeeEmail,
       jobExperience,
       education, 
@@ -22,8 +62,9 @@ const create = async (req, res) => {
       howToApply,
       createdAt: Date.now(),
     };
-    const mongooseRespoonse = await jobCollection.create(newPost);
-    if (mongooseRespoonse) {
+
+    const mongooseResponse = await jobCollection.create(newPost);
+    if (mongooseResponse) {
       res.status(200).json({
         success: true,
       });
@@ -32,12 +73,12 @@ const create = async (req, res) => {
         success: false,
       });
     }
-    // res.json({ message: 'Post created successfully!', newPost });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating post" });
   }
 };
+
 
 const getJobByID = async (req, res) => {
   try {

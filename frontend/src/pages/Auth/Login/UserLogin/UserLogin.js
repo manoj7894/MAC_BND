@@ -59,6 +59,17 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
     }
   };
 
+  const handleEnterKey = async (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (formData.step === 1) {
+        await nextStep();
+      } else {
+        await handleSubmit(e);
+      }
+    }
+  };
+
   const nextStep = async () => {
     if (formData.email) {
       try {
@@ -105,11 +116,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
   };
 
   return (
-    <>
-      {/* {isHRLogin ? (
-        <HrLogin />
-      ) : ( */}
-      <>
+      <div onKeyDown={handleEnterKey}>
         {formData.step === 1 ? (
           <div className={LoginStyle.sub_container1}>
             <div className={LoginStyle.sub_container2}>
@@ -329,8 +336,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
             </div>
           </div>
         )}
-      </>
-    </>
+      </div>
   );
 }
 

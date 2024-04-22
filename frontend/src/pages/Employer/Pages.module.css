@@ -102,6 +102,10 @@ p {
     cursor: pointer;
 }
 
+.activeCard {
+    background: rgba(255, 184, 0, 1);
+}
+
 .__postLogo {
     width: 45px;
     height: 45px;
@@ -534,6 +538,41 @@ p {
 
 .__leaveReq_Table {
     margin: 2em 1em;
+}
+
+
+/* HR JOB DETAIL CSS */
+
+.hr_job_detail_skill_container_main{
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.hr_job_detail_skill_container{
+    display: flex;
+    justify-content: center;
+}
+
+.hr_job_detail_location{
+    display: flex;
+}
+
+.hr_job_detail_location_childrens{
+    padding-right: 60px;
+}
+
+.hr_job_detail_skill{
+    list-style-type: none;
+    border: 1px solid rgba(255, 184, 0, 1);
+    background-color: rgba(255, 184, 0, 1);
+    padding:5px;
+    height: fit-content;
+    width: 15vw;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 10px;
+    margin-top: 15px;
 }
 
 @media screen and (max-width: 900px) {

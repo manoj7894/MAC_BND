@@ -19,39 +19,39 @@ const userSchema = new mongoose.Schema({
   phone_number: {
     type: Number,
     unique: true,
-    required: true
+    required: true,
   },
   dob: {
     type: Date,
-    required: true
+    required: true,
   },
   country: {
     type: String,
-    required: true
+    required: true,
   },
   state: {
     type: String,
-    required: true
+    required: true,
   },
   college: {
     type: String,
-    required: true
+    required: true,
   },
   course: {
     type: String,
-    required: true
+    required: true,
   },
   course_start_date: {
     type: Date,
-    required: true
+    required: true,
   },
   course_end_date: {
     type: Date,
-    required: true
+    required: true,
   },
   percentage: {
     type: Number,
-    required: true
+    required: true,
   },
   job_title: {
     type: String,
@@ -65,6 +65,26 @@ const userSchema = new mongoose.Schema({
   company_end_date: {
     type: Date,
   },
+  profileImage: {
+    filename: String,
+    path: String,
+    uploadedAt: {
+      type: Date,
+      default: Date.now,
+    },
+  },
+  biography: {
+    type: String,
+  },
+  skills: [
+    {
+      name: { type: String },
+      index: { type: Number },
+    },
+  ],
+  note: {
+    type: String,
+  },
   resume: [
     {
       filename: String,
@@ -75,6 +95,10 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  userType: {
+    type: String,
+  },
+
   userAppliedJob: [
     {
       jobID: {
