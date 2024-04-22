@@ -18,12 +18,13 @@ const MYResume = lazy(() => import("../pages/Job_Seeker/MyResume/MyResume.js"));
 const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js"));
 const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
-const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
+const JobListDetailedView = lazy(() => import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
 //! These All Files are imported for the Employer Routes
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
 const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
-const PreviewCreatePost = lazy(()=> import("../pages/Employer/CreatePost/CreatePostPreview.js"));
+const PreviewCreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePostPreview.js"));
+const PreAssesment = lazy(() => import("../pages/Employer/InterviewScheduled/PreAssesment.js"));
 const Employees = lazy(() => import("../pages/Employer/Employees/Employees.js"));
 const Attendance = lazy(() => import("../pages/Employer/Employees/Attendance.js"));
 const OnTime = lazy(() => import("../pages/Employer/Employees/OnTime.js"));
@@ -39,21 +40,13 @@ const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
 const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
 
 //! These All Files are imported for the Auth Routes
-const LoginPage = lazy(() =>
-  import("../pages/Auth/Login/ToggleLogin/LoginPage")
-);
+const LoginPage = lazy(() => import("../pages/Auth/Login/ToggleLogin/LoginPage"));
 const Signup = lazy(() => import("../pages/Auth/Signup/UserSignup/UserSignup"));
 const HrLogin = lazy(() => import("../pages/Auth/Login/HrLogin/HrLogin"));
 const ResetPassword = lazy(() => import("../pages/Auth/Password/User/ResetPassword/ResetPassword.js"));
-const ForgotPassword = lazy(() =>
-  import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword.js")
-);
-const HrResetPassword = lazy(() =>
-  import("../pages/Auth/Password/Hr/ResetPassword/HrResetPassword")
-);
-const HrForgotPassword = lazy(() =>
-  import("../pages/Auth/Password/Hr/ForgotPassword/HrForgotPassword")
-);
+const ForgotPassword = lazy(() => import("../pages/Auth/Password/User/ForgotPassword/ForgotPassword.js"));
+const HrResetPassword = lazy(() => import("../pages/Auth/Password/Hr/ResetPassword/HrResetPassword"));
+const HrForgotPassword = lazy(() => import("../pages/Auth/Password/Hr/ForgotPassword/HrForgotPassword"));
 //! These All Files are imported for the Auth Routes
 
 function AppRoute() {
@@ -64,7 +57,7 @@ function AppRoute() {
   return (
     <>
       {userType === "user" && <JobSeekerRoutes />}
-    
+
       {userType === "employee" && <EmployerRoutes />}
 
       {!userType && <AuthRouter />}
@@ -92,7 +85,7 @@ function JobSeekerRoutes() {
         <Route path="/application" element={<Suspense><Application /></Suspense>} />
         <Route path="/interviews" element={<Suspense><Interviews /></Suspense>} />
         <Route path="/settings" element={<Suspense><Settings /></Suspense>} />
-        <Route path="/dashboard/:id" element={ <Suspense> <JobListDetailedView /> </Suspense> }/>
+        <Route path="/dashboard/:id" element={<Suspense> <JobListDetailedView /> </Suspense>} />
       </Route>
       <Route path="/assessment-Instructions" element={<Suspense><InstructionPage /></Suspense>} />
       <Route path="/assessment-test" element={<Suspense><SelfAssessmentPage /></Suspense>} />
@@ -108,6 +101,7 @@ function EmployerRoutes() {
         <Route path='/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
         <Route path='/create_post' element={<Suspense><CreatePost /></Suspense>} />
         <Route path='/create_post/:title' element={<Suspense><PreviewCreatePost /></Suspense>} />
+        <Route path='/create_post/Set-Pre-Assessment' element={<Suspense><PreAssesment /></Suspense>} />
         <Route path='/employees' element={<Suspense><Employees /></Suspense>}>
           <Route path='/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
           <Route path='/employees/on_time' element={<Suspense><OnTime /></Suspense>} />
@@ -132,71 +126,14 @@ function EmployerRoutes() {
 function AuthRouter() {
   return (
     <Routes>
-      <Route
-        path="/login"
-        element={
-          <Suspense>
-            <LoginPage />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/user-signup"
-        element={
-          <Suspense>
-            <Signup />{" "}
-          </Suspense>
-        }
-      />
-      <Route
-        path="/hr-login"
-        element={
-          <Suspense>
-            <HrLogin />{" "}
-          </Suspense>
-        }
-      />
-      <Route
-        path="/reset-password/:token"
-        element={
-          <Suspense>
-            <ResetPassword />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/forgot-password"
-        element={
-          <Suspense>
-            <ForgotPassword />
-          </Suspense>
-        }
-      />
-      <Route
-        path="/hr/reset-password/:token"
-        element={
-          <Suspense>
-            <HrResetPassword />{" "}
-          </Suspense>
-        }
-      />
-      <Route
-        path="/hr/forgot-password"
-        element={
-          <Suspense>
-            <HrForgotPassword />
-          </Suspense>
-        }
-      />
-
-      <Route
-        path="/*"
-        element={
-          <Suspense>
-            <LoginPage />
-          </Suspense>
-        }
-      />
+      <Route path="/login" element={<Suspense> <LoginPage /> </Suspense>} />
+      <Route path="/user-signup" element={<Suspense> <Signup /> </Suspense>} />
+      <Route path="/hr-login" element={<Suspense> <HrLogin /> </Suspense>} />
+      <Route path="/reset-password/:token" element={<Suspense> <ResetPassword /> </Suspense>} />
+      <Route path="/forgot-password" element={<Suspense> <ForgotPassword /> </Suspense>} />
+      <Route path="/hr/reset-password/:token" element={<Suspense> <HrResetPassword /> </Suspense>} />
+      <Route path="/hr/forgot-password" element={ <Suspense> <HrForgotPassword /> </Suspense> } />
+      <Route path="/*" element={ <Suspense> <LoginPage /> </Suspense> } />
     </Routes>
   );
 }

@@ -95,7 +95,7 @@ export default function CreatePost() {
 
   const handleSetPreAssessmentButtonClick = (e) => {
     e.preventDefault();
-    navigateTO(`/create_post/${post.jobTitle}`, { state: { ...post, selectedImg } });
+    navigateTO(`/create_post/Set-Pre-Assessment`, { state: { ...post, selectedImg } });
   }
 
   useEffect(() => {
