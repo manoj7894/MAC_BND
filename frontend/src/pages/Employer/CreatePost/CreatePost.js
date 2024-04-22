@@ -142,6 +142,8 @@ export default function CreatePost() {
     }
   };
  
+  console.log("skills", post);
+
   return (
     <div className={pages.__create_Post_Page}>
       {loading ? (

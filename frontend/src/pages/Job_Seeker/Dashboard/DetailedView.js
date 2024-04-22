@@ -404,7 +404,7 @@ export default function JobListDetailedView() {
                                   UserDashBoardStyle.company_skill_list_display_Item
                                 }
                               >
-                                {skill}
+                                {skill.name}
                               </li>
                             );
                           })}

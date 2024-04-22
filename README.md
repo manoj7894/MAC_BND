@@ -1,5 +1,11 @@
 The history of detail changes will be available here from now on.
 
+## Date: 22-04-2024
+
+## Date: 20-04-2024
+1. Worked on hr dashboard and completed it 50% and also whole 50% is functional.
+2. Changed backend structure to satisfy front end job detail functionality.
+
 ## Date: 19-04-2024
 1. Model changed of signup in backend.
 2. New logic added in signup controller.

@@ -65,6 +65,8 @@ export default function HRDashboard() {
     setSelectedJobId(jobId);
   };
 
+  // console.log(jobPost);
+
   return (
     <div className={pages.__dashboard_Page}>
       {loading ? <Loader /> : (
