@@ -57,13 +57,8 @@ function JobSeekerLayout() {
       </div>
 
       <div className={JobSeekerStyle.LayoutContainer__RightSideContainer}>
-        <header
-          className={JobSeekerStyle.RightSideContainer__topHeaderContainer}
-        >
-          <DashboardTopComponent
-            CBOnchange={handleFilterOnchange}
-            CbToggle={handleToogleFilter}
-          />
+        <header className={JobSeekerStyle.RightSideContainer__topHeaderContainer}>
+          <DashboardTopComponent CBOnchange={handleFilterOnchange} CbToggle={handleToogleFilter} />
         </header>
 
         <div className={JobSeekerStyle.__OutletContainer}>
@@ -72,10 +67,7 @@ function JobSeekerLayout() {
       </div>
 
       {ToggleFilter && (
-        <Filter
-          handleOnChange={handleFilterOnchange}
-          CbToggle={handleToogleFilter}
-        />
+        <Filter handleOnChange={handleFilterOnchange} CbToggle={handleToogleFilter} />
       )}
     </section>
   );
@@ -262,19 +254,19 @@ function DashboardTopComponent({ CbToggle }) {
   ];
 
   const handleSearchInputChange = (e) => {
-    setSearchOption({...searhOption, [e.target.name] : e.target.value});
+    setSearchOption({ ...searhOption, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
     const setTextTimeOut = setTimeout(() => {
       if (searhOption.searchText || searhOption.Location) {
         dispatch(handleSearchData(searhOption));
-      }else{
+      } else {
         dispatch(handleSearchData(searhOption));
       }
     }, 1000);
     return () => clearTimeout(setTextTimeOut);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searhOption]);
 
 
@@ -340,10 +332,7 @@ function DashboardTopComponent({ CbToggle }) {
       </div>
 
       <div className={JobSeekerStyle.FilterAndNotificationBox}>
-        <VscSettings
-          className={JobSeekerStyle.filterBox_ICON}
-          onClick={CbToggle}
-        />
+        <VscSettings className={JobSeekerStyle.filterBox_ICON} onClick={CbToggle} />
 
         <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
       </div>

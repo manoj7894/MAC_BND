@@ -99,6 +99,7 @@ p {
     min-height: 170px;
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.4) 5px 5.4px 4.2px;
+    border: 1px solid rgba(128, 128, 128, 0.666);
     cursor: pointer;
 }
 
@@ -238,6 +239,8 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-self: flex-start;
+    margin-top: 30px;
 }
 
 .__previewImg {
@@ -284,11 +287,13 @@ p {
 
 .__createPost_Select {
     border-radius: 5px;
-    padding: .3em 4em;
+    padding: .3em 1em;
     width: 100%;
-    height: 40px;
+    height: 45px;
     outline: none;
+    border: none;
     cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 
 .__buttons {
@@ -373,6 +378,7 @@ p {
     .__imgContainer {
         width: 90%;
         height: 350px;
+        margin: auto;
     }
 
     .__btn_Cancel,

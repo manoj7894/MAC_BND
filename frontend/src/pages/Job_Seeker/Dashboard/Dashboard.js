@@ -142,7 +142,7 @@ function Dashboard() {
           job.employmentType
             .toLowerCase()
             .includes(SearchOptions.searchText.trim().toLowerCase()) ||
-          job.skilRequired.some((skil) =>
+          job?.skilRequired?.some((skil) =>
             skil
               .toLowerCase()
               .includes(SearchOptions.searchText.trim().toLowerCase())
@@ -154,7 +154,7 @@ function Dashboard() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [SearchOptions.searchText, SearchOptions.Location]);
-
+  
   const handleSortBy = (e) => {
     setSelectedSort(e.target.value);
     const sorted = [...BestMatch];
