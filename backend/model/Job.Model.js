@@ -32,9 +32,10 @@ const jobSchema = new mongoose.Schema(
         },
         skilRequired: [
             {
-                type: String
-            },
-        ],
+              name: { type: String },
+              index: { type: Number }
+            }
+          ],
         jobExperience: {
             type: String,
             required: true,

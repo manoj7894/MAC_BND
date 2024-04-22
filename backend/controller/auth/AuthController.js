@@ -16,17 +16,15 @@ const getUser = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+    // res.json({
+    //   name: user.name,
+    //   email: user.email,
+    //   userAppliedJob: user.userAppliedJob,
+    //   savedJob: user.userSavedJob,
+    //   userDetails:user
+    // });
 
-    res.json({
-      name: user.name,
-      email: user.email,
-      userAppliedJob: user.userAppliedJob,
-      savedJob: user.userSavedJob,
-      userDetails:user
-    });
-
-    res.json({user});
-
+    res.json({ userDetails: user });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -53,11 +51,6 @@ const signUp = async (req, res) => {
       company_end_date,
     } = req.body;
     const resumeFileName = req.file;
-
-    // // Ensure passwords match
-    // if (password !== conf_password) {
-    //   return res.status(400).json({ message: 'Passwords do not match' });
-    // }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -87,10 +80,14 @@ const signUp = async (req, res) => {
       company_start_date,
       company_end_date,
 
-      job_title:req.body.job_title || null,
-      company: req.body.company || null, 
+      job_title: req.body.job_title || null,
+      company: req.body.company || null,
       company_start_date: req.body.company_start_date || null,
       company_end_date: req.body.company_end_date || null,
+      profileImage: req.body.profileImage || null,
+      biography: req.body.biography || null,
+      skills: req.body.skills || null,
+      note: req.body.note || null,
 
       resume: resumeFileName,
       savedJob: [],
@@ -162,7 +159,6 @@ const forgotPassword = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "5m",
     });
-
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
