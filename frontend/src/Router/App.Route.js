@@ -18,7 +18,9 @@ const MYResume = lazy(() => import("../pages/Job_Seeker/MyResume/MyResume.js"));
 const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js"));
 const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
-const JobListDetailedView = lazy(() => import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
+const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
+
+
 //! These All Files are imported for the Employer Routes
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
