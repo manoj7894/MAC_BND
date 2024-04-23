@@ -65,7 +65,7 @@ const Employees = lazy(() =>
 const Attendance = lazy(() =>
   import("../pages/Employer/Employees/Attendance.js")
 );
-=======
+
 const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
 const ProfileDetails = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
 const CandidateProfileDetails = lazy(()=>import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
