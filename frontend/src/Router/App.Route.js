@@ -23,6 +23,7 @@ const Profile_details = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_d
 const Candidate_Profile_details = lazy(()=>import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
 
 //! These All Files are imported for the Employer Routes
+const Addemployee = lazy(()=> import("../pages/Employer/AddEmployee/AddEmployee.js"))
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
 const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
@@ -104,6 +105,7 @@ function EmployerRoutes() {
   return (
     <Routes>
       <Route path='/' element={<Suspense><MainContainer /></Suspense>}>
+        <Route path='/addemployee' element={<Suspense><Addemployee /></Suspense>} />
         <Route path='/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
         <Route path='/create_post' element={<Suspense><CreatePost /></Suspense>} />
         <Route path='/create_post/:title' element={<Suspense><PreviewCreatePost /></Suspense>} />

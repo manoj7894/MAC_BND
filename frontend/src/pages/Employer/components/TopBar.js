@@ -6,12 +6,14 @@ import { faMagnifyingGlass, faMicrophone, faUserPlus } from "@fortawesome/free-s
 import Loader from '../../Common-Components/Loaders/Loader';
 import { VscSettings } from "react-icons/vsc";
 import { IoIosNotificationsOutline } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 
 export default function TopBar() {
   const [loading, setLoading] = useState(false)
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const navigateTo = useNavigate()
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -49,7 +51,7 @@ export default function TopBar() {
         <input className={layout.__input} type="text" placeholder='search by keyword......' value={searchTerm} onChange={handleSearch} />
         <FontAwesomeIcon className={layout.__topbar_Icon} icon={faMicrophone} />
       </div>
-      <button className={layout.__btn_Add_Employee}> <FontAwesomeIcon icon={faUserPlus} /> Add Employee</button>
+      <button onClick={()=>navigateTo('/addemployee')} className={layout.__btn_Add_Employee}> <FontAwesomeIcon icon={faUserPlus} /> Add Employee</button>
       <VscSettings className={layout.__btn_filter} style={{ color: 'white', fontSize: '25' }} />
       <IoIosNotificationsOutline className={layout.__btn_notfication} style={{ color: 'white', fontSize: '25' }} />
 
