@@ -108,7 +108,6 @@ function EmployerRoutes() {
         <Route path='/hr_dashboard' element={<Suspense><HRDashboard /></Suspense>} />
         <Route path='/create_post' element={<Suspense><CreatePost /></Suspense>} />
         <Route path='/create_post/:title' element={<Suspense><PreviewCreatePost /></Suspense>} />
-        <Route path='/create_post/Set-Pre-Assessment' element={<Suspense><PreAssesment /></Suspense>} />
         <Route path='/employees' element={<Suspense><Employees /></Suspense>}>
           <Route path='/employees/attendance' element={<Suspense><Attendance /></Suspense>} />
           <Route path='/employees/on_time' element={<Suspense><OnTime /></Suspense>} />
