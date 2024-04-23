@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { handleClearResult } from "../../../Redux/ReduxSlice";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 function AssessmentResult() {
   const { result, percentageResult } = useSelector((state) => state.Assessment);
   const navigateTO = useNavigate();
@@ -11,6 +12,7 @@ function AssessmentResult() {
 
   const handleDoneButtonClick = (e) => {
     e.preventDefault();
+    toast.success('You have successfully applied for a job')
     navigateTO("/assessment");
     dispatchTO(handleClearResult());
   };
