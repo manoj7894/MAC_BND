@@ -20,6 +20,7 @@ const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Int
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
 const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
 const Profile_details = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
+const Candidate_Profile_details = lazy(()=>import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
 
 //! These All Files are imported for the Employer Routes
 const MainContainer = lazy(() => import("../pages/Employer/components/MainContainer.js"));
@@ -40,6 +41,7 @@ const InterviewScheduled = lazy(() => import("../pages/Employer/InterviewSchedul
 const CreateInterview = lazy(() => import("../pages/Employer/InterviewScheduled/CreateInterview.js"));
 const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
 const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
+const EditProfile = lazy(() => import("../pages/Employer/Settings/EditProfile.js"));
 
 //! These All Files are imported for the Auth Routes
 const LoginPage = lazy(() => import("../pages/Auth/Login/ToggleLogin/LoginPage"));
@@ -87,6 +89,7 @@ function JobSeekerRoutes() {
         <Route path="/application" element={<Suspense><Application /></Suspense>} />
         <Route path="/interviews" element={<Suspense><Interviews /></Suspense>} />
         <Route path="/settings" element={<Suspense><Settings /></Suspense>} />
+        <Route path="/settings/editprofile" element={<Suspense><Candidate_Profile_details /></Suspense>} />
         <Route path="/dashboard/:id" element={ <Suspense> <JobListDetailedView /> </Suspense> }/>
         <Route path="/dashboard/profile_details" element={ <Suspense> <Profile_details /> </Suspense> }/>
       </Route>
@@ -119,6 +122,7 @@ function EmployerRoutes() {
         <Route path='/schedule-interview' element={<Suspense><CreateInterview /></Suspense>} />
         <Route path='/chatbot' element={<Suspense><Chatbot /></Suspense>} />
         <Route path='/Setting' element={<Suspense><Setting /></Suspense>} />
+        <Route path='/Setting/Editprofile' element={<Suspense><EditProfile /></Suspense>} />
       </Route>
       <Route path='/*' element={<Suspense><MainContainer /></Suspense>} />
     </Routes>

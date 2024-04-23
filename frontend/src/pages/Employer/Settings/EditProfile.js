@@ -1,41 +1,41 @@
 import React from 'react'
-import Editprofile from './Editprofile.module.css';
+import SettingCss from './EditProfile.module.css';
 
 function EditProfile() {
     return (
-        <div className={Editprofile.main_container}>
-            <div className={Editprofile.cir_container}>
+        <div className={SettingCss.main_container}>
+            <div className={SettingCss.cir_container}>
                 <p>Profile picture</p>
-                <img src='https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png' alt='#' className={Editprofile.Clogo}></img>
+                <img src='https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png' alt='#' className={SettingCss.Clogo}></img>
             </div>
 
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
+            <div className={SettingCss.container1}>
+                <div className={SettingCss.c1}>
                     <label for='name' >First Name</label>
-                    <input type='text' id='name' className={Editprofile.input}></input>
+                    <input type='text' id='name' className={SettingCss.input}></input>
                 </div>
-                <div className={Editprofile.c1}>
+                <div className={SettingCss.c1}>
                     <label for='name' >Last Name</label>
-                    <input type='text' id='name' className={Editprofile.input}></input>
+                    <input type='text' id='name' className={SettingCss.input}></input>
                 </div>
 
             </div>
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
+            <div className={`${SettingCss.c1} ${SettingCss.cc}`}>
                 <label for='email'>Email</label>
-                <input type='text' id='email' placeholder='enter email' className={Editprofile.input_mail}></input>
+                <input type='text' id='email' placeholder='enter email' className={SettingCss.input_mail}></input>
             </div>
 
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
+            <div className={`${SettingCss.c1} ${SettingCss.cc}`}>
                 <label for='number'>Phone</label>
-                <input type='number' id='number' placeholder='+91 | Phone Number' className={Editprofile.input_mail}></input>
+                <input type='number' id='number' placeholder='+91 | Phone Number' className={SettingCss.input_mail}></input>
             </div>
 
-            <div className={Editprofile.container1}>
+            <div className={SettingCss.container1}>
 
-                <div className={Editprofile.c1}>
+                <div className={SettingCss.c1}>
                     <label for='exp' >Experience</label>
 
-                    <select id='exp' className={Editprofile.input}>
+                    <select id='exp' className={SettingCss.input}>
                         <option value="" disabled selected >Select Experience</option>
                         <option value="less than 6 month">less than 6 month</option>
                         <option value="more than 6 month">more than 6 month</option>
@@ -43,25 +43,25 @@ function EditProfile() {
                     </select>
 
                 </div>
-                <div className={Editprofile.c1}>
+                <div className={SettingCss.c1}>
                     <label for='education' >Education</label>
-                    <input type='text' id='education' className={Editprofile.input} placeholder='Education'></input>
+                    <input type='text' id='education' className={SettingCss.input} placeholder='Education'></input>
                 </div>
 
             </div>
 
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
+            <div className={`${SettingCss.c1} ${SettingCss.cc}`}>
                 <label for='web'>Website</label>
-                <select id='web' className={Editprofile.input_mail}>
+                <select id='web' className={SettingCss.input_mail}>
                     <option value="" disabled selected ></option>
                     <option value="ecom">ecomerce</option>
                     <option value="other">other</option>
                 </select>
             </div>
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
+            <div className={SettingCss.container1}>
+                <div className={SettingCss.c1}>
                     <label for='Nationality' >Nationality</label>
-                    <select id='Nationality' className={Editprofile.input}>
+                    <select id='Nationality' className={SettingCss.input}>
                         <option value="" disabled selected >Select...</option>
                         <option value="indian">Indian</option>
                         <option value="non-indian">non-indian</option>
@@ -69,17 +69,17 @@ function EditProfile() {
                     </select>
                 </div>
 
-                <div className={Editprofile.c1}>
+                <div className={SettingCss.c1}>
                     <label for='dob' >Date of Birth</label>
-                    <input type='date' id='dob' className={Editprofile.input}></input>
+                    <input type='date' id='dob' className={SettingCss.input}></input>
                 </div>
 
             </div>
 
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
+            <div className={SettingCss.container1}>
+                <div className={SettingCss.c1}>
                     <label for='gender' >Gender</label>
-                    <select id='gender' className={Editprofile.input}>
+                    <select id='gender' className={SettingCss.input}>
                         <option value="" disabled selected >Select...</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
@@ -87,9 +87,9 @@ function EditProfile() {
                     </select>
                 </div>
 
-                <div className={Editprofile.c1}>
+                <div className={SettingCss.c1}>
                     <label for='Nationality' >Nationality</label>
-                    <select id='Nationality' className={Editprofile.input}>
+                    <select id='Nationality' className={SettingCss.input}>
                         <option value="" disabled selected >Select...</option>
                         <option value="indian">Indian</option>
                         <option value="non-indian">non-indian</option>
@@ -98,12 +98,12 @@ function EditProfile() {
                 </div>
             </div>
 
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
+            <div className={`${SettingCss.c1} ${SettingCss.cc}`}>
                 <label for='bio'>Biography</label>
-                <textarea id='bio' className={Editprofile.bio} placeholder='write down your biography here. Let recuiter know about you...'></textarea>
+                <textarea id='bio' className={SettingCss.bio} placeholder='write down your biography here. Let recuiter know about you...'></textarea>
             </div>
 
-            <button className={Editprofile.save_change}>Save Changes</button>
+            <button className={SettingCss.save_change}>Save Changes</button>
         </div>
     )
 }
