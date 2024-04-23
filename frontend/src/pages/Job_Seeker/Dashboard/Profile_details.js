@@ -44,8 +44,11 @@ const dispatch =useDispatch()
 
   const firstResumeFilename = getFirstResumeFilename();
  
-  const companyStartDate = userData.company_start_date;
-  const companyEndDate = userData.company_end_date;
+  const formatISODateForInput = (isoDate) => {
+    if (!isoDate) return '';
+    const date = new Date(isoDate);
+    return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
+  };
   
   const [PreAssesment] =useState(false) //if there will be any skill test questions for user then it will be true
 
@@ -162,7 +165,8 @@ const dispatch =useDispatch()
                     <input
                       type="text"
                       id="website"
-                      value={""}
+                      defaultValue=" "
+                      value={userData.website}
                       readOnly
                     />
                   </div>
@@ -192,9 +196,9 @@ const dispatch =useDispatch()
                   <div className={Profile_style.input_container}>
                     <label htmlFor="DOB">Date of Birth</label>
                     <input
-                      type="text"
+                      type="date"
                       id="DOB"
-                      value={`${new Date(userData.dob).getDay()}-${new Date(userData.dob).getMonth()}-${new Date(userData.dob).getFullYear()}`}
+                      value={formatISODateForInput(userData.dob)}                      
                       readOnly
                     />
                   </div>
@@ -244,12 +248,12 @@ const dispatch =useDispatch()
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="company">Title</label>
-                  <input type="text" id="company" value={userData.title } readOnly />
+                  <input type="text" id="company" value={userData.job_title} readOnly />
                   <label htmlFor="start">Start Date</label>
                   <input
-                    type="text"
+                    type="date"
                     id="start"
-                    value={`${new Date(companyStartDate).getDay()}-${new Date(companyStartDate).getMonth()}-${new Date(companyStartDate).getFullYear()}`}
+                    value={formatISODateForInput(userData.company_start_date)}                      
                     readOnly
                   />
                 </div>
@@ -263,9 +267,9 @@ const dispatch =useDispatch()
                   />
                   <label htmlFor="end">End Date</label>
                   <input
-                    type="text"
+                    type="date"
                     id="end"
-                    value={`${new Date(companyEndDate).getDay()}-${new Date(companyEndDate).getMonth()}-${new Date(companyEndDate).getFullYear()}`}
+                    value={formatISODateForInput(userData.company_end_date)}                      
                     readOnly
                   />
                 </div>
