@@ -19,8 +19,8 @@ const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/App
 const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
 const JobListDetailedView = lazy(() =>import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
-const Profile_details = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
-const Candidate_Profile_details = lazy(()=>import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
+const ProfileDetails = lazy(()=>import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
+const CandidateProfileDetails = lazy(()=>import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
 
 //! These All Files are imported for the Employer Routes
 const Addemployee = lazy(()=> import("../pages/Employer/AddEmployee/AddEmployee.js"))
@@ -28,7 +28,7 @@ const MainContainer = lazy(() => import("../pages/Employer/components/MainContai
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
 const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
 const PreviewCreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePostPreview.js"));
-const PreAssesment = lazy(() => import("../pages/Employer/InterviewScheduled/PreAssesment.js"));
+const PreAssesment = lazy(() => import("../pages/Employer/CreatePost/PreAssesment.js"));
 const Employees = lazy(() => import("../pages/Employer/Employees/Employees.js"));
 const Attendance = lazy(() => import("../pages/Employer/Employees/Attendance.js"));
 const OnTime = lazy(() => import("../pages/Employer/Employees/OnTime.js"));
@@ -90,9 +90,9 @@ function JobSeekerRoutes() {
         <Route path="/application" element={<Suspense><Application /></Suspense>} />
         <Route path="/interviews" element={<Suspense><Interviews /></Suspense>} />
         <Route path="/settings" element={<Suspense><Settings /></Suspense>} />
-        <Route path="/settings/editprofile" element={<Suspense><Candidate_Profile_details /></Suspense>} />
+        <Route path="/settings/editprofile" element={<Suspense><CandidateProfileDetails /></Suspense>} />
         <Route path="/dashboard/:id" element={ <Suspense> <JobListDetailedView /> </Suspense> }/>
-        <Route path="/dashboard/profile_details" element={ <Suspense> <Profile_details /> </Suspense> }/>
+        <Route path="/dashboard/profile_details" element={ <Suspense> <ProfileDetails /> </Suspense> }/>
       </Route>
       <Route path="/assessment-Instructions" element={<Suspense><InstructionPage /></Suspense>} />
       <Route path="/assessment-test" element={<Suspense><SelfAssessmentPage /></Suspense>} />
