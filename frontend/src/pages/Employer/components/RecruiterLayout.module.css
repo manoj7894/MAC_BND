@@ -48,7 +48,8 @@
     flex-direction: column;
 }
 
-.__navbar_Links,.active {
+.__navbar_Links,
+.active {
     text-decoration: none;
     color: white;
     border-radius: 0 20px 20px 0;
@@ -138,8 +139,11 @@
     width: 100%;
     height: 70px;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
+    gap: 3vw;
     align-items: center;
+    padding-right: 2em;
+    position: relative;
 }
 
 .__searchbar {
@@ -154,43 +158,91 @@
 }
 
 .__input {
-    width: 230px;
+    width: 80%;
     height: 2.5em;
     border: none;
     outline: none;
 }
 
-.__topbar_Icon {
+.__topbar_Icon,
+.__btn_filter,
+.__btn_notfication {
     cursor: pointer;
 }
 
+.__btn_Add_Employee {
+    padding: .4em 1em;
+    border-radius: 25px;
+    color: white;
+    background: orange;
+}
+
+
+.searchItemContainer{
+    border-radius: 5px;
+    border: 1px solid grey;
+    background-color: white;
+    width: 50%;
+    max-height: 500px;
+    position: absolute;
+    z-index: 2;
+    top: 10em;
+    left:50%;
+    overflow: scroll;
+    transform: translate(-60%, -45%);
+  }
+.SearchList__Item{
+    width: 100%;
+    margin-top: 10px;
+    padding-left: 2em;
+  }
+
 @media screen and (max-width: 950px) {
     .__navbar_Page {
-      width: 100px;
+        width: 100px;
     }
-    .__navbar{
+
+    .__navbar {
         gap: 1em;
     }
-    .__navbar_Links,.active{
+
+    .__navbar_Links,
+    .active {
         margin: .3em 0;
         padding-left: 2.5em;
     }
+
     .__btn_Logout {
-      width: 3em;
-      height: 30px;
-      font-size: 22px;
+        width: 3em;
+        height: 30px;
+        font-size: 22px;
     }
-    .__hide,  .__userSection,  .__logout_Text {
-      display: none;
+
+    .__topbar {
+        gap: 20px;
+        padding-right: 30px;
     }
+
+    .__btn_Add_Employee {
+        font-size: 12px;
+    }
+
+    .__hide,
+    .__userSection,
+    .__logout_Text {
+        display: none;
+    }
+
     .__user_Img {
-      width: 35px;
+        width: 35px;
     }
+
     .__subContainer {
-      width: calc(100vw - 100px);
-      height: 100vh;
+        width: calc(100vw - 100px);
+        height: 100vh;
     }
+
     .__posts {
-      width: 90%;
+        width: 90%;
     }
-  }
+}
