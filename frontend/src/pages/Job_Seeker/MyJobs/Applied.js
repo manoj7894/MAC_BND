@@ -89,7 +89,7 @@ const Applied = () => {
       }
       {applied_jobs.length === 0 && !IsLoading &&
         <><p>You have not applied for any jobs. Find and grab the opportunity now !</p>
-          <button onClick={() => navi('/')}>Find Jobs !</button></>
+          <button className={JobStyle.find_job_btn} onClick={() => navi('/')}>Find Jobs !</button></>
       }
     </>
   );

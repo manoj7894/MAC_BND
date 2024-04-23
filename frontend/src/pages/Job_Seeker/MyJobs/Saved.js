@@ -154,8 +154,8 @@ const Saved = () => {
       }
       {saved_jobs.length === 0 && !IsLoading && (
         <>
-          <p>You have not Save any jobs. Find and grab the opportunity now !</p>
-          <button onClick={() => navi("/")}>Find Jobs !</button>
+          <p>You have not Saved any jobs. Find and grab the opportunity now !</p>
+          <button className={JobStyle.find_job_btn} onClick={() => navi("/")}>Find Jobs !</button>
         </>
       )}
     </>
