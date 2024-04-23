@@ -106,7 +106,7 @@ function CreatePostPreview() {
           </div>
 
           <div className={pages.__PostPreviewPage_ButtonContainer}>
-            <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCancleButtonClick}>Cancle</button>
+            <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCancleButtonClick}>Cancel</button>
             <button type="button" className={pages.__PostPreviewPage_Buttons} onClick={handleCreatePost}>Post</button>
           </div>
 
