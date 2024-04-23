@@ -28,7 +28,6 @@ const MainContainer = lazy(() => import("../pages/Employer/components/MainContai
 const HRDashboard = lazy(() => import("../pages/Employer/Dashboard/HRDashboard.js"));
 const CreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePost.js"));
 const PreviewCreatePost = lazy(() => import("../pages/Employer/CreatePost/CreatePostPreview.js"));
-const PreAssesment = lazy(() => import("../pages/Employer/CreatePost/PreAssesment.js"));
 const Employees = lazy(() => import("../pages/Employer/Employees/Employees.js"));
 const Attendance = lazy(() => import("../pages/Employer/Employees/Attendance.js"));
 const OnTime = lazy(() => import("../pages/Employer/Employees/OnTime.js"));
