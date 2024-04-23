@@ -3,12 +3,19 @@ import Profile_style from "./Profile_style.module.css";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import CancelPopup from "./CancelPopup/CancelPopup";
+import toast from "react-hot-toast";
+import { useDispatch } from "react-redux";
+import { handleAppliedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
+import Loader from "../../Common-Components/Loaders/Loader";
 
 const Profile_details = () => {
   const [start_popup, setstart_popup] = useState(false);
   const [cancelpopup, setcancelpopup] = useState(false);
+  const [IsLoading, setIsLoading] = useState(false);
   const navigateTO =useNavigate()
+const dispatch =useDispatch()
   const Job =useLocation().state
+
   const email = localStorage.getItem("email");
   const username = localStorage.getItem("name");
   const [userData, setuserData] = useState([]);
@@ -36,44 +43,54 @@ const Profile_details = () => {
   };
 
   const firstResumeFilename = getFirstResumeFilename();
-
-  const calculateExperienceInYears = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
-
-    // Calculate the difference in milliseconds
-    const difference = end - start;
-
-    // Convert milliseconds to years
-    const millisecondsInYear = 1000 * 60 * 60 * 24 * 365.25; // Approximate milliseconds in a year
-    const years = difference / millisecondsInYear;
-
-    // Round down to the nearest whole year
-    const totalYears = Math.floor(years);
-
-    return totalYears;
-  };
+ 
   const companyStartDate = userData.company_start_date;
   const companyEndDate = userData.company_end_date;
+  
+  const [PreAssesment] =useState(false) //if there will be any skill test questions for user then it will be true
 
-  const experienceInYears = calculateExperienceInYears(
-    companyStartDate,
-    companyEndDate
-  );
-
-  const handleApply = (e) => {
+  const handleApply = (e,item) => {
     e.preventDefault();
- if(!cancelpopup&&!start_popup){
-  setstart_popup(!start_popup);
+ if(PreAssesment){
+  if(!cancelpopup&&!start_popup){
+    setstart_popup(!start_popup);
+   }
+ }
+ else{
+  e.preventDefault();
+   setIsLoading(true);
+    axios
+      .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
+        ...item,
+        email,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(`${response.data.msg}`);
+          dispatch(handleAppliedJob(item._id));
+          dispatch(handleRemoveSavedJob(item._id));
+          setIsLoading(false);
+          navigateTO(-1)
+        } else {
+          toast.error(`${response.data.msg}`);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        toast.error(`server failed! Try again ${error.message}`);
+        setIsLoading(false);
+      });
  }
   };
+ 
   const handleCancel=()=>{
     // setstart_popup(!start_popup)
     setcancelpopup(!cancelpopup);
 
   }
   return (
-    <>
+<>
+{IsLoading?<Loader/>:    <>
       {userData && (
         <>
           <div
@@ -117,26 +134,36 @@ const Profile_details = () => {
           <i className="fa-solid fa-xmark" onClick={()=>navigateTO(-1)}></i>
           </div>
 
-              <h2>Basic Details</h2>
+              {/* <h2>Basic Details</h2> */}
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="firstname">First Name</label>
-                  <input type="text" id="firstname" value={firstname} />
+                  <input type="text" id="firstname" value={firstname} readOnly />
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="lastname">Last Name</label>
-                  <input type="text" id="lastname" value={lastname} />
+                  <input type="text" id="lastname" value={lastname} readOnly />
                 </div>
               </div>
               <div className={Profile_style.email_box}>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={userData.email} />
+                <input type="email" id="email" value={userData.email} readOnly />
                 <div className={Profile_style.input_container}>
                     <label htmlFor="resume">Upload Resume *</label>
                     <input
                       type="text"
                       id="resume"
                       value={firstResumeFilename}
+                      readOnly
+                    />
+                  </div>
+                  <div className={Profile_style.input_container}>
+                    <label htmlFor="website">Website</label>
+                    <input
+                      type="text"
+                      id="website"
+                      value={""}
+                      readOnly
                     />
                   </div>
               </div>
@@ -148,12 +175,17 @@ const Profile_details = () => {
                       type="number"
                       id="phonenumber"
                       value={userData.phone_number}
+                      readOnly
                     />
                   </div>
           
                   <div className={Profile_style.input_container}>
                     <label htmlFor="country">Country</label>
-                    <input type="text" id="country" value={userData.country} />
+                    <input type="text" id="country" value={userData.country} readOnly />
+                  </div>
+                  <div className={Profile_style.input_container}>
+                    <label htmlFor="gender">Gender</label>
+                    <input type="text" id="gender" value={userData.gender} readOnly />
                   </div>
                 </div>
                 <div className={Profile_style.right_basic_details}>
@@ -162,21 +194,26 @@ const Profile_details = () => {
                     <input
                       type="text"
                       id="DOB"
-                      value={new Date(userData.dob)}
+                      value={`${new Date(userData.dob).getDay()}-${new Date(userData.dob).getMonth()}-${new Date(userData.dob).getFullYear()}`}
+                      readOnly
                     />
                   </div>
                   <div className={Profile_style.input_container}>
                     <label htmlFor="state">State</label>
-                    <input type="text" id="state" value={userData.state} />
+                    <input type="text" id="state" value={userData.state} readOnly/>
+                  </div>
+                  <div className={Profile_style.input_container}>
+                    <label htmlFor="marital">Marital Status</label>
+                    <input type="text" id="marital" value={userData.marital_status} readOnly />
                   </div>
                 
                 </div>
               </div>
-              <h2>Education Details</h2>
+              <h2>Education Details</h2><br/>
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="course">Course</label>
-                  <input type="text" id="course" value={userData.course} />
+                  <input type="text" id="course" value={userData.course} readOnly/>
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="specialization">Specialization</label>
@@ -184,13 +221,14 @@ const Profile_details = () => {
                     type="text"
                     id="specialization"
                     value={userData.course}
+                    readOnly
                   />
                 </div>
               </div>
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="university">University</label>
-                  <input type="text" id="university" value={userData.college} />
+                  <input type="text" id="university" value={userData.college} readOnly />
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="percentage">Percentage</label>
@@ -198,26 +236,54 @@ const Profile_details = () => {
                     type="text"
                     id="percentage"
                     value={`${userData.percentage}%`}
+                    readOnly
                   />
                 </div>
               </div>
-              <h2>Experience Details</h2>
+              <h2>Work Experience (Optional)</h2><br/>
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
-                  <label htmlFor="company">Company</label>
-                  <input type="text" id="company" value={userData.company} />
+                  <label htmlFor="company">Title</label>
+                  <input type="text" id="company" value={userData.title } readOnly />
+                  <label htmlFor="start">Start Date</label>
+                  <input
+                    type="text"
+                    id="start"
+                    value={`${new Date(companyStartDate).getDay()}-${new Date(companyStartDate).getMonth()}-${new Date(companyStartDate).getFullYear()}`}
+                    readOnly
+                  />
                 </div>
                 <div className={Profile_style.input_name_container}>
-                  <label htmlFor="experience">Experience</label>
+                  <label htmlFor="experience">Company Name</label>
                   <input
                     type="text"
                     id="experience"
-                    value={`${experienceInYears} years`}
+                    value={userData.company}
+                    readOnly
+                  />
+                  <label htmlFor="end">End Date</label>
+                  <input
+                    type="text"
+                    id="end"
+                    value={`${new Date(companyEndDate).getDay()}-${new Date(companyEndDate).getMonth()}-${new Date(companyEndDate).getFullYear()}`}
+                    readOnly
                   />
                 </div>
               </div>
-              <br />
-              <button type="submit" className={Profile_style.save_apply_btn} onClick={handleApply}>
+              <div className={Profile_style.biography_section}>
+          <div className={Profile_style.input_biography_container}>
+          <label htmlFor="biography">Biography</label>
+                  <input
+                    type="text"
+                    id="biography"
+                    value={userData.biography}
+                    readOnly
+                  />
+          </div>
+
+              </div>
+
+              <button type="submit" className={Profile_style.save_apply_btn} onClick={(e)=>handleApply(e,Job)}>
                 APPLY
               </button>
             </form>
@@ -225,6 +291,8 @@ const Profile_details = () => {
         </>
       )}
     </>
+}
+</>
   );
 };
 
