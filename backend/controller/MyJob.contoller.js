@@ -71,6 +71,38 @@ const getAppliedJob = async (req, res) => {
     }
 }
 
+const getApplicantsForJob = async (req, res) => {
+    
+    try {
+        const jobId = req.params.jobId;
+
+        // Find all applied jobs for the given jobId
+        const applicants = await appliedJobCollection.find({
+            jobID: jobId
+        });
+
+        if (!applicants || applicants.length === 0) {
+            return res.status(404).json({
+                success: false,
+                msg: "No applicants found for this job"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            applicants: applicants
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            msg: `Server failed! Try again ${error.message}`
+        });
+    }
+}
+
+
+
+
 const removeAppliedJob = async (req, res) => {
     try {
         const [email, jobId] = req.params.email.split("-")
@@ -199,6 +231,7 @@ module.exports = {
     createAppliedJob,
     getAppliedJob,
     removeAppliedJob,
+    getApplicantsForJob,
     createSavedJob,
     getSavedJob,
     removeSavedJob,

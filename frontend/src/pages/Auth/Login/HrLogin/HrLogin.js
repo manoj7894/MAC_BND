@@ -57,6 +57,18 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     }
   };
 
+  const handleEnterKey = async (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (formData.step === 1) {
+        await nextStep();
+      } else {
+        await handleSubmit(e);
+      }
+    }
+  };
+  
+  
   const nextStep = async () => {
     if (formData.email) {
       try {
@@ -113,12 +125,9 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     nav("/hr/forgot-password");
   };
 
+
   return (
-    <>
-      {/* {isHRLogin ? (
-        <UserLogin />
-      ) : ( */}
-      <>
+      <div onKeyDown={handleEnterKey}>
         {formData.step === 1 ? (
           <div className={hrLoginStyle.sub_container1}>
             <div className={hrLoginStyle.sub_container2}>
@@ -334,8 +343,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
             </div>
           </div>
         )}
-      </>
-    </>
+      </div>
   );
 }
 

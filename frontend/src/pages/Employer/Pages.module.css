@@ -102,6 +102,10 @@ p {
     cursor: pointer;
 }
 
+.activeCard {
+    background: rgba(255, 184, 0, 1);
+}
+
 .__postLogo {
     width: 45px;
     height: 45px;
@@ -238,13 +242,26 @@ p {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    align-self: flex-start;
+    margin-top: 3em;
+    overflow: hidden;
+    position: relative;
 }
 
 .__previewImg {
-    width: 100%;
+    border-radius: 10px;
+    width: 95%;
     height: 95%;
-    object-fit: contain;
+    object-fit: cover;
     cursor: pointer;
+}
+.__previewImgText{
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20px;
+    text-align: center;
 }
 
 .__postImg {
@@ -270,6 +287,20 @@ p {
     padding-left: .2em;
 }
 
+.preAssessment_buttonContainer{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.preAssessment_button{
+    border: none;
+    outline: none;
+    background-color: #FFB800;
+    padding: 0.5em 2em;
+    color: white;
+    border-radius: 10px;
+
+}
 .__inputs {
     width: 100%;
     height: 45px;
@@ -285,7 +316,7 @@ p {
 .__createPost_Select {
     border-radius: 5px;
     border: none;
-    padding: .3em 4em;
+    padding: .3em 1em;
     width: 100%;
     height: 40px;
     outline: none;
@@ -299,8 +330,11 @@ p {
     justify-content: space-evenly;
 }
 
-.__btn_Cancel,.__btn_Save,
-.__btn_Yes,.__btn_Cancel {
+.__btn_Cancel,
+.__btn_Save,
+.__btn_Yes,
+.__btn_Cancel,
+.__PostPreviewPage_Buttons {
     width: 200px;
     background-color: #FFFFFF;
     border: 1px solid #222222;
@@ -318,9 +352,138 @@ p {
     border: none;
 }
 
+
 .__btn_Cancel:active,
 .__btn_Save:active {
     transform: scale(.95);
+}
+
+/* Create Post Details View page------------------------------------------------------------ */
+.__PostPreviewPage_Container {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+}
+
+.__PostPreviewPage_heading {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.__PostPreviewPage_PosterContainer {
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    width: 65%;
+    height: 350px;
+    margin: 10px 0px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+
+.__PostPreviewPage_Poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.__PostPreviewPage_PosterName_Box {
+    margin: 15px 0px;
+    border-radius: 5px;
+    height: 48px;
+    width: 50%;
+    border: 1px solid #E1DCD9;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0em 1em;
+}
+
+.__PostPreviewPage__imgUploaded {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.__PostPreviewPage__imgICON {
+    color: #3081D0;
+    font-size: 22px;
+}
+
+.__PostPreviewPage__imgUploadedText {
+    font-weight: 400;
+    font-size: 18px;
+    color: #4C4646;
+}
+
+.__PostPreviewPage_PosterName {
+    color: #3081D0;
+    font-size: 22px;
+}
+
+.__PostPreviewPage_PostDescription_Box {
+    width: 85%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.__PostPreviewPage_Description {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #000000;
+    margin: 10px 0px;
+}
+
+.__PostPreviewPage_Description strong {
+    font-size: 20px;
+}
+
+.__PostPreviewPage_Skils {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.__PostPreviewPage_Skils strong {
+    font-size: 19px;
+    font-weight: 500;
+    width: 120px;
+}
+
+.__PostPreviewPage_Skils span {
+    font-size: 18px;
+    word-spacing: 10px;
+    width: calc(100% - 120px);
+    color: #000000;
+    font-weight: 400;
+}
+
+.__PostPreviewPage_ButtonContainer {
+    margin: 20px 0px 10px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.__PostPreviewPage_Buttons:nth-child(2) {
+    background: rgb(30, 30, 255);
+    color: white;
+    border: none;
 }
 
 /* Employee Page------------------------------------------------------------ */
@@ -377,6 +540,41 @@ p {
     margin: 2em 1em;
 }
 
+
+/* HR JOB DETAIL CSS */
+
+.hr_job_detail_skill_container_main{
+    display: flex;
+    justify-content: space-between;
+    width: fit-content;
+}
+
+.hr_job_detail_skill_container{
+    display: flex;
+    justify-content: center;
+}
+
+.hr_job_detail_location{
+    display: flex;
+}
+
+.hr_job_detail_location_childrens{
+    padding-right: 60px;
+}
+
+.hr_job_detail_skill{
+    list-style-type: none;
+    border: 1px solid rgba(255, 184, 0, 1);
+    background-color: rgba(255, 184, 0, 1);
+    padding:5px;
+    height: fit-content;
+    width: 15vw;
+    border-radius: 30px;
+    text-align: center;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
 @media screen and (max-width: 900px) {
     .__postDetails {
         flex-direction: column;
@@ -395,5 +593,16 @@ p {
 
     .__createPost_Form {
         width: 90%;
+    }
+}
+
+@media screen and (max-width:855px) {
+    .__PostPreviewPage_PosterContainer,
+    .__PostPreviewPage_PostDescription_Box {
+        width: 100%;
+    }
+
+    .__PostPreviewPage_PosterName_Box {
+        width: 95%;
     }
 }
