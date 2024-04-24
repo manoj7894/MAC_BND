@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import SettingStyle from '../Settings/Setting.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -288,10 +287,10 @@ function Setting() {
           <h2>{settingtype}</h2>
           {/* Render the content based on setting type */}
           {renderSettingContent()}
+          {settingtype === "" && <p>Select any option from the list</p>}
         </div>
       </div>
     </div>
   );
 }
-
-export default Setting;
+export default Setting

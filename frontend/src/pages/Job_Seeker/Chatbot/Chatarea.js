@@ -30,6 +30,10 @@ export default function Chatarea() {
       .JobSeeker_RightSideContainer__topHeaderContainer__2MnVw {
         display: none !important;
       }
+      .JobSeeker___OutletContainer__BTBGZ{
+        height: 100vh;
+      }
+      
     `;
     document.head.appendChild(style);
 
