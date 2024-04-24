@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import axios from "axios";
-import PreAssesmentStyle from "./InterviewScheduled.module.css";
+import PreAssesmentStyle from "./Preassessment.module.css";
 import toast from "react-hot-toast";
+import {useNavigate} from 'react-router-dom'
 
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
@@ -12,6 +13,7 @@ const PreAssesment = () => {
   const [newQuestion, setNewQuestion] = useState("");
   const [options, setOptions] = useState(["", "", "", ""]);
   const [editingMCQId, setEditingMCQId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchMCQs();
@@ -51,7 +53,7 @@ const PreAssesment = () => {
           correctAnswer: options[0], // Assuming correct answer is always the first option
         });
         toast.success("Question Updated Successfully");
-  
+
         const editedMCQIndex = mcqs.findIndex((mcq) => mcq._id === editingMCQId);
         const newMCQs = [...mcqs];
         newMCQs[editedMCQIndex] = { ...mcqs[editedMCQIndex], question: newQuestion, options };
@@ -216,7 +218,7 @@ const PreAssesment = () => {
 
       <div className={PreAssesmentStyle.form_action_btn_container}>
         <div className={PreAssesmentStyle.cancel_btn_container}>
-          <Button className={PreAssesmentStyle.cancel_btn}>CANCEL</Button>
+          <Button className={PreAssesmentStyle.cancel_btn} onClick={(e)=>navigate(-1) }>CANCEL</Button>
         </div>
 
         <div className={PreAssesmentStyle.submit_btn_container}>

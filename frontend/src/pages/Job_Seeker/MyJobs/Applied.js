@@ -13,6 +13,7 @@ const Applied = () => {
   useEffect(() => {
     setIsLoading(true)
     axios.get(`http://localhost:8080/api/user/My-jobs/get/apply-job/${email}`).then((response) => {
+      console.log(response.data.appliedJob)
       if (response.data.success) {
         setAppliedJobs(response.data.appliedJob);
         setIsLoading(false)
@@ -44,9 +45,9 @@ const Applied = () => {
                     className="fa-solid fa-money-check-dollar"
                     style={{ color: "#067418" }}
                   ></i>
-                  <span style={{ fontWeight: "bold",fontSize: "20px" }}>{item.salaryRange} </span>
+                  <span style={{ fontWeight: "bold", fontSize: "20px" }}>{item.salaryRange} </span>
                   <span style={{ color: "#9595b4", fontSize: "14px" }}>
-                  LPA
+                    LPA
                   </span>
                 </div>
                 <div className={JobStyle.apply_box}>
@@ -89,7 +90,7 @@ const Applied = () => {
       }
       {applied_jobs.length === 0 && !IsLoading &&
         <><p>You have not applied for any jobs. Find and grab the opportunity now !</p>
-          <button onClick={() => navi('/')}>Find Jobs !</button></>
+          <button className={JobStyle.find_job_btn} onClick={() => navi('/')}>Find Jobs !</button></>
       }
     </>
   );

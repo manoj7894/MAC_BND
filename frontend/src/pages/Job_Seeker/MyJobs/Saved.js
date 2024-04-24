@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import Loader from "../../Common-Components/Loaders/Loader"
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
 import { useSelector, useDispatch } from "react-redux"
-import { handleAppliedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
+import { handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
 import fill_fav from "../../../Assets/Filled_favoutite.png"
 const Saved = () => {
   const { email } = useSelector((state) => state.Assessment.currentUser);
@@ -35,37 +35,7 @@ const Saved = () => {
 
   const handleApplyButtonClick = (e, item) => {
     e.preventDefault();
-    setIsLoading(true);
-    const tempItem = {
-      _id: item.jobID,
-      jobTitle: item.jobTitle,
-      jobPoster: item.jobPoster,
-      jobDescription: item.jobDescription,
-      employmentType: item.employmentType,
-      location: item.location,
-      salaryRange: item.salaryRange,
-      skilRequired: item.skilRequired,
-      employeeEmail: item.employeeEmail,
-      jobExperience: item.jobExperience,
-      createdAt: item.createdAt,
-      userEmail: item.userEmail,
-    }
-    axios.post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-      ...tempItem, email
-    }).then((response) => {
-      if (response.data.success) {
-        toast.success(`${response.data.msg}`);
-        dispatch(handleAppliedJob(tempItem._id));
-        dispatch(handleRemoveSavedJob(tempItem._id));
-        loadSavedJobs();
-      } else {
-        toast.error(`${response.data.msg}`);
-        loadSavedJobs();
-      }
-    }).catch((error) => {
-      toast.error(`server failed! Try again ${error.message}`);
-      loadSavedJobs();
-    })
+    navi(`/dashboard/${item.jobID}`)
   }
 
   const loadSavedJobs = () => {
@@ -154,8 +124,8 @@ const Saved = () => {
       }
       {saved_jobs.length === 0 && !IsLoading && (
         <>
-          <p>You have not Save any jobs. Find and grab the opportunity now !</p>
-          <button onClick={() => navi("/")}>Find Jobs !</button>
+          <p>You have not Saved any jobs. Find and grab the opportunity now !</p>
+          <button className={JobStyle.find_job_btn} onClick={() => navi("/")}>Find Jobs !</button>
         </>
       )}
     </>

@@ -34,6 +34,14 @@
 .typebox:hover {
   cursor: pointer;
 }
+.find_job_btn{
+  width: 20%;
+  height: 10%;
+  background-color: black;
+  color: white;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
 .mysaved_container {
   width: 90%;
   height: 72vh;

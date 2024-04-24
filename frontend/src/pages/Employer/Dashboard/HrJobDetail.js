@@ -33,6 +33,7 @@ const HrJobDetail = ({ jobId }) => {
             <strong>Requirements</strong>
           </p>
           <p style={{ width: "50vw" }}>{job.responsibility}</p>
+          <p style={{ width: "50vw" }}>{job.responsibility}</p>
 
           <div className={pages.hr_job_detail_skill_container_main}>
             <div>
@@ -43,6 +44,13 @@ const HrJobDetail = ({ jobId }) => {
               </div>
             </div>
             <div>
+              <ul className={pages.hr_job_detail_skill_container}>
+                {job.skilRequired.map((skill) => (
+                  <li key={skill.index} className={pages.hr_job_detail_skill}>
+                    {skill.name}
+                  </li>
+                ))}
+              </ul>
               <ul className={pages.hr_job_detail_skill_container}>
                 {job.skilRequired.map((skill) => (
                   <li key={skill.index} className={pages.hr_job_detail_skill}>

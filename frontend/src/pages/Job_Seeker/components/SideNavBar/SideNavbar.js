@@ -118,7 +118,7 @@ function SideNavbar() {
 
           <p className={navStyle.sidenavBar__userName}>
             {name && name}
-            <button className={navStyle.editProfileButton}>Edit Profile</button>
+            <button onClick={()=>navigateTO('/settings/editprofile')} className={navStyle.editProfileButton}>Edit Profile</button>
           </p>
 
           <DropDownMENU userName={name} userLogOut={handleLogoutClick} />

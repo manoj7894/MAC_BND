@@ -9,22 +9,23 @@ export default function MainContainer() {
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (pathname === "/" ||
-    (pathname !== "/hr_dashboard" &&
-      pathname !== "/create_post" &&
-      pathname !== "/employees" &&
-      pathname !== "/employees/attendance" &&
-      pathname !== "/employees/on_time" &&
-      pathname !== "/employees/absent" &&
-      pathname !== "/employees/late_arrivals" &&
-      pathname !== "/employees/leave_requests" &&
-      pathname !== "/payroll" &&
-      pathname !== "/analytics" &&
-      pathname !== "/candidates" &&
-      pathname !== "/interview_scheduled" &&
-      pathname !== "/schedule-interview" &&
-      pathname !== "/chatbot" &&
-      pathname !== "/Setting"))
+
+    // (pathname !== "/hr_dashboard" &&
+    // pathname !== "/create_post" &&
+    // pathname !== "/employees" &&
+    // pathname !== "/employees/attendance" &&
+    // pathname !== "/employees/on_time" &&
+    // pathname !== "/employees/absent" &&
+    // pathname !== "/employees/late_arrivals" &&
+    // pathname !== "/employees/leave_requests" &&
+    // pathname !== "/payroll" &&
+    // pathname !== "/analytics" &&
+    // pathname !== "/candidates" &&
+    // pathname !== "/interview_scheduled" &&
+    // pathname !== "/schedule-interview" &&
+    // pathname !== "/chatbot" &&
+    // pathname !== "/Setting")
+    if (pathname === "/")
       navigateTo('/hr_dashboard')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])

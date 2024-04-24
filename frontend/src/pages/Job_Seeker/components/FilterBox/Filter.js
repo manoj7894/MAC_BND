@@ -443,11 +443,11 @@ function Filter({ handleOnChange, CbToggle }) {
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
                 checked={FilterOptions["SalaryRange"].includes("10-12")}
-                id="SalaryRange4"
+                id="SalaryRange5"
                 value="10-12"
               />
               <label
-                htmlFor="SalaryRange4"
+                htmlFor="SalaryRange5"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
                 10 - 12 LPA
@@ -461,11 +461,11 @@ function Filter({ handleOnChange, CbToggle }) {
                 className={filterStyle.filterBox__formGroupRow_CheckBOX}
                 name="SalaryRange"
                 checked={FilterOptions["SalaryRange"].includes("15")}
-                id="SalaryRange4"
+                id="SalaryRange6"
                 value="15"
               />
               <label
-                htmlFor="SalaryRange4"
+                htmlFor="SalaryRange6"
                 className={filterStyle.filterBox__formGroupRow_Label}
               >
                 15+ LPA

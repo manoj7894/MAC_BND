@@ -17,14 +17,13 @@ export default function HR_Navbar() {
   const [tabletView, setTabletView] = useState()
   const tabScreen = useMediaQuery({ maxWidth: 950 })
   const dispatch = useDispatch();
-  const navigateTO = useNavigate()
   const { name } = useSelector((state) => state.Assessment.currentUser);
 
   const handleLogoutClick = () => {
     dispatch(handleUserLogOut());
     toast.success(`${name} Logged out !!`)
     setTimeout(() => {
-      navigateTO("/login")
+      navigateTo("/login")
     }, 1000);
   }
 
@@ -54,7 +53,7 @@ export default function HR_Navbar() {
           <img className={layout.__user_Img} title='Profile' src={user} alt='' />
           <div className={layout.__userSection}>
             {name}
-            <button className={layout.__btn_Edit_Profile}>EDIT MY PROFILE</button>
+            <button onClick={()=>navigateTo('/Setting/Editprofile')} className={layout.__btn_Edit_Profile}>EDIT MY PROFILE</button>
           </div>
         </div>
         <button className={layout.__btn_Logout} onClick={handleLogoutClick}>

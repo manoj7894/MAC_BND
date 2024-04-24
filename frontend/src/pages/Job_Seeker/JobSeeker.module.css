@@ -3,10 +3,12 @@
   padding: 0;
   box-sizing: border-box;
 }
-input{
+
+input {
   padding: 0;
   margin: 0;
 }
+
 .JobSeeker_Layout_Container {
   width: 100%;
   height: 100vh;
@@ -153,6 +155,26 @@ input{
   scrollbar-width: none;
   scroll-behavior: smooth;
 }
+
+/* Interview Schedule Navbar -------- */
+.__interview_Top_Navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 0 4em;
+}
+
+.robo,  .sound {
+  font-size: 35px;
+  color: white;
+}
+
+.sound {
+  font-size: 28px;
+}
+
+
 
 @media screen and (max-width: 1025px) {
   .LayoutContainer__LeftSideContainer {
