@@ -10,6 +10,9 @@ function EditProfile() {
 
     const [userData, setuserData] = useState({
         profileImage:{},
+        firstname:" ",
+        lastname:" ",
+        email:" ",
         phone_number: " ",
         dob: "",
         country: " ",
@@ -86,17 +89,17 @@ const updateUserDetails = async (e,userDataToUpdate) => {
             <div className={Editprofile.container1}>
                 <div className={Editprofile.c1}>
                     <label htmlFor='name' >First Name</label>
-                    <input type='text' id='name' className={Editprofile.input} value={firstname}  ></input>
+                    <input type='text' id='name' className={Editprofile.input} value={firstname}  />
                 </div>
                 <div className={Editprofile.c1}>
                     <label htmlFor='name' >Last Name</label>
-                    <input type='text' id='name' className={Editprofile.input} value={lastname}  ></input>
+                    <input type='text' id='name' className={Editprofile.input} value={lastname}  />
                 </div>
 
             </div>
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
                 <label htmlFor='email'>Email</label>
-                <input type='text' id='email' placeholder='enter email' className={Editprofile.input_mail}  value={email} ></input>
+                <input type='text' id='email' placeholder='enter email' className={Editprofile.input_mail}  value={email} />
             </div>
 
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
