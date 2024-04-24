@@ -27,7 +27,9 @@
   margin-top: 40px;
 }
 .chatbot_bg {
-  width: 30%;
+  width: 20%;
+  height: auto;
+  object-fit: contain;
 }
 .chatbot_full_image {
   background: linear-gradient(90deg, #0050d1 0%, #00296b 100%);
@@ -68,7 +70,6 @@
   justify-content: space-between;
   height: 70px;
   background: linear-gradient(90deg, #0050d1 0%, #00296b 100%);
-
   width: 100%;
 }
 .ai_search_icons {
@@ -216,10 +217,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.search_answer {
   padding: 10px;
-  margin-top: 30px;
 }
 
 .search_answer_two {
@@ -285,5 +283,5 @@
   font-family: inter;
 }
 .search_answer_total {
-  margin-top: 70px;
+  margin-top: 30px;
 }
