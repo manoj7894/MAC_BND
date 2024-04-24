@@ -139,7 +139,7 @@ export default function HRDashboard() {
                   </div>
                   <div className={pages.__post_body}>
                     <span>{data.location}</span>
-                    <span>{data.jobExperience}</span>
+                    <span>{data.jobExperience} years</span>
                   </div>
                   <div className={pages.__post_Footer}> <span>{data.totalApplication ? data.totalApplication : 0}</span> application(s)  </div>
                 </div>
