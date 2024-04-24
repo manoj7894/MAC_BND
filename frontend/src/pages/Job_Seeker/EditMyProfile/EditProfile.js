@@ -104,7 +104,7 @@ const updateUserDetails = async (e,userDataToUpdate) => {
 
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
                 <label htmlFor='number'>Phone</label>
-                <input type='number' id='number' name='phone_number' placeholder='+91 | Phone Number' className={Editprofile.input} value={userData.phone_number} onChange={HandleChange}></input>
+                <input type='number' id='number' name='phone_number' placeholder='+91 | Phone Number' className={Editprofile.input} value={userData.phone_number} onChange={HandleChange}/>
             </div>
 
             <div className={Editprofile.container1}>
@@ -123,7 +123,7 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                 </div>
                 <div className={Editprofile.c1}>
                     <label htmlFor='education' >Education</label>
-                    <input type='text' id='education' name="course" className={Editprofile.input} placeholder='Education'value={userData.course} onChange={HandleChange}></input>
+                    <input type='text' id='education' name="course" className={Editprofile.input} placeholder='Education'value={userData.course} onChange={HandleChange}/>
                 </div>
 
             </div>
