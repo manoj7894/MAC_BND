@@ -38,7 +38,6 @@ const jobRoutes = require("./Routes/Job.Route");
 app.use("/api/jobs", jobRoutes);
 //!  JObs (HR) Related  Routes and import
 
-
 const Port = process.env.PORT;
 
 // Resume Routes
@@ -59,4 +58,3 @@ app.listen(Port, async () => {
     console.log(`SOMETHING WENT WRONG : ${err}`);
   }
 });
-

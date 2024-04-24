@@ -18,8 +18,6 @@ const getUser = async (req, res) => {
 
     // res.json({ userDetails:user});
 
-
-
     // res.json({
     //   name: user.name,
     //   email: user.email,
@@ -29,7 +27,6 @@ const getUser = async (req, res) => {
     // });
 
     res.json({ userDetails: user });
-
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -242,6 +239,11 @@ const updateUserField = async (req, res) => {
   }
 };
 
-
-
-module.exports = { signUp, login, forgotPassword, resetPassword, getUser,updateUserField };
+module.exports = {
+  signUp,
+  login,
+  forgotPassword,
+  resetPassword,
+  getUser,
+  updateUserField,
+};
