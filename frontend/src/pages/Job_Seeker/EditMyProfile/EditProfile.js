@@ -17,16 +17,16 @@ function EditProfile() {
   const [firstname, lastname] = username.split(" ");
   const [isLoading, setLoading] = useState(false)
   const [userData, setuserData] = useState({
-    profileImage:{},
+    profileImage: {},
     phone_number: " ",
     dob: "",
     country: " ",
     course: " ",
-    website:" ",
-    gender:" ",
-    marital_status:" ",
-    biography:" ",
-    experience:" "
+    website: " ",
+    gender: " ",
+    marital_status: " ",
+    biography: " ",
+    experience: " "
   });
 
 
@@ -136,8 +136,8 @@ function EditProfile() {
 
             </div>
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='email'>Email</label>
-                <input type='text' id='email' placeholder='enter email' className={Editprofile.input_mail}  value={email} ></input>
+              <label htmlFor='email'>Email</label>
+              <input type='text' id='email' placeholder='enter email' className={Editprofile.input_mail} value={email} ></input>
             </div>
 
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
@@ -177,9 +177,9 @@ function EditProfile() {
 
               </div>
               <div className={Editprofile.c1}>
-                    <label htmlFor='education' >Education</label>
-                    <input type='text' id='education' name="course" className={Editprofile.input} placeholder='Education'value={userData.course} onChange={HandleChange}></input>
-                </div>
+                <label htmlFor='education' >Education</label>
+                <input type='text' id='education' name="course" className={Editprofile.input} placeholder='Education' value={userData.course} onChange={HandleChange}></input>
+              </div>
 
             </div>
 
@@ -232,7 +232,7 @@ function EditProfile() {
 
               <div className={Editprofile.c1}>
                 <label htmlFor='Nationality' >Nationality</label>
-                <select id='Nationality' className={Editprofile.input} name="country"onChange={HandleChange}>
+                <select id='Nationality' className={Editprofile.input} name="country" onChange={HandleChange}>
                   <option defaultValue={userData.country} disabled>{userData.country}</option>
                   <option value="Indian">Indian</option>
                   <option value="Non-indian">non-indian</option>
@@ -242,8 +242,8 @@ function EditProfile() {
             </div>
 
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='biography'>Biography</label>
-                <textarea id='biography'name='biography' className={Editprofile.bio} placeholder='write down your biography here. Let recuiter know about you...' value={userData.biography} onChange={HandleChange}></textarea>
+              <label htmlFor='biography'>Biography</label>
+              <textarea id='biography' name='biography' className={Editprofile.bio} placeholder='write down your biography here. Let recuiter know about you...' value={userData.biography} onChange={HandleChange}></textarea>
             </div>
 
             <button type='button' className={Editprofile.save_change} onClick={(e) => updateUserDetails(e, userData)}>Save Changes</button>
