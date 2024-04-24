@@ -42,13 +42,13 @@
   cursor: default;
   outline: none;
 }
+
 .profile_main_container{
    border: 1px solid rgb(231, 231, 231);
     width: 95%;
     margin: 0.5rem auto;
     position: relative;
     min-height: 100vh;
-    
 }
 .form_container input{
     height: 45px;
@@ -60,7 +60,6 @@
     cursor: default;
     outline:none;
 }
-
 .form_container label {
   /* font-size: small; */
   font-weight: bold;
