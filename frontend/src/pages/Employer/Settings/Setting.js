@@ -162,14 +162,11 @@ function Setting() {
 
         );
 
-
-
       // Add cases for other setting types as needed
       default:
         return (
-          <div>
-            <p>Select any option from the list</p>
-          </div>
+          <>
+          </>
         );
     }
   };
