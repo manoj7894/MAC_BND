@@ -55,7 +55,7 @@ const[name,setname]=useState([])
     return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
   };
   
-  const [PreAssesment] =useState(false) //if there will be any skill test questions for user then it will be true
+  const [PreAssesment] =useState(true) //if there will be any skill test questions for user then it will be true
 
   const handleApply = (e,item) => {
     e.preventDefault();
@@ -249,7 +249,7 @@ const[name,setname]=useState([])
                 </div>
               </div>
               <h2>Work Experience (Optional)</h2><br/>
-              <div className={Profile_style.name_section}>
+              {userData.experience==="Experience"?<div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="company">Title</label>
                   <input type="text" id="company" value={userData.job_title||""} readOnly />
@@ -277,7 +277,16 @@ const[name,setname]=useState([])
                     readOnly
                   />
                 </div>
-              </div>
+              </div>:
+               <div className={Profile_style.input_name_container}>
+               <label htmlFor="percentage">Experience</label>
+               <input
+                 type="text"
+                 id="percentage"
+                 value={userData.experience||""}
+                 readOnly
+               />
+             </div>}
               <div className={Profile_style.biography_section}>
           <div className={Profile_style.input_biography_container}>
           <label htmlFor="biography">Biography</label>

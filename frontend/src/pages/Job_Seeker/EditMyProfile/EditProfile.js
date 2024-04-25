@@ -101,10 +101,7 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                     <label htmlFor='name' >Full Name</label>
                     <input type='text' id='name' name='name' className={Editprofile.input} value={userData.name||""} onChange={HandleChange} ></input>
                 </div>
-                {/* <div className={Editprofile.c1}>
-                    <label htmlFor='lastname' >Last Name</label>
-                    <input type='text' id='lastname' name='lastname'  className={Editprofile.input} value={lastname||""} onChange={HandleChange} ></input>
-                </div> */}
+              
 
             </div>
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
@@ -113,8 +110,8 @@ const updateUserDetails = async (e,userDataToUpdate) => {
             </div>
 
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='number'>Phone</label>
-                <input type='number' id='number' name='phone_number' placeholder='+91 | Phone Number' className={Editprofile.input} value={userData.phone_number||""} onChange={HandleChange}></input>
+                <label htmlFor='number'>Phone Number (must have 10 digits*)</label>
+                <input type='tel' id='number' pattern="[0-9]{10}" name='phone_number' placeholder='+91 | Phone Number' className={Editprofile.input} value={userData.phone_number||""} onChange={HandleChange}></input>
             </div>
             <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
                 <label htmlFor='web'>Website</label>
