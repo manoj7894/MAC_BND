@@ -207,6 +207,10 @@ const updateUserField = async (req, res) => {
     const { email } = req.body; // Extract the email from the request body
     const updatedUserData = req.body; // All updated user data is in the request body
 
+    // change the skils structure according to the model skils structure
+    let updatedSkils = updatedUserData.skills.map((data, index) => ({ name: data.trim(), index }))
+    updatedUserData.skills = updatedSkils
+
     // Find the user by email
     const user = await User.findOne({ email });
     if (!user) {
