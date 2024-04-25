@@ -24,7 +24,7 @@ function ApplicationStatus() {
 
     console.log(popUp)
     return (
-        <div>
+        <div className={ApplicationCss.main_container}>
             {/* ---------selection of ApplicationStatus----- */}
             <div className={ApplicationCss.selection}>
 
