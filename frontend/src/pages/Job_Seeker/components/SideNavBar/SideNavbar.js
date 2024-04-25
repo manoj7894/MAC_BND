@@ -136,10 +136,12 @@ function SideNavbar() {
 export default SideNavbar;
 
 function DropDownMENU({ userName, userLogOut }) {
+  const navigateTO = useNavigate()
+
   return (
     <div className={navStyle.ProfileDropDownContainer}>
       <p className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Name}`}> {userName && userName}</p>
-      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`}>Edit Profile</button>
+      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={(e)=> navigateTO("/settings/editprofile")}>Edit Profile</button>
       <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={userLogOut}>  <RiLogoutCircleRLine className={navStyle.logOutButtonICON} />
         Log Out </button>
     </div>
