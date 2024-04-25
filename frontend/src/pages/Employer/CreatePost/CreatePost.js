@@ -227,6 +227,7 @@ export default function CreatePost() {
 
           <div className={pages.__input_Grps}>
             <label htmlFor="skilRequired">Skill Required</label> <br />
+            <p style={{color:'green', fontSize:'10px', paddingBottom:'5px'}}>*Please separate your job skill with comma.*</p>
             <input
               type="text"
               name="skilRequired"

@@ -552,7 +552,8 @@ p {
 
 .hr_job_detail_skill_container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
 }
 
 .hr_job_detail_location{

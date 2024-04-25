@@ -81,6 +81,7 @@ export default function HRDashboard() {
         .then((response) => {
           if (response.data.success) {
             toast.success(`Job deleted successfully`);
+            setSelectedJobId(null);
             loadJobPost();
           }
         });
