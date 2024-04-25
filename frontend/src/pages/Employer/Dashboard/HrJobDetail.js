@@ -25,12 +25,12 @@ const HrJobDetail = ({ jobId }) => {
     <>
         <div key={job && job._id}>
           <h2>{job && job.jobTitle} needed.</h2>
-          <p style={{ width: "50vw" }}>{job && job.jobDescription}</p>
+          <p style={{ width: "66vw" }}>{job && job.jobDescription}</p>
           <p style={{ paddingTop: "20px" }}>
             <strong>Requirements</strong>
           </p>
-          <p style={{ width: "50vw",textAlign:'justify'}}>{job && job.responsibility}</p>
-          <p style={{ width: "50vw",textAlign:'justify'}}>{job && job.responsibility}</p>
+          <p style={{ width: "66vw",textAlign:'justify'}}>{job && job.responsibility}</p>
+          <p style={{ width: "66vw",textAlign:'justify'}}>{job && job.responsibility}</p>
 
           <div className={pages.hr_job_detail_skill_container_main}>
             <div>
