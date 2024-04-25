@@ -1,12 +1,175 @@
-
-import React, { useState } from 'react'
-import SettingStyle from '../Settings/Setting.module.css'
+import React, { useState } from 'react';
+import SettingStyle from '../Settings/Setting.module.css';
 import { useNavigate } from 'react-router-dom';
+import { FiUsers } from "react-icons/fi";
+import { FaArrowRightToBracket } from "react-icons/fa6";
+import { FaSync } from "react-icons/fa";
+import { RiUserSettingsFill } from "react-icons/ri";
+import { TbUserExclamation } from "react-icons/tb";
 
 function Setting() {
   const [settingtype, setsettingtype] = useState("");
-  const username = localStorage.getItem("name")
+  const username = localStorage.getItem("name");
   const navi = useNavigate();
+
+  // Function to render content based on setting type
+  const renderSettingContent = () => {
+    switch (settingtype) {
+      case "Setting/Profile":
+        return (
+          <div className={SettingStyle.profile_designs}>
+            {/* Content for Profile setting */}
+            <button className={SettingStyle.add_btn}>+ Add Profile</button>
+
+
+            <div className={SettingStyle.Profile_cont1}>
+
+              <div className={SettingStyle.me_profile_box}>
+                <img
+                  src="https://a.storyblok.com/f/191576/1200x800/215e59568f/round_profil_picture_after_.webp"
+                  alt="profile_img"
+                />
+                <div className={SettingStyle.my_name_sec}>
+                  <h4>{username}</h4>
+                  <button onClick={() => { navi('/Setting/Editprofile') }}>Edit My Profile</button>
+                </div>
+                <div className={SettingStyle.logout_btn}>
+                  <p><FaArrowRightToBracket /></p>
+                  <span>Log Out</span>
+                </div>
+              </div>
+              <div className={SettingStyle.manage_account}>
+                <hr></hr>
+                <p><span><FiUsers />
+                </span>Manage Account</p>
+              </div>
+
+            </div>
+            <div className={SettingStyle.Profile_cont2}>
+
+              <div className={SettingStyle.Profile_cont2_One}>
+                <p><FaSync /></p><span>Sync</span>
+
+              </div>
+              <div className={SettingStyle.Profile_cont2_One}>
+
+                <p><RiUserSettingsFill /></p><span>Profile Preference</span>
+
+              </div>
+              <div className={SettingStyle.Profile_cont2_One}>
+
+                <p><TbUserExclamation /></p><span>Personal Info</span>
+
+              </div>
+            </div>
+          </div>
+        );
+      case "Setting/privacy":
+        return (
+          <div>
+            {/* Content for Privacy setting */}
+            <h3>Privacy Settings</h3>
+            <p>This is where you can manage your privacy preferences.</p>
+          </div>
+        );
+      case "Setting/appearance":
+        return (
+          <div>
+            <button className={SettingStyle.add_btn}>+ Add Profile</button>
+            <div className={`${SettingStyle.Appearance} ${SettingStyle.Profile_cont2}`}>
+
+              <div className={SettingStyle.Profile_cont2_One}>
+                <span>Dark Mode</span>
+              </div>
+
+              <div className={SettingStyle.Profile_cont2_One}>
+                <span>Font Size</span>
+              </div>
+
+              <div className={SettingStyle.Profile_cont2_One}>
+                <span>Any other appearance button</span>
+              </div>
+
+
+            </div>
+
+          </div>
+        );
+
+      case "Setting/notification":
+        return (
+          <div>
+            <button className={SettingStyle.add_btn}>+ Add Profile</button>
+            <div className={`${SettingStyle.notification} ${SettingStyle.Profile_cont1}`}>
+
+              <div className={SettingStyle.checkboxex}>
+                <label for='check'>gsbvcxbv</label>
+                <div className={SettingStyle.checkbox1}>
+                  <input type='checkbox' id='check' className={SettingStyle.click}></input>
+                  <span>Allow Notification</span>
+                </div>
+              </div>
+
+
+              <div className={SettingStyle.checkboxex}>
+                <label for='check'>gsbvcxbv</label>
+                <div className={SettingStyle.checkbox1}>
+                  <input type='checkbox' id='check' className={SettingStyle.click}></input>
+                  <span>Allow Notification</span>
+                </div>
+              </div>
+
+
+              <div className={SettingStyle.checkboxex}>
+                <label for='check'>gsbvcxbv</label>
+                <div className={SettingStyle.checkbox1}>
+                  <input type='checkbox' id='check' className={SettingStyle.click}></input>
+                  <span>Allow Notification</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        );
+      case "Setting/reset":
+        return (
+          <div>
+
+          </div>
+
+        );
+      case "Setting/call":
+        return (
+          <div>
+
+          </div>
+
+        );
+
+      case "Setting/help":
+        return (
+          <div>
+
+          </div>
+
+        );
+      case "Setting/support":
+        return (
+          <div>
+
+          </div>
+
+        );
+
+      // Add cases for other setting types as needed
+      default:
+        return (
+          <>
+          </>
+        );
+    }
+  };
 
   return (
     <div className={SettingStyle.my_setting_container}>
@@ -23,7 +186,7 @@ function Setting() {
           />
           <div className={SettingStyle.my_name_section}>
             <h4>{username}</h4>
-            <button onClick={() => { navi('/profile') }}>Edit My Profile</button>
+            <button onClick={() => { navi('/Setting/Editprofile') }}>Edit My Profile</button>
           </div>
         </div>
         <h2>Settings</h2>
@@ -33,7 +196,7 @@ function Setting() {
           <div
             className={
               settingtype === "Setting/Profile"
-                ? `${SettingStyle.setting_opt_active}`
+                ? `${SettingStyle.setting_opt_active} `
                 : `${SettingStyle.setting_opt}`
             }
             onClick={() => setsettingtype("Setting/Profile")}
@@ -53,14 +216,14 @@ function Setting() {
           </div>
           <div
             className={
-              settingtype === "Setting/appearence"
+              settingtype === "Setting/appearance"
                 ? `${SettingStyle.setting_opt_active}`
                 : `${SettingStyle.setting_opt}`
             }
-            onClick={() => setsettingtype("Setting/appearence")}
+            onClick={() => setsettingtype("Setting/appearance")}
           >
             {" "}
-            <i className="fa-solid fa-wand-magic-sparkles"></i>Appearence
+            <i className="fa-solid fa-wand-magic-sparkles"></i>Appearance
           </div>
           <div
             className={
@@ -113,14 +276,18 @@ function Setting() {
           >
             <i className="fa-solid fa-headset"></i>Support
           </div>
+
+
+          {/* Add other setting options here */}
         </div>
         <div className={SettingStyle.setting_opt_right}>
           <h2>{settingtype}</h2>
+          {/* Render the content based on setting type */}
+          {renderSettingContent()}
           {settingtype === "" && <p>Select any option from the list</p>}
         </div>
       </div>
     </div>
-  )
+  );
 }
-
 export default Setting

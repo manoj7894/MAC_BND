@@ -11,12 +11,12 @@ function CreatePostPreview() {
   const { title } = useParams();
   const { state } = useLocation();
 
-  console.log("PreviewState", {state});
 
   const handleCancleButtonClick = (e) => {
     e.preventDefault();
     navigateTO("/create_post", { state: { ...state } })
   }
+
 
   const handleCreatePost = (e) => {
     setLoading(true)
@@ -33,7 +33,7 @@ function CreatePostPreview() {
     formData.append("jobExperience", state.jobExperience);
     formData.append("education", state.education);
     formData.append("responsibility", state.responsibility);
-    formData.append("howToApply", state.howToApply);
+   formData.append("howToApply", state.howToApply);
     const mcqs = state.mcq ?? [];
 
     // Append MCQs if available
@@ -99,7 +99,12 @@ function CreatePostPreview() {
             </p>
 
             <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-              <strong>Skils: </strong>  <span> {state?.skilRequired}</span>
+              <strong>Skils: </strong>  {
+                state?.skilRequired?.map((skils, index)=>{
+                  return <span key={index} className={pages.__PostPreviewSkilsTag}>{skils}</span>
+                })
+               
+              }
             </p>
 
             <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
