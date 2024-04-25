@@ -17,6 +17,7 @@ function CreatePostPreview() {
     navigateTO("/create_post", { state: { ...state } })
   }
 
+
   const handleCreatePost = (e) => {
     setLoading(true)
     e.preventDefault();
@@ -94,7 +95,12 @@ function CreatePostPreview() {
             </p>
 
             <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
-              <strong>Skils: </strong>  <span> {state?.skilRequired}</span>
+              <strong>Skils: </strong>  {
+                state?.skilRequired?.map((skils, index)=>{
+                  return <span key={index} className={pages.__PostPreviewSkilsTag}>{skils}</span>
+                })
+               
+              }
             </p>
 
             <p className={`${pages.__PostPreviewPage_Description}, ${pages.__PostPreviewPage_Skils}`}>
