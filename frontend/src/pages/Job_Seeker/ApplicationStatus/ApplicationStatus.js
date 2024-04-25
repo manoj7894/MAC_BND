@@ -76,7 +76,7 @@ function ApplicationStatus() {
 
             </div>
 
-            ---------------- right side profile container------------
+            {/* ---------------- right side profile container------------ */}
 
 
             <div className={ApplicationCss.Profile_Main}>
