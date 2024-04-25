@@ -24,7 +24,7 @@ function ApplicationStatus() {
 
     console.log(popUp)
     return (
-        <div className={ApplicationCss.main_container}>
+        <div>
             {/* ---------selection of ApplicationStatus----- */}
             <div className={ApplicationCss.selection}>
 
@@ -76,7 +76,36 @@ function ApplicationStatus() {
 
             </div>
 
+            ---------------- right side profile container------------
 
+
+            <div className={ApplicationCss.Profile_Main}>
+
+                {/*-------------- first profile box -------------*/}
+                {/* <div className={`${ApplicationCss.container_right1} ${ApplicationCss.profile}`}>
+
+
+                    <div className={ApplicationCss.profile_image}>
+                        <FaUser className={ApplicationCss.profile_image1} />
+                    </div>
+                    <p>Candidate_Name </p>
+                    <p className={ApplicationCss.jobTitle}>Job Title</p>
+                    <button className={ApplicationCss.Edit_Profile_btn}>Edit Profile</button>
+                </div> */}
+
+                {/* ---------------------second experience box ------------*/}
+                {/* <div className={`${ApplicationCss.container_right1} ${ApplicationCss.experience}`}>
+                    <h3>Experience</h3>
+                    <p>years</p>
+                    <h3>Skills And Experience</h3>
+                    <p>UI Designer</p>
+                    <p>UX Designer</p>
+                    <button className={ApplicationCss.ViewProfile_button}>View Profile</button>
+                </div> */}
+            </div>
+            {
+                popUp ? <div className={ApplicationCss.secondaryDiv}><YourApplicationStatus status={popUp} toggleFunc={handleClick2} /></div> : null
+            }
         </div>
     )
 }
