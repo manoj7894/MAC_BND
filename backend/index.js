@@ -39,7 +39,7 @@ app.use("/api/jobs", jobRoutes);
 //!  JObs (HR) Related  Routes and import
 
 
-const Port = process.env.PORT;
+
 
 // Resume Routes
 const ResumeRoutes = require("./Routes/ResumeRoutes.js");

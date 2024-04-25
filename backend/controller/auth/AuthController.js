@@ -217,11 +217,12 @@ const resetPassword = async (req, res) => {
 
 const updateUserField = async (req, res) => {
   try {
-    const { email } = req.body; // Extract the email from the request body
+    const {email} =req.query;
+    // const  {email} = req.body; // Extract the email from the request body
     const updatedUserData = req.body; // All updated user data is in the request body
 
     // Find the user by email
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ email:email });
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }

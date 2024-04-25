@@ -17,11 +17,12 @@ const dispatch =useDispatch()
   const Job =useLocation().state
 
   const email = localStorage.getItem("email");
-  const username = localStorage.getItem("name");
+  // const username = localStorage.getItem("name");
   const [userData, setuserData] = useState([]);
-//   console.log(userData);
+  console.log(userData);
+const[name,setname]=useState([])
 
-  const [firstname, lastname] = username.split(" ");
+
   // const resumes=userData.resume[0].filename
   // console.log(resumes);
 
@@ -31,9 +32,13 @@ const dispatch =useDispatch()
         `http://localhost:8080/api/user?email=${email}`
       );
       setuserData(response.data.userDetails);
+      setname(response.data.userDetails.name.split(" "))
+      
+
     };
     fetchData();
   }, [email]);
+
 
   const getFirstResumeFilename = () => {
     if (userData.resume && userData.resume.length > 0) {
@@ -141,22 +146,22 @@ const dispatch =useDispatch()
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="firstname">First Name</label>
-                  <input type="text" id="firstname" value={firstname} readOnly />
+                  <input type="text" id="firstname" value={name[0]||""} readOnly />
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="lastname">Last Name</label>
-                  <input type="text" id="lastname" value={lastname} readOnly />
+                  <input type="text" id="lastname" value={name[1]||""} readOnly />
                 </div>
               </div>
               <div className={Profile_style.email_box}>
                 <label htmlFor="email">Email</label>
-                <input type="email" id="email" value={userData.email} readOnly />
+                <input type="email" id="email" value={userData.email||""} readOnly />
                 <div className={Profile_style.input_container}>
                     <label htmlFor="resume">Upload Resume *</label>
                     <input
                       type="text"
                       id="resume"
-                      value={firstResumeFilename}
+                      value={firstResumeFilename||""}
                       readOnly
                     />
                   </div>
@@ -165,8 +170,7 @@ const dispatch =useDispatch()
                     <input
                       type="text"
                       id="website"
-                      defaultValue=" "
-                      value={userData.website}
+                      value={userData.website||""}
                       readOnly
                     />
                   </div>
@@ -178,18 +182,18 @@ const dispatch =useDispatch()
                     <input
                       type="number"
                       id="phonenumber"
-                      value={userData.phone_number}
+                      value={userData.phone_number||""}
                       readOnly
                     />
                   </div>
           
                   <div className={Profile_style.input_container}>
                     <label htmlFor="country">Country</label>
-                    <input type="text" id="country" value={userData.country} readOnly />
+                    <input type="text" id="country" value={userData.country||""} readOnly />
                   </div>
                   <div className={Profile_style.input_container}>
                     <label htmlFor="gender">Gender</label>
-                    <input type="text" id="gender" value={userData.gender} readOnly />
+                    <input type="text" id="gender" value={userData.gender||""} readOnly />
                   </div>
                 </div>
                 <div className={Profile_style.right_basic_details}>
@@ -198,17 +202,17 @@ const dispatch =useDispatch()
                     <input
                       type="date"
                       id="DOB"
-                      value={formatISODateForInput(userData.dob)}                      
+                      value={formatISODateForInput(userData.dob)||""}                      
                       readOnly
                     />
                   </div>
                   <div className={Profile_style.input_container}>
                     <label htmlFor="state">State</label>
-                    <input type="text" id="state" value={userData.state} readOnly/>
+                    <input type="text" id="state" value={userData.state||""} readOnly/>
                   </div>
                   <div className={Profile_style.input_container}>
                     <label htmlFor="marital">Marital Status</label>
-                    <input type="text" id="marital" value={userData.marital_status} readOnly />
+                    <input type="text" id="marital" value={userData.marital_status||""} readOnly />
                   </div>
                 
                 </div>
@@ -217,14 +221,14 @@ const dispatch =useDispatch()
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="course">Course</label>
-                  <input type="text" id="course" value={userData.course} readOnly/>
+                  <input type="text" id="course" value={userData.course||""} readOnly/>
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="specialization">Specialization</label>
                   <input
                     type="text"
                     id="specialization"
-                    value={userData.course}
+                    value={userData.course||""}
                     readOnly
                   />
                 </div>
@@ -232,14 +236,14 @@ const dispatch =useDispatch()
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="university">University</label>
-                  <input type="text" id="university" value={userData.college} readOnly />
+                  <input type="text" id="university" value={userData.college||""} readOnly />
                 </div>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="percentage">Percentage</label>
                   <input
                     type="text"
                     id="percentage"
-                    value={`${userData.percentage}%`}
+                    value={`${userData.percentage}%`||""}
                     readOnly
                   />
                 </div>
@@ -248,7 +252,7 @@ const dispatch =useDispatch()
               <div className={Profile_style.name_section}>
                 <div className={Profile_style.input_name_container}>
                   <label htmlFor="company">Title</label>
-                  <input type="text" id="company" value={userData.job_title} readOnly />
+                  <input type="text" id="company" value={userData.job_title||""} readOnly />
                   <label htmlFor="start">Start Date</label>
                   <input
                     type="date"
@@ -262,14 +266,14 @@ const dispatch =useDispatch()
                   <input
                     type="text"
                     id="experience"
-                    value={userData.company}
+                    value={userData.company||""}
                     readOnly
                   />
                   <label htmlFor="end">End Date</label>
                   <input
                     type="date"
                     id="end"
-                    value={formatISODateForInput(userData.company_end_date)}                      
+                    value={formatISODateForInput(userData.company_end_date)||""}                      
                     readOnly
                   />
                 </div>
@@ -280,7 +284,7 @@ const dispatch =useDispatch()
                   <input
                     type="text"
                     id="biography"
-                    value={userData.biography}
+                    value={userData.biography||""}
                     readOnly
                   />
           </div>
