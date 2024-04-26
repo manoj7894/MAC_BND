@@ -33,15 +33,19 @@ function CreatePostPreview() {
     formData.append("jobExperience", state.jobExperience);
     formData.append("education", state.education);
     formData.append("responsibility", state.responsibility);
-    formData.append("howToApply", state.howToApply);
-    
-    state?.mcq?.forEach((mcq, index) => {
-      formData.append(`mcq[${index}][question]`, mcq.question);
-      mcq.options.forEach((option, optionIndex) => {
-        formData.append(`mcq[${index}][options][${optionIndex}]`, option);
+   formData.append("howToApply", state.howToApply);
+    const mcqs = state.mcq ?? [];
+
+    // Append MCQs if available
+    if (mcqs.length > 0) {
+      mcqs.forEach((mcq, index) => {
+        formData.append(`mcq[${index}][question]`, mcq.question);
+        mcq.options.forEach((option, optionIndex) => {
+          formData.append(`mcq[${index}][options][${optionIndex}]`, option);
+        });
+        formData.append(`mcq[${index}][correctAnswer]`, mcq.correctAnswer);
       });
-      formData.append(`mcq[${index}][correctAnswer]`, mcq.correctAnswer);
-    });
+    }
     setLoading(true);
     axios.post("http://localhost:8080/api/jobs/create-job", formData, {
       headers: { "Content-Type": "multipart/form-data" },

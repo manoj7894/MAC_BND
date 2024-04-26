@@ -29,6 +29,8 @@ const create = async (req, res) => {
       .split(",")
       .map((skill, index) => ({ name: skill.trim(), index }));
 
+      const mcqData = mcq ? mcq : [];
+
     const newPost = {
       jobPoster: result.secure_url,
       jobTitle,
@@ -43,7 +45,7 @@ const create = async (req, res) => {
       responsibility,
       howToApply,
       createdAt: Date.now(),
-      mcq
+      mcq: mcqData
     };
 
     const mongooseResponse = await jobCollection.create(newPost);

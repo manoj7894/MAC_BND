@@ -237,6 +237,7 @@ export default function CreatePost() {
               </select>
             </div>
 
+
             <div className={pages.__input_Grps}>
               <label htmlFor="skilRequired">Skill Required</label> <br />
               {
