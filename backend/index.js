@@ -60,6 +60,6 @@ app.listen(Port, async () => {
     await ConnectDb();
     console.log(`SERVER STARED  : http://localhost:${process.env.PORT}`);
   } catch (err) {
-    console.log(`SOMETHING WENT WRONG : ${err}`);
+    console.log(`SOMETHING WENT WRONG : ${err}`); 
   }
 });
