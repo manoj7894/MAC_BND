@@ -40,6 +40,8 @@ app.use("/api/jobs", jobRoutes);
 
 
 
+const Port = process.env.PORT;
+
 
 // Resume Routes
 const ResumeRoutes = require("./Routes/ResumeRoutes.js");
@@ -51,14 +53,16 @@ const myJobRoutes = require("./Routes/MyJob.Route");
 app.use("/api/user/My-jobs", myJobRoutes);
 //!  MyJobs (JobSeeker) Related  Routes and import
 
-const Port = process.env.Port;
+
+
+
+
 
 app.listen(Port, async () => {
   try {
     await ConnectDb();
-    console.log(`SERVER STARED  : http://localhost:${process.env.Port}`);
+    console.log(`SERVER STARED  : http://localhost:${process.env.PORT}`);
   } catch (err) {
-    console.log(`SOMETHING WENT WRONG : ${err}`);
+    console.log(`SOMETHING WENT WRONG : ${err}`); 
   }
 });
-

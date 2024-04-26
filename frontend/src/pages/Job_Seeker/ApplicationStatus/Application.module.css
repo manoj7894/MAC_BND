@@ -1,6 +1,14 @@
+.main_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-left: 10%;
+}
+
 .selection {
-    height: 9vh;
-    width: 70%;
+    height: 10vh;
+    width: 75%;
     border: 2px solid black;
     margin-left: 2%;
     margin-top: 5vh;
@@ -10,16 +18,15 @@
 }
 
 .Select {
-    position: relative;
-    top: 1.5vh;
-    display: flex;
-    width: 18vw;
-    height: 6vh;
+    width: 20vw;
+    height: 7vh;
     border-radius: 35px;
-    padding: 10px;
+    margin-top: 1vh;
+    padding: 15px;
     display: flex;
     justify-content: flex-start;
-    gap: 1.2vw;
+    align-items: center;
+    gap: 1.1vw;
     font-size: 20px;
     font-weight: bold;
 }
@@ -39,8 +46,8 @@
 
 /*--------company applied-------------------*/
 .company_applied {
-    /* height: 28vh; */
-    width: 70%;
+    height: 30vh;
+    width: 75%;
     border: 2px solid black;
     margin-left: 2%;
     margin-top: 2%;
@@ -62,8 +69,9 @@
     border: 1px solid black;
     display: flex;
     justify-content: center;
+    align-items: center;
     padding: 10px;
-    margin-top: 2%;
+    margin-top: 4%;
 }
 
 .Clogo {
@@ -78,7 +86,7 @@
 }
 
 .Product_Discription1 {
-    font-size: 32px;
+    font-size: 30px;
     font-weight: bold;
     margin-bottom: 0px !important;
 }
@@ -93,6 +101,7 @@
 .money {
     display: flex;
     justify-content: flex-start;
+    gap: 0.5vw;
 }
 
 .note {
@@ -107,19 +116,18 @@
 
 .money span {
     color: rgb(107, 107, 107);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
 }
 
 .view_status_button {
     width: 13vw;
     background-color: rgb(153, 152, 152);
-    height: 5vh;
+    height: 6vh;
     color: white;
-    font-size: 22px;
-    padding: 5px;
-    font-weight: bold;
-    border-radius: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 22px;
     margin-top: 7vh;
 }
 
@@ -213,9 +221,10 @@
     border-radius: 10px;
 }
 
-.secondaryDiv{
+.secondaryDiv {
     position: absolute;
     top: 0%;
     width: 100%;
     backdrop-filter: blur(15px);
+    left: 0%;
 }
