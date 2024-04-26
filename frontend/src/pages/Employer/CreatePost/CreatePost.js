@@ -225,7 +225,7 @@ export default function CreatePost() {
                 name="salaryRange"
                 id="salaryRange"
                 onChange={handleOnChange}
-                value={post.salaryRange}
+                value={post.salaryRange} 
               >
                 <option value="">Select your job experience</option>
                 <option value="2-3">2 - 3 LPA</option>
