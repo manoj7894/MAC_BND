@@ -7,7 +7,7 @@ import { MdOutlineLocationOn } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 import { BiSolidDropletHalf } from "react-icons/bi";
 import { GiMoneyStack } from "react-icons/gi";
-import { FaUser } from "react-icons/fa";
+// import { FaUser } from "react-icons/fa";
 import YourApplicationStatus from './YourApplicationStatus';
 
 
