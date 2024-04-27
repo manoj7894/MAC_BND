@@ -27,10 +27,10 @@ export default function Chatarea() {
   useEffect(() => {
     const style = document.createElement("style");
     style.innerHTML = `
-      .JobSeeker_RightSideContainer__topHeaderContainer__2MnVw {
+      .JobSeeker_RightSideContainer__topHeaderContainer{
         display: none !important;
       }
-      .JobSeeker___OutletContainer__BTBGZ{
+      .JobSeeker___OutletContainer{
         height: 100vh;
       }
       
@@ -44,9 +44,13 @@ export default function Chatarea() {
   return (
     <div className={ChatBotStyle.ai_full}>
       <Helmet>
-        <style>{`
-          .JobSeeker_RightSideContainer__topHeaderContainer__2MnVw {
+      <style>{`
+          .JobSeeker_RightSideContainer__topHeaderContainer {
             display: none !important;
+          }
+
+          .JobSeeker_LayoutContainer__RightSideContainer {
+            height: auto;
           }
         `}</style>
       </Helmet>
