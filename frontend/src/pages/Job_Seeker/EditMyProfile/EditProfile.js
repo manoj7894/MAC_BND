@@ -135,7 +135,7 @@ function EditProfile() {
           {
             isLoading ? <Loader /> : <>
               <div className={Editprofile.cir_container}>
-                <p>Profile picture</p>
+                <h4>Profile picture</h4>
                 <div className={Editprofile.__imgContainer}>
                   <img className={Editprofile.__previewImg} src={userData.profileImage} alt="" onError={(e) => { e.target.src = `${noImg}`; e.onError = null }} onClick={(e) => imgRef.current.click()} />
                   <input type="file" accept='image/*' ref={imgRef} hidden name='profileImage' onChange={handleOnChange} />

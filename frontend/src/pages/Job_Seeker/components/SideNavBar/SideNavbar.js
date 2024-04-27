@@ -119,7 +119,7 @@ function SideNavbar() {
 
           <p className={navStyle.sidenavBar__userName}>
             {name && name}
-            <button onClick={()=>navigateTO('/settings/editprofile')} className={navStyle.editProfileButton}>Edit Profile</button>
+            <button onClick={() => navigateTO('/settings/editprofile')} className={navStyle.editProfileButton}>Edit Profile</button>
           </p>
 
           <DropDownMENU userName={name} userLogOut={handleLogoutClick} />
@@ -142,7 +142,7 @@ function DropDownMENU({ userName, userLogOut }) {
   return (
     <div className={navStyle.ProfileDropDownContainer}>
       <p className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Name}`}> {userName && userName}</p>
-      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={(e)=> navigateTO("/settings/editprofile")}>Edit Profile</button>
+      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={(e) => navigateTO("/settings/editprofile")}>Edit Profile</button>
       <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={userLogOut}>  <RiLogoutCircleRLine className={navStyle.logOutButtonICON} />
         Log Out </button>
     </div>

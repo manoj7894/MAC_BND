@@ -25,10 +25,7 @@ function Setting() {
           <div className={SettingStyle.profile_designs}>
             {/* Content for Profile setting */}
             <button className={SettingStyle.add_btn}>+ Add Profile</button>
-
-
             <div className={SettingStyle.Profile_cont1}>
-
               <div className={SettingStyle.me_profile_box}>
                 <img
                   src={profileImage}
@@ -52,20 +49,14 @@ function Setting() {
 
             </div>
             <div className={SettingStyle.Profile_cont2}>
-
               <div className={SettingStyle.Profile_cont2_One}>
                 <p><FaSync /></p><span>Sync</span>
-
               </div>
               <div className={SettingStyle.Profile_cont2_One}>
-
                 <p><RiUserSettingsFill /></p><span>Profile Preference</span>
-
               </div>
               <div className={SettingStyle.Profile_cont2_One}>
-
                 <p><TbUserExclamation /></p><span>Personal Info</span>
-
               </div>
             </div>
           </div>

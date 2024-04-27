@@ -79,7 +79,6 @@ const userSchema = new mongoose.Schema({
   marital_status: {
     type: String
   },
- 
   profileImage: {
     type: String,
   },
@@ -108,7 +107,6 @@ const userSchema = new mongoose.Schema({
   userType: {
     type: String,
   },
-
   userAppliedJob: [
     {
       jobID: {
