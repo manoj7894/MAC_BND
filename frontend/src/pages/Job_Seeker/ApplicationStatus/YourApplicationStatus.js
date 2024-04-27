@@ -22,6 +22,7 @@ function YourApplicationStatus(props) {
         console.log(newObj[stage] + " niufccefewcggnfgnngecgcuegegguiguigui")
         setCount(newObj[stage])
         console.log(count)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     useEffect(() => {
