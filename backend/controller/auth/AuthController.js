@@ -94,6 +94,7 @@ const signUp = async (req, res) => {
       appliedJob: [],
     });
   } catch (error) {
+    console.log(error)
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -124,6 +125,7 @@ const login = async (req, res) => {
       name,
       email,
       userType: "user",
+      profileImage : user.profileImage,
       savedJob: user.userSavedJob,
       appliedJob: user.userAppliedJob,
     });
