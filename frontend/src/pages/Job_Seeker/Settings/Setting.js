@@ -8,9 +8,13 @@ import { FaSync } from "react-icons/fa";
 import { RiUserSettingsFill } from "react-icons/ri";
 import { TbUserExclamation } from "react-icons/tb";
 
+import { useSelector } from 'react-redux'
+
 function Setting() {
+    const { name,profileImage } = useSelector((state) => state.Assessment.currentUser);
+
   const [settingtype, setsettingtype] = useState("");
-  const username = localStorage.getItem("name");
+  // const username = localStorage.getItem("name");
   const navi = useNavigate();
 
   // Function to render content based on setting type
@@ -24,12 +28,13 @@ function Setting() {
             <div className={SettingStyle.Profile_cont1}>
               <div className={SettingStyle.me_profile_box}>
                 <img
-                  src="https://a.storyblok.com/f/191576/1200x800/215e59568f/round_profil_picture_after_.webp"
+                  src={profileImage}
                   alt="profile_img"
+                  onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }}
                 />
                 <div className={SettingStyle.my_name_sec}>
-                  <h4>{username}</h4>
-                  <button onClick={() => { navi('/Setting/Editprofile') }}>Edit My Profile</button>
+                  <h4>{name}</h4>
+                  <button onClick={() => { navi('/settings/editprofile') }}>Edit My Profile</button>
                 </div>
                 <div className={SettingStyle.logout_btn}>
                   <p><FaArrowRightToBracket /></p>
@@ -176,12 +181,13 @@ function Setting() {
         </div>
         <div className={SettingStyle.my_profile_box}>
           <img
-            src="https://a.storyblok.com/f/191576/1200x800/215e59568f/round_profil_picture_after_.webp"
+            src={profileImage}
             alt="profile_img"
+            onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }}
           />
           <div className={SettingStyle.my_name_section}>
-            <h4>{username}</h4>
-            <button onClick={() => { navi('/Setting/Editprofile') }}>Edit My Profile</button>
+            <h4>{name}</h4>
+            <button onClick={() => { navi('/settings/editprofile') }}>Edit My Profile</button>
           </div>
         </div>
         <h2>Settings</h2>

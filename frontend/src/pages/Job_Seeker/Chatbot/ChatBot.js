@@ -28,11 +28,11 @@ function ChatBot() {
     <div>
       <Helmet>
         <style>{`
-          .JobSeeker_RightSideContainer__topHeaderContainer__2MnVw {
+          .JobSeeker_RightSideContainer__topHeaderContainer{
             display: none !important;
           }
 
-          .JobSeeker_LayoutContainer__RightSideContainer__SxVp2 {
+          .JobSeeker_LayoutContainer__RightSideContainer{
             height: auto;
           }
         `}</style>

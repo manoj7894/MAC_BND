@@ -64,13 +64,7 @@ const signUp = async (req, res) => {
       course,
       course_start_date,
       course_end_date,
-      percentage,
-
-      job_title,
-      company,
-      company_start_date,
-      company_end_date,
-
+      percentage, 
       job_title: req.body.job_title || null,
       company: req.body.company || null,
       company_start_date: req.body.company_start_date || null,
@@ -130,6 +124,7 @@ const login = async (req, res) => {
       name,
       email,
       userType: "user",
+      profileImage : user.profileImage,
       savedJob: user.userSavedJob,
       appliedJob: user.userAppliedJob,
     });
