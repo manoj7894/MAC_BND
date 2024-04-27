@@ -211,8 +211,8 @@ const updateUserDetails = async (e,userDataToUpdate) => {
 
             </div>
             <div className={Editprofile.container1}>
-{/* <h2>Work Experience</h2> */}
-<div className={Editprofile.c1}>
+<h2>Work Experience</h2>
+{/* <div className={Editprofile.c1}>
 <label htmlFor='Nationality' >Experience</label>
                     <select id='Nationality' className={Editprofile.input} name="experience"onChange={HandleChange}>
                         <option defaultValue={userData.country||""} disabled>{userData.experience}</option>
@@ -221,7 +221,7 @@ const updateUserDetails = async (e,userDataToUpdate) => {
 
                     </select>
 
-</div>
+</div> */}
             </div>
             
               <div className={Editprofile.container1}>
@@ -229,8 +229,7 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                 <div className={Editprofile.c1}>
                 
                   <label htmlFor="company">Title</label>
-                  <input type="text" id="company" value={userData.experience==="Experience"?userData.job_title||"":" "} className={Editprofile.input}
-                                     readOnly={userData.experience==="Fresher"?true:false}
+                  <input type="text" id="company" value={userData.job_title||""} className={Editprofile.input}
                                      onChange={HandleChange}
                                      />
                   <label htmlFor="start">Start Date</label>
@@ -238,10 +237,9 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                     type="date"
                     id="start"
                     name='company_start_date'
-                    value={userData.experience==="Experience"?formatISODateForInput(userData.company_start_date)||"":" "}                      
+                    value={formatISODateForInput(userData.company_start_date)||""}                      
                     className={Editprofile.input}
                     onChange={HandleChange}
-                   readOnly={userData.experience==="Fresher"?true:false}
                   />
                 </div>
                 <div className={Editprofile.c1}>
@@ -250,10 +248,9 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                     type="text"
                     id="company"
                     name='company'
-                    value={userData.experience==="Experience"?userData.company ||"":" "}
+                    value={userData.company ||""}
                     className={Editprofile.input}
                     onChange={HandleChange}
-                    readOnly={userData.experience==="Fresher"?true:false}
 
                   />
                   <label htmlFor="end">End Date</label>
@@ -261,10 +258,9 @@ const updateUserDetails = async (e,userDataToUpdate) => {
                     type="date"
                     id="end"
                     name='company_end_date'
-                    value={userData.experience==="Experience"?formatISODateForInput(userData.company_end_date)||"":" "}                      
+                    value={formatISODateForInput(userData.company_end_date)||""}                      
                     className={Editprofile.input}
                     onChange={HandleChange}
-                    readOnly={userData.experience==="Fresher"?true:false}
 
                   />
                 </div>

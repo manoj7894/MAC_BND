@@ -47,6 +47,10 @@ const ProfileDetails = lazy(() =>
 const CandidateProfileDetails = lazy(() =>
   import("../pages/Job_Seeker/EditMyProfile/EditProfile.js")
 );
+const AssesmentInstruction =lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/AssesmentInstruction.js"));
+const JobAssesment= lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesment.js")) ;
+const JobAssesmentResult =lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesmentResult.js"));
+
 const ChatBot = lazy(() => import("../pages/Job_Seeker/Chatbot/ChatBot.js"));
 const Chatarea = lazy(() => import("../pages/Job_Seeker/Chatbot/Chatarea.js"));
 
@@ -306,6 +310,31 @@ function JobSeekerRoutes() {
           </Suspense>
         }
       />
+      <Route
+        path="/skill-assesment-instructions"
+        element={
+          <Suspense>
+            <AssesmentInstruction />
+          </Suspense>
+        }
+      />
+       <Route
+        path="/job-assesment-test"
+        element={
+          <Suspense>
+            <JobAssesment/>
+          </Suspense>
+        }
+      />
+      <Route
+        path="/job-assesment-result"
+        element={
+          <Suspense>
+            <JobAssesmentResult />
+          </Suspense>
+        }
+      />
+     
     </Routes>
   );
 }
