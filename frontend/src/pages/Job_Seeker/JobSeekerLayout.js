@@ -298,7 +298,7 @@ function DashboardTopComponent({ CbToggle }) {
   return (
     <div className={JobSeekerStyle.Dashboard_TopHeader_Container}>
       <div className={JobSeekerStyle.searchFormContainer}>
-        <form className={JobSeekerStyle.DashboardSearchBarBox}>
+        <form className={JobSeekerStyle.DashboardSearchBarBox} onSubmit={(e)=> e.preventDefault()}>
           <div className={JobSeekerStyle.SearchInputBox}>
             <div className={JobSeekerStyle.SearchICONBox}>
               <CiSearch className={JobSeekerStyle.SearchICON} />

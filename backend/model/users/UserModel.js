@@ -82,7 +82,6 @@ const userSchema = new mongoose.Schema({
  
   profileImage: {
     type: String,
-    required: true,
   },
   biography: {
     type: String,

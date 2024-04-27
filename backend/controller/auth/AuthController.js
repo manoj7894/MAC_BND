@@ -124,6 +124,7 @@ const login = async (req, res) => {
       name,
       email,
       userType: "user",
+      profileImage : user.profileImage,
       savedJob: user.userSavedJob,
       appliedJob: user.userAppliedJob,
     });
