@@ -57,9 +57,6 @@ const[name,setname]=useState([])
     return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
   };
 
-  const [PreAssesment] =useState(false) //if there will be any skill test questions for user then it will be true
-
-
   const handleApply = (e,item) => {
     e.preventDefault();
     dispatch(fetchJobDetails(item._id||" "));
