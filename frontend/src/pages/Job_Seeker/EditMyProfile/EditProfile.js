@@ -180,30 +180,21 @@ const updateUserDetails = async (e,userDataToUpdate) => {
 
                 <div className={Editprofile.c1}>
                 <label htmlFor='education' >University/College</label>
-                    <input type='text' id='education' name="course" className={Editprofile.input} placeholder='Education'value={userData.college||""} onChange={HandleChange}></input>
+                    <input type='text' id='education' name="college" className={Editprofile.input} placeholder='Education'value={userData.college||""} onChange={HandleChange}></input>
 
-                <label htmlFor="specialization">Specialization</label>
+  <label htmlFor="percentage">Percentage</label>
                   <input
                     type="text"
-                    id="specialization"
-                    name='specialization'
-                    value={userData.course||""}
-                    className={Editprofile.input}
+                    id="percentage"
+                    value={`${userData.percentage}`||""}
+                    className={Editprofile.input} 
                     onChange={HandleChange}
                   />
-
                 </div>
                 <div className={Editprofile.c1}>
                 <label htmlFor="course">Course</label>
                   <input type="text" id="course" name='course' className={Editprofile.input} value={userData.course||""} onChange={HandleChange}/>
-                  <label htmlFor="percentage">Percentage</label>
-                  <input
-                    type="text"
-                    id="percentage"
-                    value={`${userData.percentage}%`||""}
-                    className={Editprofile.input} 
-                    onChange={HandleChange}
-                  />
+                
                 </div>
                
 
@@ -211,25 +202,16 @@ const updateUserDetails = async (e,userDataToUpdate) => {
 
             </div>
             <div className={Editprofile.container1}>
-<h2>Work Experience</h2>
-{/* <div className={Editprofile.c1}>
-<label htmlFor='Nationality' >Experience</label>
-                    <select id='Nationality' className={Editprofile.input} name="experience"onChange={HandleChange}>
-                        <option defaultValue={userData.country||""} disabled>{userData.experience}</option>
-                        <option value="Fresher">Fresher</option>
-                        <option value="Experience">Experience</option>
+<h2>Work Experience (Optional)</h2>
 
-                    </select>
-
-</div> */}
             </div>
             
               <div className={Editprofile.container1}>
               
                 <div className={Editprofile.c1}>
                 
-                  <label htmlFor="company">Title</label>
-                  <input type="text" id="company" value={userData.job_title||""} className={Editprofile.input}
+                  <label htmlFor="title">Title</label>
+                  <input type="text" id="title" name='job_title' value={userData.job_title||""} className={Editprofile.input}
                                      onChange={HandleChange}
                                      />
                   <label htmlFor="start">Start Date</label>
