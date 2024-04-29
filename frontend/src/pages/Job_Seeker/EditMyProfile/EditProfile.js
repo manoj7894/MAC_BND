@@ -100,11 +100,6 @@ function EditProfile() {
             <input type="text" name="website" id="website" placeholder="Enter your website link" className={styleSheet.Form__input} />
           </div>
 
-          <div className={`${styleSheet.Form__inputRows_Secondry}`} style={{"width": "100%"}}>
-            <label htmlFor="about" className={styleSheet.Form__inputBox_Label}> About</label>
-            <textarea className={styleSheet.Form_About_textArea} placeholder="Write about yourself" id="about" ></textarea>
-          </div>
-
           <div className={`${styleSheet.Form__inputRows_Primary}`}>
 
             <div className={styleSheet.Form__inputBox}>
@@ -163,18 +158,23 @@ function EditProfile() {
             <input type="number" inputmode="numeric" name="percentage" id="percentage" placeholder="Enter your percentage" className={styleSheet.Form__input} />
           </div>
 
+          <div className={`${styleSheet.Form__inputRows_Secondry}`}>
+            <label htmlFor="skills" className={styleSheet.Form__inputBox_Label}> Skills</label>
+            <input type="text" name="skills" id="skills" placeholder="Enter your skils" className={styleSheet.Form__input} />
+          </div>
+
           {/*Work Exp optional part  */}
           <h2 className={styleSheet.Form_WorkEXP_heading}>Work experience (Optional)</h2>
 
           <div className={`${styleSheet.Form__inputRows_Primary}`}>
             <div className={styleSheet.Form__inputBox}>
-              <label htmlFor="college" className={styleSheet.Form__inputBox_Label}> university/College</label>
-              <input type="text" id="college" placeholder="Enter College or university name" className={styleSheet.Form__input} />
+              <label htmlFor="jobTitle" className={styleSheet.Form__inputBox_Label}> Job Title</label>
+              <input type="text" id="jobTitle" placeholder="Enter job title" className={styleSheet.Form__input} />
             </div>
 
             <div className={styleSheet.Form__inputBox}>
-              <label htmlFor="course" className={styleSheet.Form__inputBox_Label}>course</label>
-              <input type="text" id="course" placeholder="Enter course name" className={styleSheet.Form__input} />
+              <label htmlFor="companyName" className={styleSheet.Form__inputBox_Label}>Company Name</label>
+              <input type="text" id="companyName" placeholder="Enter company name" className={styleSheet.Form__input} />
             </div>
           </div>
 
@@ -188,6 +188,11 @@ function EditProfile() {
               <label htmlFor="course" className={styleSheet.Form__inputBox_Label}>course</label>
               <input type="text" id="course" placeholder="Enter course name" className={styleSheet.Form__input} />
             </div>
+          </div>
+
+          <div className={`${styleSheet.Form__inputRows_Secondry}`} style={{"width": "100%"}}>
+            <label htmlFor="about" className={styleSheet.Form__inputBox_Label}> About</label>
+            <textarea className={styleSheet.Form_About_textArea} placeholder="Write about yourself" id="about" ></textarea>
           </div>
 
           <div className={styleSheet.Form__buttonContainer}>
