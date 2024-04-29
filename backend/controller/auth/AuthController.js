@@ -207,7 +207,13 @@ const updateUserField = async (req, res) => {
     const { phone_number, dob, country, course, website, gender, marital_status, biography, experience, skills
     } = req.body;
 
+
+    // change the skils structure according to the model skils structure
+    // let updatedSkils = updatedUserData.skills.map((data, index) => ({ name: data.trim(), index }))
+    // updatedUserData.skills = updatedSkils
+
     const skillArray = skills.split(",").map((skill, index) => ({ name: skill.trim(), index }));
+
 
     // Find the user by email
     const user = await User.findOne({ email: email });
