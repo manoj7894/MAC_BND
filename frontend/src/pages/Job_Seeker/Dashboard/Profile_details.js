@@ -56,7 +56,9 @@ const[name,setname]=useState([])
     const date = new Date(isoDate);
     return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
   };
-  
+
+  const [PreAssesment] =useState(false) //if there will be any skill test questions for user then it will be true
+
 
   const handleApply = (e,item) => {
     e.preventDefault();
@@ -259,7 +261,7 @@ const[name,setname]=useState([])
                   <input
                     type="date"
                     id="start"
-                    value={formatISODateForInput(userData.company_start_date)}                      
+                    value={formatISODateForInput(userData.company_start_date)||""}                      
                     readOnly
                   />
                 </div>

@@ -60,7 +60,7 @@ export default function CreatePost() {
       post.employmentType === "" ||
       post.location === "" ||
       post.salaryRange === "" ||
-      post.skilRequired === "" ||
+      post.skilRequired.length <=0 ||
       post.jobExperience === "" ||
       post.education === "" ||
       post.responsibility === "" ||
@@ -104,7 +104,7 @@ export default function CreatePost() {
   }
 
   const handleSkilsKeyDown = (e) => {
-    if (e.key === "Enter") {
+    if ((e.key === "Enter") && e.target.value.trim().length > 2) {
 
       if (post.skilRequired?.every((data) => data.toUpperCase() !== Skils.toUpperCase())) {
         post.skilRequired.push(Skils.toUpperCase())
@@ -225,7 +225,7 @@ export default function CreatePost() {
                 name="salaryRange"
                 id="salaryRange"
                 onChange={handleOnChange}
-                value={post.salaryRange}
+                value={post.salaryRange} 
               >
                 <option value="">Select your job experience</option>
                 <option value="2-3">2 - 3 LPA</option>
@@ -239,7 +239,9 @@ export default function CreatePost() {
 
 
             <div className={pages.__input_Grps}>
-              <label htmlFor="skilRequired">Skill Required</label> <br />
+              <label htmlFor="skilRequired">Skill Required</label>
+              <span className={pages.__input_Grps_labelInfo}>Press <strong>ENTER</strong> for register the skil set</span>
+               <br />
               {
                  post.skilRequired?.length > 0 && <ul className={pages.__requiredSkils_List}>
                   {
