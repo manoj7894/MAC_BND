@@ -1,259 +1,203 @@
-import React, { useEffect, useState } from 'react'
-import Editprofile from './Editprofile.module.css';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import React, { useEffect, useState } from "react";
+import styleSheet from "./Editprofile.module.css";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useSelector } from "react-redux";
+import Loader from "../../Common-Components/Loaders/Loader";
+const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
 
 function EditProfile() {
-    const email = localStorage.getItem("email");
+  const { email, name } = useSelector((state) => state.Assessment.currentUser);
+  const [IsLoading, setIsLoading] = useState(false);
+  const [userDetails, setUserDetails] = useState({
+    name: "",
+    email: "",
+    phone_number: "",
+    dob: "",
+    country: "",
+    state: "",
+    college: "",
+    course: "",
+    course_start_date: "",
+    course_end_date: "",
+    percentage: "",
+    job_title: "",
+    company: "",
+    company_start_date: "",
+    company_end_date: "",
+    profileImage: "",
+    biography: "",
+    skills: "",
+    note: "",
+    resume: "",
+    userAppliedJob: "",
+    userSavedJob: "",
+    experience: "",
+    website: "",
+    gender: "",
+    marital_status: "",
+  });
 
-    const [userData, setuserData] = useState({
-       profileImage:{}, 
-       name:"",
-        email:" ",
-        phone_number: " ",
-        dob: "",
-        country: " ",
-        course: " ",
-        website:" ",
-        gender:" ",
-        marital_status:" ",
-        biography:" ",
-        experience:" ",
-        job_title:" ",
-        company:" ",
-        company_end_date:"",
-        company_start_date:"",
-
-    });
-  
-
- useEffect(() => {
-        const fetchData = async () => {
-          const response = await axios.get(
-            `http://localhost:8080/api/user?email=${email}`
-          );
-          setuserData(response.data.userDetails);
-
-        };
-        fetchData();
-      }, [email]);
-
-      
-const updateUserDetails = async (e,userDataToUpdate) => {
-    e.preventDefault()
-    try {
-      const response = await axios.put(`http://localhost:8080/api/update-user?email=${email}`, userDataToUpdate);
-      toast.success(response.data.message); // Handle response from the server
-      localStorage.setItem('email',userData.email)
-      localStorage.setItem('name',userData.name)
-     
-    } catch (error) {
-      console.error('Error updating user:', error);
-    }
+  //! Load user data by using his email address
+  const loadUserData = () => {
+    setIsLoading(true);
+    axios
+      .get(`${baseURL}/user?email=${email}`)
+      .then((response) => {
+        if (response.data.success) {
+          setUserDetails(response.data.userDetails);
+          setIsLoading(false);
+        }
+      })
+      .catch((error) => {
+        setIsLoading(false);
+        toast.error(`Something went wrong ${error.msg}`);
+      });
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(loadUserData, [email]);
 
-      const formatISODateForInput = (isoDate) => {
-        if (!isoDate) return '';
-        const date = new Date(isoDate);
-        return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
-      };
+  console.log(userDetails);
+  return (
+    <main className={styleSheet.mainContainer}>
+      {IsLoading ? (
+        <Loader />
+      ) : (
+        <form className={styleSheet.editProfile__form}>
 
-      const HandleChange = (e) => {
-        const { name, value } = e.target;
-       setuserData((prevUserData) => ({
-          ...prevUserData,
-          [name]: value,
-        }));
-       
-      };
-    return (
-        <div className={Editprofile.Details_container}>
-          <form onSubmit={(e)=>updateUserDetails(e,userData)}>
-                    <div className={Editprofile.main_container}>
-            <div className={Editprofile.cir_container}>
-                <p>Profile picture</p>
-                <div className={Editprofile.Upload_btn}>
-            <label htmlFor="profileImage" className={Editprofile.customFileInput}>
-              {userData ? (
-                <img src='https://media.creativemornings.com/uploads/user/avatar/120448/profile-circle.png' alt='#' className={Editprofile.Clogo}></img>
-            ) : (
-                <div className={Editprofile.input_label}>
-                  <div>
-                    <i className="fa-solid fa-arrow-up-from-bracket"></i>
-                  </div>
-                  <p>Upload Profile</p>
-                </div>
-              )}
-              <input
-                type="file"
-                id="profileImage"
-                name="profileImage"
-                accept="image/*"
-                style={{ display: "none" }}
-                onChange={HandleChange}
-              />
-            </label>
+          <div className={styleSheet.Form__profileContainer}>
+            <label htmlFor="profilePicture" className={styleSheet.form__userLabel}>Profile Picture</label>
+            <div className={styleSheet.Form__profileBox}>
+              <img src={userDetails?.profileImage} alt={`${name}-Profile`} className={styleSheet.Form__userProfile}/>
+            </div>
           </div>
+
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="firstName" className={styleSheet.Form__inputBox_Label}> First Name</label>
+              <input type="text" id="firstName" placeholder="Enter your first name" className={styleSheet.Form__input} />
             </div>
 
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
-                    <label htmlFor='name' >Full Name</label>
-                    <input type='text' id='name' name='name' className={Editprofile.input} value={userData.name||""} onChange={HandleChange} ></input>
-                </div>
-              
-
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="lastName" className={styleSheet.Form__inputBox_Label}>Last Name</label>
+              <input type="text" id="lastName" placeholder="Enter your last name" className={styleSheet.Form__input} />
             </div>
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='email'>Email</label>
-                <input type='email' id='email' name='email' placeholder='enter email' className={Editprofile.input_mail} onChange={HandleChange}  value={userData.email||""} ></input>
-            </div>
+          </div>
 
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='number'>Phone Number (must have 10 digits*)</label>
-                <input type='tel' id='number' pattern="[0-9]{10}" name='phone_number' placeholder='+91 | Phone Number' className={Editprofile.input} value={userData.phone_number||""} onChange={HandleChange}></input>
-            </div>
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='web'>Website</label>
-                <input
-                      type="text"
-                      id="website"
-                      name='website'
-                      value={userData.website||""}
-                      className={Editprofile.input_mail}
-                      onChange={HandleChange}
-                    />
-            </div>
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
-                    <label htmlFor='marital_status' >Marital Status</label>
-                    <select id='marital_status' name='marital_status' className={Editprofile.input} onChange={HandleChange}>
-                        <option defaultValue={userData.marital_status||""} disabled >{userData.marital_status||""}</option>
-                        <option value="Unmarried">Unmarried</option>
-                        <option value="Married">Married</option>
+          <div className={`${styleSheet.Form__inputRows_Secondry}`}>
+            <label htmlFor="email" className={styleSheet.Form__inputBox_Label}> Email Address</label>
+            <input type="email" name="email" id="email" placeholder="Enter your email address" className={styleSheet.Form__input} />
+          </div>
 
-                    </select>
-                </div>
+          <div className={`${styleSheet.Form__inputRows_Secondry}`}>
+            <label htmlFor="phone" className={styleSheet.Form__inputBox_Label}>Phone</label>
+            <input type="phone" name="phone" id="phone" placeholder="Enter your phone number" className={styleSheet.Form__input} />
+          </div>
 
-                <div className={Editprofile.c1}>
-          <label htmlFor="dob">Date of Birth</label>
-          <input
-            type="date"
-            id="dob"
-            className={Editprofile.input}
-            name="dob"
-            value={formatISODateForInput(userData.dob)||""}
-            onChange={HandleChange}
-          />
-        </div>
+          
+          <div className={`${styleSheet.Form__inputRows_Secondry}`}>
+            <label htmlFor="website" className={styleSheet.Form__inputBox_Label}>Website</label>
+            <input type="text" name="website" id="website" placeholder="Enter your website link" className={styleSheet.Form__input} />
+          </div>
+
+          <div className={`${styleSheet.Form__inputRows_Secondry}`} style={{"width": "100%"}}>
+            <label htmlFor="about" className={styleSheet.Form__inputBox_Label}> About</label>
+            <textarea className={styleSheet.Form_About_textArea} placeholder="Write about yourself" id="about" ></textarea>
+          </div>
+
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="maritalStatus" className={styleSheet.Form__inputBox_Label}> Marital Status</label>
+              <select className={`${styleSheet.Form__input} ${styleSheet.Form__Select_input}`}>
+                <option value="">Select your marital status</option>
+                <option value="single" className={styleSheet.Form_SelectInput_options}>single</option>
+                <option value="married" className={styleSheet.Form_SelectInput_options}>married</option>
+                <option value="widowed" className={styleSheet.Form_SelectInput_options}>widowed</option>
+                <option value="divorced" className={styleSheet.Form_SelectInput_options}>divorced</option>
+                <option value="separated" className={styleSheet.Form_SelectInput_options}>separated</option>
+              </select>
             </div>
 
-            <div className={Editprofile.container1}>
-                <div className={Editprofile.c1}>
-                    <label htmlFor='gender' >Gender</label>
-                    <select id='gender' name='gender' className={Editprofile.input} onChange={HandleChange}>
-                        <option defaultValue={userData.gender||""} disabled >{userData.gender||""}</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="dob" className={styleSheet.Form__inputBox_Label}>Date of birth</label>
+              <input type="date" name="dob" id="dob" className={styleSheet.Form__input} />
+            </div>
+          </div>
 
-                <div className={Editprofile.c1}>
-                    <label htmlFor='Nationality' >Nationality</label>
-                    <select id='Nationality' className={Editprofile.input} name="country"onChange={HandleChange}>
-                        <option defaultValue={userData.country||""} disabled>{userData.country}</option>
-                        <option value="Indian">Indian</option>
-                        <option value="Non-indian">non-indian</option>
-
-                    </select>
-                </div>
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="gender" className={styleSheet.Form__inputBox_Label}> Gender</label>
+              <select className={`${styleSheet.Form__input} ${styleSheet.Form__Select_input}`}>
+                <option value="">Select your gender</option>
+                <option value="male" className={styleSheet.Form_SelectInput_options}>male</option>
+                <option value="female" className={styleSheet.Form_SelectInput_options}>female</option>
+                <option value="other" className={styleSheet.Form_SelectInput_options}>other</option>
+              </select>
             </div>
 
-            <div className={`${Editprofile.c1} ${Editprofile.cc}`}>
-                <label htmlFor='biography'>Biography</label>
-                <textarea id='biography'name='biography' className={Editprofile.bio} placeholder='write down your biography here. Let recuiter know about you...' value={userData.biography||""} onChange={HandleChange}></textarea>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="nationality" className={styleSheet.Form__inputBox_Label}> nationality</label>
+              <select className={`${styleSheet.Form__input} ${styleSheet.Form__Select_input}`}>
+                <option value="">Select your nationality</option>
+                <option value="indian" className={styleSheet.Form_SelectInput_options}>indian</option>
+                <option value="non-indian" className={styleSheet.Form_SelectInput_options}>non-indian</option>
+              </select>
+            </div>
+          </div>
+          
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="college" className={styleSheet.Form__inputBox_Label}> university/College</label>
+              <input type="text" id="college" placeholder="Enter College or university name" className={styleSheet.Form__input} />
             </div>
 
-            
-            <div className={Editprofile.container1}>
-
-                <div className={Editprofile.c1}>
-                <label htmlFor='education' >University/College</label>
-                    <input type='text' id='education' name="college" className={Editprofile.input} placeholder='Education'value={userData.college||""} onChange={HandleChange}></input>
-
-  <label htmlFor="percentage">Percentage</label>
-                  <input
-                    type="text"
-                    id="percentage"
-                    value={`${userData.percentage}`||""}
-                    className={Editprofile.input} 
-                    onChange={HandleChange}
-                  />
-                </div>
-                <div className={Editprofile.c1}>
-                <label htmlFor="course">Course</label>
-                  <input type="text" id="course" name='course' className={Editprofile.input} value={userData.course||""} onChange={HandleChange}/>
-                
-                </div>
-               
-
-                
-
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="course" className={styleSheet.Form__inputBox_Label}>course</label>
+              <input type="text" id="course" placeholder="Enter course name" className={styleSheet.Form__input} />
             </div>
-            <div className={Editprofile.container1}>
-<h2>Work Experience (Optional)</h2>
+          </div>
 
+          <div className={`${styleSheet.Form__inputRows_Secondry}`}>
+            <label htmlFor="percentage" className={styleSheet.Form__inputBox_Label}> percentage</label>
+            <input type="number" inputmode="numeric" name="percentage" id="percentage" placeholder="Enter your percentage" className={styleSheet.Form__input} />
+          </div>
+
+          {/*Work Exp optional part  */}
+          <h2 className={styleSheet.Form_WorkEXP_heading}>Work experience (Optional)</h2>
+
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="college" className={styleSheet.Form__inputBox_Label}> university/College</label>
+              <input type="text" id="college" placeholder="Enter College or university name" className={styleSheet.Form__input} />
             </div>
-            
-              <div className={Editprofile.container1}>
-              
-                <div className={Editprofile.c1}>
-                
-                  <label htmlFor="title">Title</label>
-                  <input type="text" id="title" name='job_title' value={userData.job_title||""} className={Editprofile.input}
-                                     onChange={HandleChange}
-                                     />
-                  <label htmlFor="start">Start Date</label>
-                  <input
-                    type="date"
-                    id="start"
-                    name='company_start_date'
-                    value={formatISODateForInput(userData.company_start_date)||""}                      
-                    className={Editprofile.input}
-                    onChange={HandleChange}
-                  />
-                </div>
-                <div className={Editprofile.c1}>
-                  <label htmlFor="company">Company Name</label>
-                  <input
-                    type="text"
-                    id="company"
-                    name='company'
-                    value={userData.company ||""}
-                    className={Editprofile.input}
-                    onChange={HandleChange}
 
-                  />
-                  <label htmlFor="end">End Date</label>
-                  <input
-                    type="date"
-                    id="end"
-                    name='company_end_date'
-                    value={formatISODateForInput(userData.company_end_date)||""}                      
-                    className={Editprofile.input}
-                    onChange={HandleChange}
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="course" className={styleSheet.Form__inputBox_Label}>course</label>
+              <input type="text" id="course" placeholder="Enter course name" className={styleSheet.Form__input} />
+            </div>
+          </div>
 
-                  />
-                </div>
-              </div>
+          <div className={`${styleSheet.Form__inputRows_Primary}`}>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="college" className={styleSheet.Form__inputBox_Label}> university/College</label>
+              <input type="text" id="college" placeholder="Enter College or university name" className={styleSheet.Form__input} />
+            </div>
 
-            <button type='submit'  className={Editprofile.save_change}>Save Changes</button>
-        </div>
+            <div className={styleSheet.Form__inputBox}>
+              <label htmlFor="course" className={styleSheet.Form__inputBox_Label}>course</label>
+              <input type="text" id="course" placeholder="Enter course name" className={styleSheet.Form__input} />
+            </div>
+          </div>
+
+          <div className={styleSheet.Form__buttonContainer}>
+            <button type="button" className={styleSheet.Form__saveChangesButton}>Save Changes</button>
+          </div>
 
         </form>
-        </div>
-    )
+      )}
+    </main>
+  );
 }
 
-export default EditProfile
+export default EditProfile;
