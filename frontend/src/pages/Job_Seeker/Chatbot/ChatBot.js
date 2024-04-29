@@ -5,12 +5,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-
 import { Helmet } from "react-helmet";
-
 import icon2 from "./image/icon2.png";
 import bg from "../../../Assets/backdropimage.png";
-
 import { FaArrowRightLong } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 
@@ -60,20 +57,14 @@ function ChatBot() {
                     assistant
                   </div>
                   <div className={ChatBotStyle.chatbot_content_image}>
-                    <img
-                      src={icon2}
-                      alt={"icon2"}
-                      className={ChatBotStyle.chatbot_image}
-                    />
+                    <img src={icon2} alt={"icon2"} className={ChatBotStyle.chatbot_image} />
                   </div>
 
                   <Link to="/Chatarea" className={ChatBotStyle.chatbot_link}>
                     <button className={ChatBotStyle.chatbot_button}>
                       Continue
                       <span>
-                        <FaArrowRightLong
-                          className={ChatBotStyle.chatbot_button_arrow}
-                        />
+                        <FaArrowRightLong className={ChatBotStyle.chatbot_button_arrow} />
                       </span>
                     </button>
                   </Link>

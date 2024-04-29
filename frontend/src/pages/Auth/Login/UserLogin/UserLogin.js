@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -27,6 +27,15 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
 
   const [name, setName] = useState("");
 
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    // Set focus to the password input field when step changes to 2
+    if (formData.step === 2) {
+      passwordRef.current.focus();
+    }
+  }, [formData.step]);
+  
   useEffect(() => {
     // Fetch user's name based on their email
     const fetchUserData = async () => {
@@ -35,7 +44,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
           `${baseUrl}/user?email=${formData.email}`
         );
         const userData = response.data;
-        setName(userData.name);
+        setName(userData.userDetails.name);
       } catch (error) {
         toast.error(`${error.message}`);
       }
@@ -94,11 +103,11 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
         headers: { "Content-Type": "application/json" },
       });
 
-      const { name, email, token, userType, savedJob, appliedJob } =
+      const { name, email, token, userType, savedJob, appliedJob, profileImage } =
         response.data;
 
       dispatchTO(
-        handleUserLogin({ name, email, token, userType, savedJob, appliedJob })
+        handleUserLogin({ name, email, token, userType, savedJob, appliedJob, profileImage })
       );
       toast.success(`Welcome back, ${name}!`);
       nav("/");
@@ -187,6 +196,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
                           value={formData.email}
                           onChange={handleChange}
                           required
+                          autoFocus
                         />
                       </Form>
                     </div>
@@ -296,6 +306,7 @@ function UserLogin({ toggleLoginType, isHRLogin }) {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                            ref={passwordRef}
                           />
                           <span
                             style={{

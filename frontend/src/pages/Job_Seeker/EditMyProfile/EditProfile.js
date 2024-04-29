@@ -135,7 +135,7 @@ function EditProfile() {
           {
             isLoading ? <Loader /> : <>
               <div className={Editprofile.cir_container}>
-                <p>Profile picture</p>
+                <h4>Profile picture</h4>
                 <div className={Editprofile.__imgContainer}>
                   <img className={Editprofile.__previewImg} src={userData.profileImage} alt="" onError={(e) => { e.target.src = `${noImg}`; e.onError = null }} onClick={(e) => imgRef.current.click()} />
                   <input type="file" accept='image/*' ref={imgRef} hidden name='profileImage' onChange={handleOnChange} />
@@ -176,11 +176,14 @@ function EditProfile() {
                 <div className={Editprofile.c1}>
                   <label htmlFor='experience' >Experience</label>
                   <select id='experience' name='experience' className={Editprofile.input} onChange={HandleChange}>
-                    <option defaultValue="" disabled >Select Experience</option>
-                    <option value="Fresher" >Fresher</option>
-                    <option value="Less than 6 month">Less than 6 Months</option>
-                    <option value="6-12 months">6-12 Months</option>
-                    <option value="greater than 1 year">Greater than 1 year</option>
+                    <option value="">Select your job experience</option>
+                    <option value="fresher">Fresher</option>
+                    <option value="0-6">0 - 6 months</option>
+                    <option value="1-2">1 - 2 years</option>
+                    <option value="2-3">2 - 3 years</option>
+                    <option value="3-4">3 - 4 years</option>
+                    <option value="4-5">4 - 5 years</option>
+                    <option value="5+">5+ years</option>
                   </select>
                 </div>
                 <div className={Editprofile.c1}>
