@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    user-select: none;
 }
 
 p,
@@ -16,10 +17,11 @@ span,
 label,
 input,
 select,
-option {
+option,
+ul,
+li {
     padding: 0;
     margin: 0;
-    cursor:initial;
 }
 
 
@@ -109,7 +111,7 @@ option {
     display: none;
 }
 
-.Form_About_textArea{
+.Form_About_textArea {
     resize: none;
     outline: none;
     border: none;
@@ -122,9 +124,11 @@ option {
     padding: 1em;
     height: 175px;
 }
+
 .Form__Select_input {
     cursor: pointer;
     font-weight: 400;
+    text-transform: capitalize;
     color: black;
 }
 
@@ -139,13 +143,14 @@ option {
     color: grey;
 }
 
-.Form__buttonContainer{
+.Form__buttonContainer {
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.Form__saveChangesButton{
+
+.Form__saveChangesButton {
     border: none;
     outline: none;
     background-color: blue;
@@ -159,13 +164,45 @@ option {
     font-weight: 500;
 }
 
+.Form_skilsList {
+    /* border: 2px solid red; */
+    margin: 10px 0px;
+    height: 60px;
+    list-style: none;
+    overflow: hidden;
+    overflow-x: auto;
+    white-space: nowrap;
+    scroll-behavior: smooth;
+}
+
+.Form_skilsList_Item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2em 1em;
+    width: fit-content;
+    gap: 10px;
+    background: linear-gradient(90deg, #00296B 0%, #0050D1 100%);
+    margin-right: 10px;
+    color: white;
+    font-size: 16px;
+    border-radius: 5px;
+    text-transform: uppercase;
+}
+
+.Form_skilsList_Item_DeleteButton {
+    font-size: 20px;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 1024px) {
-    .editProfile__form{
+    .editProfile__form {
         width: 90%;
     }
 }
+
 @media screen and (max-width: 760px) {
-    .editProfile__form{
+    .editProfile__form {
         width: 100%;
     }
 }
