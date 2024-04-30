@@ -199,7 +199,7 @@ function AssesmentInstruction() {
           <Link
             to={"/job-assesment-test"}
             className={assessmentStyle.StartQuizButton}
-            state={{ id: state._id, time:"1 Mins", mcq: state.mcq }}
+            state={{ id: state._id, time:"10 Mins", mcq: state.mcq }}
           >
             Start Quiz{" "}
           </Link>
