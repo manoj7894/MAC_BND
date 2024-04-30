@@ -118,7 +118,7 @@ function SideNavbar() {
           </Tooltip>
 
           <p className={navStyle.sidenavBar__userName}>
-            {name && name}
+            {name && name?.split(" ")[0]}
             <button onClick={() => navigateTO('/settings/editprofile')} className={navStyle.editProfileButton}>Edit Profile</button>
           </p>
 

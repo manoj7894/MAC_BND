@@ -13,7 +13,7 @@ function EditProfile() {
   const { email, name } = useSelector((state) => state.Assessment.currentUser);
   const [IsLoading, setIsLoading] = useState(false);
   const [Skils, setSkils] = useState("");
-  const [SkilsTags, SetSkilsTags] = useState("");
+  const [SkilsTags, SetSkilsTags] = useState([]);
   const [selectedImgPath, setSelectedImg] = useState(null)
 
   const [userDetails, setUserDetails] = useState({
@@ -47,7 +47,7 @@ function EditProfile() {
     let { name, value } = e.target;
     setUserDetails({ ...userDetails, [name]: value });
     if (name === "firstName" || name === "lastName") {
-      const firstName = name === "firstName" ? value : userDetails.name.split(" ")[0];
+      const firstName = name === "firstName" ? value : (userDetails.name?.split(" ")[0] ?? "");
       const lastName = name === "lastName" ? value : (userDetails.name?.split(" ")[1] ?? "");
       const fullName = `${firstName} ${lastName}`;
       setUserDetails({ ...userDetails, name: fullName });
@@ -87,6 +87,7 @@ function EditProfile() {
   // ! handleSavechanges click
   const handleSaveChangesClick = (e) => {
     e.preventDefault();
+    setIsLoading(true)
     const formData = new FormData();
     formData.append("name", userDetails?.name);
     formData.append("email", userDetails?.email);
@@ -107,6 +108,24 @@ function EditProfile() {
     formData.append("marital_status", userDetails?.marital_status);
     formData.append("skills", SkilsTags);
 
+    axios.patch(`http://localhost:8080/api/update-user/${email}`, formData, {
+      headers: { "Content-Type": "multipart/form-data" }
+    }).then((response) => {
+      if (response.data.success) {
+        toast.success(response.data.msg);
+        setSelectedImg(null);
+        loadUserData()
+      } else {
+        toast.error(response.data.msg);
+        setSelectedImg(null);
+        loadUserData()
+      }
+
+    }).catch((error) => {
+      toast.error(`Something went wrong : ${error.msg}`);
+      loadUserData();
+    })
+
   }
 
   //! Load user data by using his email address
@@ -116,9 +135,9 @@ function EditProfile() {
       .get(`${baseURL}/user?email=${email}`)
       .then((response) => {
         if (response.data.success) {
-          const { name, email, phone_number, dob, country, college, course, course_start_date, course_end_date, percentage, job_title, company, company_start_date, company_end_date, profileImage, biography, website, gender, marital_status } = response.data.userDetails
+          const { name, email, phone_number, dob, country, college, course, percentage, job_title, company, company_start_date, company_end_date, profileImage, biography, website, gender, marital_status } = response.data.userDetails
 
-          setUserDetails({ name, email, phone_number, dob, country, college, course, course_start_date, course_end_date, percentage, job_title, company, company_start_date, company_end_date, profileImage, biography, website, gender, marital_status, });
+          setUserDetails({ name, email, phone_number, dob, country, college, course, percentage, job_title, company, company_start_date, company_end_date, profileImage, biography, website, gender, marital_status, });
 
           SetSkilsTags(response.data.userDetails?.skills?.map((data) => data.name) ?? [])
           setIsLoading(false);
@@ -137,7 +156,7 @@ function EditProfile() {
       {IsLoading ? (
         <Loader />
       ) : (
-        <form className={styleSheet.editProfile__form} onSubmit={(e) => e.preventDefault()}>
+        <form className={styleSheet.editProfile__form} onSubmit={(e) => e.preventDefault()} encType="multipart/form-data">
 
           <div className={styleSheet.Form__profileContainer}>
             <label htmlFor="profileImage" className={styleSheet.form__userLabel}>Profile Picture</label>
@@ -155,12 +174,12 @@ function EditProfile() {
           <div className={`${styleSheet.Form__inputRows_Primary}`}>
             <div className={styleSheet.Form__inputBox}>
               <label htmlFor="firstName" className={styleSheet.Form__inputBox_Label}> First Name</label>
-              <input type="text" value={userDetails.name?.split(" ")[0]} name="firstName" id="firstName" placeholder="Enter your first name" className={styleSheet.Form__input} onChange={handleOnChange} autoComplete="off" />
+              <input type="text" value={userDetails.name?.split(" ")[0] ?? ""} name="firstName" id="firstName" placeholder="Enter your first name" className={styleSheet.Form__input} onChange={handleOnChange} autoComplete="off" />
             </div>
 
             <div className={styleSheet.Form__inputBox}>
               <label htmlFor="lastName" className={styleSheet.Form__inputBox_Label}>Last Name</label>
-              <input type="text" name="lastName" value={userDetails.name?.split(" ")[1]} id="lastName" placeholder="Enter your last name" className={styleSheet.Form__input} onChange={handleOnChange} autoComplete="off" />
+              <input type="text" name="lastName" value={userDetails.name?.split(" ")[1] ?? ""} id="lastName" placeholder="Enter your last name" className={styleSheet.Form__input} onChange={handleOnChange} autoComplete="off" />
             </div>
           </div>
 
