@@ -252,7 +252,6 @@ function Dashboard() {
                         <div
                           className={DashBoardStyle.rec_list_view_full}
                           key={item._id}
-                          onClick={()=>navigateTO(`/dashboard/${item._id}`)}
                         >
                           <div className={DashBoardStyle.rec_list_view}>
                             <div className={DashBoardStyle.rec_company_detail}>
