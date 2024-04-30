@@ -153,7 +153,7 @@ function JobAssesment() {
                         <p className="SelfAssessment__TimerBox">
                             Time Remaining
                             <span className="SelfAssessment__remainigTimer">
-                                <PiTimer /> <Timer minutes={state?.time?.split(" ")[0]} type="Job_Assesment"  />
+                                <PiTimer /> <Timer minutes={state?.time?.split(" ")[0]} type="Job_Assesment" AnsweredQuestion={selectedOption} correctAnswer={state.mcq}  />
                             </span>
                         </p>
                     </header>
