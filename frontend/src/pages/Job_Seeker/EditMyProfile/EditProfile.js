@@ -139,13 +139,16 @@ function EditProfile() {
 
           setUserDetails({ name, email, phone_number, dob, country, college, course, percentage, job_title, company, company_start_date, company_end_date, profileImage, biography, website, gender, marital_status, });
 
-          SetSkilsTags(response.data.userDetails?.skills?.map((data) => data.name) ?? [])
+          SetSkilsTags(response.data.userDetails?.skills?.map((data) => data.name) ?? []);
+
+          localStorage.setItem("profileImage", response.data.userDetails?.profileImage);
+          localStorage.setItem("name", response.data.userDetails?.name);
           setIsLoading(false);
         }
       })
       .catch((error) => {
         setIsLoading(false);
-        toast.error(`Something went wrong ${error.msg}`);
+        toast.error(`Something went wrong ${error.message}`);
       });
   };
   // eslint-disable-next-line react-hooks/exhaustive-deps
