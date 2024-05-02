@@ -48,7 +48,6 @@ li {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    width: 225px;
     color: black;
     text-transform: capitalize;
     font-size: 18px;
@@ -62,7 +61,7 @@ li {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    width: 225px;
+    width: 325px;
     text-transform: capitalize;
     font-size: 18px;
     background: linear-gradient(90deg, #0050D1 0%, #00296B 100%);
@@ -106,98 +105,14 @@ li {
     position: relative;
 }
 
-.company_box {
+.JobStatus_Card_BOX{
     border: 1px solid rgb(219, 218, 218);
-    margin-bottom: 1rem;
-    border-radius: 20px;
     box-shadow: 0px 2px 3px rgb(184, 183, 183);
     width: 80%;
+    height: 175px;
     margin: 20px auto;
-    min-height: 150px;
     border-radius: 20px;
 }
-
-.saved_job_box {
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid rgb(218, 216, 216);
-    padding: 10px;
-}
-
-.company_job_profile {
-    display: flex;
-    align-items: center;
-    width: 50%;
-}
-
-.company_job_profile img[alt="comp_logo"] {
-    width: 55px;
-    height: 55px;
-    border: 1px solid rgb(141, 140, 140);
-    border-radius: 50%;
-}
-
-.job_position {
-    height: 50%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding-left: 30px;
-}
-
-.job_position p {
-    color: #9595b4;
-    font-size: small;
-}
-
-.lpa_box {
-    margin: auto;
-}
-
-.lpa_box i {
-    padding-right: 10px;
-}
-
-.fa-tag {
-    color: black;
-    transform: rotate(45deg);
-}
-
-.apply_box {
-    width: 15%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.location_box {
-    width: 100%;
-    height: 5vh;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.req_1 {
-    width: 20%;
-    display: flex;
-    align-items: center;
-}
-
-.req_1 i {
-    padding-right: 10px;
-}
-
-.btn_applied {
-    width: 100%;
-    border: 1px solid white;
-    background: linear-gradient(to right, #9595b4, #000012);
-    color: white;
-    border-radius: 5px;
-    text-align: center;
-}
-
-
 
 
 /* ...................................... */

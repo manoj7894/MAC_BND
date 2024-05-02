@@ -1,13 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ApplicationStyle from "./Application.module.css";
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
-import {
-  NavLink,
-  Outlet,
-  useLocation,
-  useNavigate,
-  useParams,
-} from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate, useParams,} from "react-router-dom";
 import { GiProgression } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineCheck } from "react-icons/md";
@@ -74,7 +68,6 @@ function ApplicationStatus() {
               ApplicationStyle.ApplicationStatus__navBar_Item_ICON_SecondaryBox
             }
           >
-            {" "}
             <RxCross2 />
           </span>
           Not-Shortlisted
@@ -92,7 +85,7 @@ function Status() {
   const { email } = useSelector((state) => state.Assessment.currentUser);
   const [IsLoading, setLoading] = useState(false);
   const [appliedJOB, setAppliedJOB] = useState([]);
-  const { status } = useParams();
+//   const { status } = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -120,84 +113,21 @@ function Status() {
         <Loader />
       ) : (
         <>
-          {appliedJOB?.length > 0 ? (
+          {appliedJOB.length > 0 ? (
             <>
-              {appliedJOB.map((item) => {
-                return (
-                  <div className={ApplicationStyle.company_box} key={item._id}>
-                    <div className={ApplicationStyle.saved_job_box}>
-                      <div className={ApplicationStyle.company_job_profile}>
-                        <img src={item.jobPoster} alt="comp_logo" />
-                        <div className={ApplicationStyle.job_position}>
-                          <h5>{item.jobTitle}</h5>
-                          <span
-                            style={{
-                              margin: "5px 0px",
-                              display: "block",
-                              color: "grey",
-                              fontWeight: "600",
-                              fontSize: "14px",
-                            }}
-                          >
-                            Applied <CalculateTimeAgo time={item.createdAt} />
-                          </span>
-                        </div>
-                      </div>
-                      <div className={ApplicationStyle.lpa_box}>
-                        <i
-                          className="fa-solid fa-money-check-dollar"
-                          style={{ color: "#067418" }}
-                        ></i>
-                        <span style={{ fontWeight: "bold", fontSize: "20px" }}>
-                          {item.salaryRange}{" "}
-                        </span>
-                        <span style={{ color: "#9595b4", fontSize: "14px" }}>
-                          LPA
-                        </span>
-                      </div>
+              {appliedJOB.map((data, index) => {
+                return <div key={data._id + index} className={ApplicationStyle.JobStatus_Card_BOX}>
 
-                      <div className={ApplicationStyle.apply_box}>
-                        <button className={ApplicationStyle.btn_applied}>
-                          View Status
-                        </button>
-                      </div>
+                    <div className={ApplicationStyle.JobStatus_Card_BOX_TOP}></div>
+                    <div className={ApplicationStyle.JobStatus_Card_BOX_BOTTOM}></div>
 
-                    </div>
 
-                    <div className={ApplicationStyle.location_box}>
-                      <div className={ApplicationStyle.req_1}>
-                        <i
-                          className="fa-solid fa-location-dot"
-                          style={{ color: "black" }}
-                        ></i>
 
-                        {item.location}
-                      </div>
-                      <div className={ApplicationStyle.req_1}>
-                        <div>
-                          <i
-                            className="fa-solid fa-envelope-open-text"
-                            style={{ color: "black" }}
-                          ></i>
-                        </div>
-                        {item.jobExperience}
-                      </div>
-                      <div className={ApplicationStyle.req_1}>
-                        <div>
-                          <i
-                            className="fa-solid fa-droplet"
-                            style={{ color: "black" }}
-                          ></i>
-                        </div>
-                        {item.employmentType}
-                      </div>
-                    </div>
-                  </div>
-                );
+                </div>;
               })}
             </>
           ) : (
-            <></>
+            <> No data to show </>
           )}
         </>
       )}
