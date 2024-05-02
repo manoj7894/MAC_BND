@@ -74,7 +74,8 @@ const Profile_details = () => {
           email,
           applicationStatus:
           {
-            JobStatus: 'Applied - Application Sent',
+            JobStatus: 'In-Progress',
+            StatusText: 'Applied - Application Sent',
             updatedAt: Date.now()
           }
         })

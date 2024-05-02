@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import ApplicationStyle from "./Application.module.css";
 import { CalculateTimeAgo } from "../../Common-Components/TimeAgo";
-import { NavLink, Outlet, useLocation, useNavigate, useParams,} from "react-router-dom";
+import { Link, NavLink, Outlet, useLocation, useNavigate, useParams, } from "react-router-dom";
 import { GiProgression } from "react-icons/gi";
 import { RxCross2 } from "react-icons/rx";
 import { MdOutlineCheck } from "react-icons/md";
+import { FcMoneyTransfer } from "react-icons/fc";
 import axios from "axios";
 import Loader from "../../Common-Components/Loaders/Loader";
 import { useSelector } from "react-redux";
@@ -82,10 +83,12 @@ function ApplicationStatus() {
 }
 
 function Status() {
+  const { pathname } = useLocation();
   const { email } = useSelector((state) => state.Assessment.currentUser);
   const [IsLoading, setLoading] = useState(false);
   const [appliedJOB, setAppliedJOB] = useState([]);
-//   const { status } = useParams();
+  const [FilterAppliedJOB, setFilterAppliedJOB] = useState([]);
+  const { status } = useParams();
 
   useEffect(() => {
     setLoading(true);
@@ -94,6 +97,7 @@ function Status() {
       .then((response) => {
         if (response.data.success) {
           setAppliedJOB(response.data.appliedJob);
+          setFilterAppliedJOB(response.data.appliedJob.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase())));
           setLoading(false);
         } else {
           setAppliedJOB([]);
@@ -107,27 +111,68 @@ function Status() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    const filterJob = appliedJOB?.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase()));
+    setFilterAppliedJOB(filterJob)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname])
+
   return (
     <>
       {IsLoading ? (
         <Loader />
       ) : (
         <>
-          {appliedJOB.length > 0 ? (
+          {FilterAppliedJOB?.length > 0 ? (
             <>
-              {appliedJOB.map((data, index) => {
+              {FilterAppliedJOB?.map((data, index) => {
                 return <div key={data._id + index} className={ApplicationStyle.JobStatus_Card_BOX}>
 
-                    <div className={ApplicationStyle.JobStatus_Card_BOX_TOP}></div>
-                    <div className={ApplicationStyle.JobStatus_Card_BOX_BOTTOM}></div>
+                  <div className={ApplicationStyle.JobStatus_Card_BOX_TOP}>
 
+                    <div className={ApplicationStyle.CardBox_jobProfileBox}>
+                      <div className={ApplicationStyle.CardBox_jobPoster}>
+                        <img src={data?.jobPoster} alt={`${data?.jobTitle}-Poster`} width={'100%'} height={"100%"} />
+                      </div>
+                      <p className={ApplicationStyle.CardBox_JObTitle}>
+                        <span className={ApplicationStyle.CardBox_Title}>{data.jobTitle.slice(0, 24)}...</span>
+                        Applied <CalculateTimeAgo time={data.createdAt} />
+                      </p>
+                    </div>
 
+                    <p className={ApplicationStyle.CardBox_jobSalaryRange}>
+                      <FcMoneyTransfer className={ApplicationStyle.CardBox_jobSalaryRangeICON} /> {data.salaryRange} LPA
+                    </p>
+
+                    <div className={ApplicationStyle.CardBox_job_ButtonContainer}>
+                      {
+                        pathname !== "/application/In-Progress" && <button type="button" className={`${ApplicationStyle.CardBox_job_Buttons} ${ApplicationStyle.CardBox_job_FeedbackButton}`}>View Feedback</button>
+                      }
+                      <button type="button" className={`${ApplicationStyle.CardBox_job_Buttons} ${pathname === "/application/In-Progress" && ApplicationStyle.CardBox_job_Buttons_InProgress} ${pathname === "/application/Shortlisted" && ApplicationStyle.CardBox_job_Buttons_shortListed} ${pathname === "/application/Not-Shortlisted" && ApplicationStyle.CardBox_job_Buttons_NOTshortListed}
+                    `}> View Status</button>
+                    </div>
+                  </div>
+
+                  <div className={ApplicationStyle.JobStatus_Card_BOX_BOTTOM}>
+
+                  </div>
 
                 </div>;
               })}
             </>
           ) : (
-            <> No data to show </>
+            <>
+              {
+                status === "In-Progress" && <p className={ApplicationStyle.NoDataMsg}>You haven't applied for any job yet. <Link to={'/dashboard'} className={ApplicationStyle.SearchJobsButton}>Search Jobs</Link></p>
+              }
+              {
+                status === "Shortlisted" && <p className={ApplicationStyle.NoDataMsg}>No applications shortlisted yet <Link to={'/application/In-Progress'} className={ApplicationStyle.SearchJobsButton}>Check Status</Link></p>
+              }
+              {
+                status === "Not-Shortlisted" && <p className={ApplicationStyle.NoDataMsg}>You haven't received any rejections for your applications.<Link to={'/application/In-Progress'} className={ApplicationStyle.SearchJobsButton}>Check Status</Link></p>
+              }
+
+            </>
           )}
         </>
       )}
