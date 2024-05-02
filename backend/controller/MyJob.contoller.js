@@ -11,7 +11,7 @@ const createAppliedJob = async (req, res) => {
 
         // add the applied job appliedjobCollection
         const mongooseResponse = await appliedJobCollection.create({
-            jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: createdAt, userEmail: email, applicationStatus : applicationStatus
+            jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: Date.now(), userEmail: email, applicationStatus : applicationStatus
         });
 
         // update the jobo collection applicationCount by 1 and also update the applidBy data in collection with user emailID everytime any user applied for jobs
