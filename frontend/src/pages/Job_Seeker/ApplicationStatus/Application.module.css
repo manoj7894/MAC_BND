@@ -318,10 +318,10 @@ li {
 }
 
 .Status__poupBox_PosterBox {
-    width: 120px;
-    height: 120px;
+    width: 90px;
+    height: 90px;
     border-radius: 50%;
-    margin: 10px auto;
+    margin: 5px auto;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -354,16 +354,17 @@ li {
 
 .Status__poupBox_SecondaryHeading {
     font-weight: 600;
-    font-size: 24px;
+    font-size: 22px;
     color: #171A1F;
     text-align: center;
     margin: 10px auto;
+    width: 95%;
 }
 
 .Status__poupBox_TertiaryHeading {
-    margin: 5px auto;
+    margin: 0px auto;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     color: #A3A3A3;
     width: 90%;
