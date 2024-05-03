@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ChatBotStyle from "./Chatbot.module.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { Helmet } from "react-helmet";
 import icon2 from "./image/icon2.png";
 import bg from "../../../Assets/backdropimage.png";
@@ -44,9 +40,6 @@ function ChatBot() {
           </div>
         )}
         {showContent && (
-          <Container>
-            <Row>
-              <Col xxl={12}>
                 <div className={ChatBotStyle.chatbot_full_content}>
                   <div className={ChatBotStyle.chatbot_title}>
                     Your AI Assistant
@@ -69,9 +62,6 @@ function ChatBot() {
                     </button>
                   </Link>
                 </div>
-              </Col>
-            </Row>
-          </Container>
         )}
       </div>
     </div>
