@@ -95,9 +95,15 @@ function Status() {
   const [IsLoading, setLoading] = useState(false);
   const [appliedJOB, setAppliedJOB] = useState([]);
   const [FilterAppliedJOB, setFilterAppliedJOB] = useState([]);
+  const [SelectedJobStatus, setSelectedJobStatus] = useState([]);
   const [showPopup, setShowPopup] = useState(false);
   const { status } = useParams();
 
+  const handleViewStatusClick = (e, jobStatus) => {
+    e.preventDefault();
+    setSelectedJobStatus(jobStatus)
+    setShowPopup(true)
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -159,7 +165,7 @@ function Status() {
                       }
 
                       <button type="button" className={`${ApplicationStyle.CardBox_job_Buttons} ${pathname === "/application/In-Progress" && ApplicationStyle.CardBox_job_Buttons_InProgress} ${pathname === "/application/Shortlisted" && ApplicationStyle.CardBox_job_Buttons_shortListed} ${pathname === "/application/Not-Shortlisted" && ApplicationStyle.CardBox_job_Buttons_NOTshortListed}
-                    `} onClick={() => setShowPopup(true)}> View Status</button>
+                    `} onClick={(e) => handleViewStatusClick(e, data.applicationStatus)}> View Status</button>
                     </div>
                   </div>
 
@@ -202,15 +208,29 @@ function Status() {
       )}
 
       {
-        showPopup && <StatusPopup popupType={status} CbTogglePopup={setShowPopup} />
+        showPopup && <StatusPopup popupType={status} CbTogglePopup={setShowPopup} jobStatus={SelectedJobStatus} />
       }
 
     </>
   );
 }
 
-function StatusPopup({ popupType, CbTogglePopup }) {
+function StatusPopup({ popupType, CbTogglePopup, jobStatus }) {
   const navigateTO = useNavigate();
+
+  const calculateDate = (dateString) => {
+    if (dateString) {
+      const monthObj = {
+        1: "January", 2: "February", 3: "March", 4: "April", 5: "May", 6: "June", 7: "July", 8: "August", 9: "September", 10: "October", 11: "November", 12: "December"
+      }
+      const date = new Date(dateString);
+      const month = date.getMonth() + 1;
+      const day = date.getDate();
+
+      return <span className={ApplicationStyle.Status__poupBox_date}>{day >= 10 ? '0' + day : day} {monthObj[month]} </span>
+    }
+
+  }
 
   return <div className={ApplicationStyle.Status__poupMainContainer}>
     <div className={ApplicationStyle.Status__poupBox}>
@@ -249,11 +269,15 @@ function StatusPopup({ popupType, CbTogglePopup }) {
       }
 
       <ul className={ApplicationStyle.Status__poupBox_StatusTimeLineList}>
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${ApplicationStyle.completedStep}`}>Applied</li>
-        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Application Sent</li>
-        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Application Viewed</li>
-        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Resume Viewed</li>
-        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Waiting for recruiter</li>
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Applied') && ApplicationStyle.completedStep}`}>Applied{calculateDate(jobStatus.filter((data) => data.StatusText === 'Applied')[0]?.updatedAt)}</li>
+
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Sent') && ApplicationStyle.completedStep}`}>Application Sent{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Sent')[0]?.updatedAt)}</li>
+
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Viewed') && ApplicationStyle.completedStep}`}>Application Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Viewed')[0]?.updatedAt)}</li>
+
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Resume Viewed') && ApplicationStyle.completedStep}`}>Resume Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Resume Viewed')[0]?.updatedAt)}</li>
+
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem}`}>Waiting for recruiter</li>
       </ul>
 
       <button className={ApplicationStyle.Status_popupbuttons} onClick={() => CbTogglePopup(false)}>OK, GOT IT</button>
