@@ -290,7 +290,7 @@ li {
     left: 50%;
     transform: translate(-50%, -50%);
     width: 575px;
-    height: 645px;
+    min-height: 645px;
     background-color: white;
     animation: slideInFromBottom 0.6s ease-in-out;
     transition: all 0.6s ease-in;
