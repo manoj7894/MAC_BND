@@ -13,6 +13,9 @@ import toast from "react-hot-toast";
 import locationICON from "../../../Assets/ep_location.png";
 import expICON from "../../../Assets/mdi_book-education-outline.png";
 import empTypeICON from "../../../Assets/Vector.png";
+import inProgressICON from "../../../Assets/inProgress__IMG.png";
+import ShortListedICON from "../../../Assets/Shorlisted_img.png";
+import NOTShortListedICON from "../../../Assets/NOTShorlisted_img.png";
 const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
 
 
@@ -92,7 +95,9 @@ function Status() {
   const [IsLoading, setLoading] = useState(false);
   const [appliedJOB, setAppliedJOB] = useState([]);
   const [FilterAppliedJOB, setFilterAppliedJOB] = useState([]);
+  const [showPopup, setShowPopup] = useState(false);
   const { status } = useParams();
+
 
   useEffect(() => {
     setLoading(true);
@@ -101,7 +106,7 @@ function Status() {
       .then((response) => {
         if (response.data.success) {
           setAppliedJOB(response.data.appliedJob);
-          setFilterAppliedJOB(response.data.appliedJob.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase())));
+          setFilterAppliedJOB(response.data.appliedJob.filter((data) => data.applicationStatus.some((statusData) => statusData.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase())));
           setLoading(false);
         } else {
           setAppliedJOB([]);
@@ -152,8 +157,9 @@ function Status() {
                       {
                         pathname !== "/application/In-Progress" && <button type="button" className={`${ApplicationStyle.CardBox_job_Buttons} ${ApplicationStyle.CardBox_job_FeedbackButton}`}>View Feedback</button>
                       }
+
                       <button type="button" className={`${ApplicationStyle.CardBox_job_Buttons} ${pathname === "/application/In-Progress" && ApplicationStyle.CardBox_job_Buttons_InProgress} ${pathname === "/application/Shortlisted" && ApplicationStyle.CardBox_job_Buttons_shortListed} ${pathname === "/application/Not-Shortlisted" && ApplicationStyle.CardBox_job_Buttons_NOTshortListed}
-                    `}> View Status</button>
+                    `} onClick={() => setShowPopup(true)}> View Status</button>
                     </div>
                   </div>
 
@@ -162,17 +168,17 @@ function Status() {
                       <img src={locationICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
                       {data?.location}
                     </p>
-                    
+
                     <p className={ApplicationStyle.CardBox__InfoBox}>
                       <img src={expICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
                       {data?.jobExperience}
                     </p>
-                    
+
                     <p className={ApplicationStyle.CardBox__InfoBox}>
                       <img src={empTypeICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
                       {data?.employmentType}
                     </p>
-                    
+
                   </div>
 
                 </div>;
@@ -181,7 +187,7 @@ function Status() {
           ) : (
             <>
               {
-                status === "In-Progress" && <p className={ApplicationStyle.NoDataMsg}>You haven't applied for any job yet. <Link to={'/dashboard'} className={ApplicationStyle.SearchJobsButton}>Search Jobs</Link></p>
+                status === "In-Progress" && <p className={ApplicationStyle.NoDataMsg}>You don't have any applications currently in progress. <Link to={'/dashboard'} className={ApplicationStyle.SearchJobsButton}>Search Jobs</Link></p>
               }
               {
                 status === "Shortlisted" && <p className={ApplicationStyle.NoDataMsg}>No applications shortlisted yet <Link to={'/application/In-Progress'} className={ApplicationStyle.SearchJobsButton}>Check Status</Link></p>
@@ -194,9 +200,71 @@ function Status() {
           )}
         </>
       )}
+
+      {
+        showPopup && <StatusPopup popupType={status} CbTogglePopup={setShowPopup} />
+      }
+
     </>
   );
 }
+
+function StatusPopup({ popupType, CbTogglePopup }) {
+  const navigateTO = useNavigate();
+
+  return <div className={ApplicationStyle.Status__poupMainContainer}>
+    <div className={ApplicationStyle.Status__poupBox}>
+      <h2 className={ApplicationStyle.Status__poupBox_Heading}>Your Application status</h2>
+
+      {
+        popupType === "In-Progress" && <>
+          <div className={`${ApplicationStyle.Status__poupBox_PosterBox} ${ApplicationStyle.Status__poupBox_InProgress_PosterBox}`}>
+            <img src={inProgressICON} alt="Application-In-Progress" className={`${ApplicationStyle.Status__poupBox_Poster} `} />
+          </div>
+          <h3 className={ApplicationStyle.Status__poupBox_SecondaryHeading}>We're reviewing your application </h3>
+          <h4 className={ApplicationStyle.Status__poupBox_TertiaryHeading}>Thanks for applying. We'll review and consider your application. You can check back later to see how things are going. </h4>
+        </>
+      }
+
+      {
+        popupType === "Shortlisted" && <>
+
+          <div className={`${ApplicationStyle.Status__poupBox_PosterBox} ${ApplicationStyle.Status__poupBox_Shortlisted_PosterBox}`}>
+            <img src={ShortListedICON} alt="Application-Shortlisted" className={`${ApplicationStyle.Status__poupBox_Poster} ${ApplicationStyle.Status__poupBox_SecondaryPoster}`} />
+          </div>
+          <h3 className={ApplicationStyle.Status__poupBox_SecondaryHeading}>Congratulations you are shortlisted</h3>
+          <h4 className={ApplicationStyle.Status__poupBox_TertiaryHeading}>You're one step closer to joining our team. We have a few more steps in our hiring process.</h4>
+        </>
+      }
+
+
+      {
+        popupType === "Not-Shortlisted" && <>
+          <div className={`${ApplicationStyle.Status__poupBox_PosterBox} ${ApplicationStyle.Status__poupBox_Not_Shortlisted_PosterBox}`}>
+            <img src={NOTShortListedICON} alt="Application-Shortlisted" className={`${ApplicationStyle.Status__poupBox_Poster} ${ApplicationStyle.Status__poupBox_SecondaryPoster}`} />
+          </div>
+          <h3 className={ApplicationStyle.Status__poupBox_SecondaryHeading}>We're reviewing your application We've decided not to move forward with your application.</h3>
+          <h4 className={ApplicationStyle.Status__poupBox_TertiaryHeading}>Our decision was based on the qualifications of other candidates. We appreciate your interest and encourage you to apply for other positions at our company.</h4>
+        </>
+      }
+
+      <ul className={ApplicationStyle.Status__poupBox_StatusTimeLineList}>
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${ApplicationStyle.completedStep}`}>Applied</li>
+        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Application Sent</li>
+        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Application Viewed</li>
+        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Resume Viewed</li>
+        <li className={ApplicationStyle.Status__StatusTimeLineListItem}>Waiting for recruiter</li>
+      </ul>
+
+      <button className={ApplicationStyle.Status_popupbuttons} onClick={() => CbTogglePopup(false)}>OK, GOT IT</button>
+      <button className={ApplicationStyle.Status_popupbuttons} onClick={() => navigateTO("/dashboard")} >Browse jobs at HRConnect</button>
+      <span className={ApplicationStyle.Status_popupBottomMSG}>HR Connect  is proud to be an equal opportunity workplace and is an affirmative action employer</span>
+    </div>
+
+  </div>
+}
+
+
 
 export default ApplicationStatus;
 export { Status };
