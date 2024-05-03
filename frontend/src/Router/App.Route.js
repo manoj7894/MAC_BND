@@ -96,7 +96,8 @@ const InterviewScheduled = lazy(() =>
 const CreateInterview = lazy(() =>
   import("../pages/Employer/InterviewScheduled/CreateInterview.js")
 );
-const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
+const Chatbot = lazy(() => import("../pages/Employer/ChatBot/ChatBot.js"));
+const ChatArea = lazy(() => import("../pages/Employer/ChatBot/Chatarea.js"));
 const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
 const EditProfile = lazy(() =>
   import("../pages/Employer/Settings/EditProfile.js")
@@ -189,6 +190,7 @@ function EmployerRoutes() {
         <Route path="/interview_scheduled" element={<Suspense>    <InterviewScheduled />  </Suspense>} />
         <Route path="/schedule-interview" element={<Suspense>    <CreateInterview />  </Suspense>} />
         <Route path="/chatbot" element={<Suspense>    <Chatbot />  </Suspense>} />
+        <Route path="/Chatarea" element={<Suspense>    <ChatArea />  </Suspense>} />
         <Route path="/Setting" element={<Suspense>    <Setting />  </Suspense>} />
         <Route path="/Setting/Editprofile" element={<Suspense>    <EditProfile />  </Suspense>} />
       </Route>
