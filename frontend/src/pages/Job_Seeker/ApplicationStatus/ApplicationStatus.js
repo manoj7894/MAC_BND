@@ -271,11 +271,11 @@ function StatusPopup({ popupType, CbTogglePopup, jobStatus }) {
       <ul className={ApplicationStyle.Status__poupBox_StatusTimeLineList}>
         <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Applied') && ApplicationStyle.completedStep}`}>Applied{calculateDate(jobStatus.filter((data) => data.StatusText === 'Applied')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Sent') && ApplicationStyle.completedStep}`}>Application Sent{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Sent')[0]?.updatedAt)}</li>
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Sent') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}`}>Application Sent{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Sent')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Viewed') && ApplicationStyle.completedStep}`}>Application Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Viewed')[0]?.updatedAt)}</li>
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Viewed') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}}`}>Application Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Viewed')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Resume Viewed') && ApplicationStyle.completedStep}`}>Resume Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Resume Viewed')[0]?.updatedAt)}</li>
+        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Resume Viewed') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}}`}>Resume Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Resume Viewed')[0]?.updatedAt)}</li>
 
         <li className={`${ApplicationStyle.Status__StatusTimeLineListItem}`}>Waiting for recruiter</li>
       </ul>
