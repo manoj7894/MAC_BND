@@ -10,8 +10,12 @@ import axios from "axios";
 import Loader from "../../Common-Components/Loaders/Loader";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import locationICON from "../../../Assets/ep_location.png";
+import expICON from "../../../Assets/mdi_book-education-outline.png";
+import empTypeICON from "../../../Assets/Vector.png";
 const baseURL = process.env.REACT_APP_BACKEND_BASE_URL;
-// import TimeAgo from "../../Common-Components/TimeAgo.js"
+
+
 function ApplicationStatus() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
@@ -154,7 +158,21 @@ function Status() {
                   </div>
 
                   <div className={ApplicationStyle.JobStatus_Card_BOX_BOTTOM}>
-
+                    <p className={ApplicationStyle.CardBox__InfoBox}>
+                      <img src={locationICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
+                      {data?.location}
+                    </p>
+                    
+                    <p className={ApplicationStyle.CardBox__InfoBox}>
+                      <img src={expICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
+                      {data?.jobExperience}
+                    </p>
+                    
+                    <p className={ApplicationStyle.CardBox__InfoBox}>
+                      <img src={empTypeICON} alt="ICON" className={ApplicationStyle.CardBox__jobInfoICON} />
+                      {data?.employmentType}
+                    </p>
+                    
                   </div>
 
                 </div>;

@@ -53,6 +53,7 @@ li {
     font-size: 18px;
     border-radius: 20px;
     padding: 5px 0px;
+    width: 225px;
 }
 
 .active {
@@ -61,7 +62,7 @@ li {
     align-items: center;
     justify-content: center;
     gap: 20px;
-    width: 325px;
+    width: 225px;
     text-transform: capitalize;
     font-size: 18px;
     background: linear-gradient(90deg, #0050D1 0%, #00296B 100%);
@@ -126,7 +127,6 @@ li {
 
 .CardBox_jobProfileBox {
     border-top-left-radius: 20px;
-    border: 2px solid blue;
     height: 100%;
     display: flex;
     align-items: center;
@@ -142,7 +142,7 @@ li {
 }
 
 .CardBox_JObTitle {
-    font-size: 14px;
+    font-size: 1.1vw;
     color: rgba(161, 161, 161, 1);
     font-weight: 500;
     margin: 0px 15px;
@@ -151,20 +151,19 @@ li {
 }
 
 .CardBox_Title {
-    font-size: 20px;
+    font-size: 1.1vw;
     color: rgba(0, 0, 0, 1);
     font-weight: 600;
     display: block;
 }
 
 .CardBox_jobSalaryRange {
-    border: 2px solid red;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 10px;
-    font-size: 18px;
+    font-size: 1.2vw;
     font-weight: 500;
 }
 
@@ -173,7 +172,6 @@ li {
 }
 
 .CardBox_job_ButtonContainer {
-    border: 2px solid black;
     width: 220px;
     height: 100%;
     border-top-right-radius: 20px;
@@ -216,10 +214,29 @@ li {
 }
 
 .JobStatus_Card_BOX_BOTTOM {
+    border-top: 2px solid rgba(0, 0, 0, 0.25);
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    border: 2px solid black;
     height: calc(100% - 120px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0em 0.8em;
+}
+
+.CardBox__InfoBox {
+    font-weight: 600;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    text-transform: capitalize;
+}
+
+.CardBox__jobInfoICON {
+    max-width: 20px;
+    max-height: 20px;
 }
 
 .NoDataMsg {
@@ -254,4 +271,35 @@ li {
     text-decoration: none;
 }
 
+@media screen and (max-width: 1023px) {
+    .ApplicationStatus__navBar{
+        width: 95%;
+    }
+    .JobStatus_Card_BOX {
+        width: 90%;
+    }
+    .CardBox_JObTitle {
+        font-size: 1.3vw;
+    }
+    
+    .CardBox_Title {
+        font-size: 1.5vw;
+    }
+    .CardBox_jobSalaryRange {
+        font-size: 2vw;
+    }
+    
+}
+@media screen and (max-width: 800px) {
+    .CardBox_JObTitle {
+        font-size: 1.5vw;
+    }
+    
+    .CardBox_Title {
+        font-size: 1.8vw;
+    }
+    .CardBox_jobSalaryRange {
+        font-size: 1.8vw;
+    }
+}
 /* ...................................... */
