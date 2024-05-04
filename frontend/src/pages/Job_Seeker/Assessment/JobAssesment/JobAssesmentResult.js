@@ -20,12 +20,17 @@ function JobAssesmentResult() {
         ...item,
         email,
         percentageResult,
-        applicationStatus:
-        {
-          JobStatus: 'In-Progress',
-          StatusText: 'Applied - Application Sent',
-          updatedAt: Date.now()
-        }
+        applicationStatus: [
+          {
+            JobStatus: 'In-Progress',
+            StatusText: 'Applied',
+            updatedAt: Date.now()
+          }, {
+            JobStatus: 'In-Progress',
+            StatusText: 'Application Sent',
+            updatedAt: Date.now()
+          }
+        ]
       })
       .then((response) => {
         if (response.data.success) {
