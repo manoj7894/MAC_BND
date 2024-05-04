@@ -9,8 +9,6 @@ import ChatBotStyle from "./Chatbot.module.css";
 
 import icon3 from "../../../Assets/icon3.png";
 import icon4 from "../../../Assets/icon4.png";
-import icon5 from "../../../Assets/icon5.png";
-import icon6 from "../../../Assets/icon6.png";
 import { GoDotFill } from "react-icons/go";
 import ChatbotCompo from "./ChatbotCompo";
 
@@ -36,8 +34,8 @@ export default function Chatarea() {
 
 
   return (
-    <>
-    <div className={ChatBotStyle.ai_full}>
+<div style={{margin:'-24px -24px 0px -24px'}}>
+<div className={ChatBotStyle.ai_full}>
       <Helmet>
       <style>{`
           .JobSeeker_RightSideContainer__topHeaderContainer {
@@ -74,49 +72,10 @@ export default function Chatarea() {
         </Row>
       </Container>
 
-      <div className={ChatBotStyle.chatbot_body}>
       <div>
       <ChatbotCompo/>
       </div>
-
-    <div>
-    <div className={ChatBotStyle.ai_inter}>
-            <div
-              className={ChatBotStyle.noPaddingRow}
-            >
-              <div className={ChatBotStyle.ai_inter_side}>
-                <div className={ChatBotStyle.with_ai}>
-                  Ace your <br /> interview with <br />{" "}
-                  <span className={ChatBotStyle.ai_orange}>AI</span>
-                </div>
-                <div className={ChatBotStyle.ai_summary}>
-                  Schedule your interview with AI, which can enhance your
-                  confidence levels, thereby increasing your chances of seizing
-                  opportunities at multinational corporations.
-                </div>
-
-                <img
-                  src={icon5}
-                  alt={"icon5"}
-                  className={ChatBotStyle.chatbot_image_group}
-                />
-
-                <img
-                  src={icon6}
-                  alt={"icon6"}
-                  className={ChatBotStyle.chatbot_image_camera}
-                />
-
-                <button className={ChatBotStyle.chatbot_shew}>
-                  SCHEDULE NOW
-                </button>
-              </div>
-            </div>
-      </div>
-
     </div>
-      </div>
-    </div>
-    </>
+</div>
   );
 }
