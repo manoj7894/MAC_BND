@@ -50,6 +50,16 @@ const[name,setname]=useState([])
   };
 
   const firstResumeFilename = getFirstResumeFilename();
+
+  const currentDate = new Date();
+const day = currentDate.getDate();
+const month = currentDate.getMonth() + 1; // January is 0, so we add 1
+const year = currentDate.getFullYear();
+
+const AppliedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+
+console.log(AppliedDate); //this is date of application
+
  
   const formatISODateForInput = (isoDate) => {
     if (!isoDate) return '';
@@ -71,7 +81,9 @@ const[name,setname]=useState([])
     axios
       .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
         ...item,
+        userData,
         email,
+        AppliedDate
       })
       .then((response) => {
         if (response.data.success) {

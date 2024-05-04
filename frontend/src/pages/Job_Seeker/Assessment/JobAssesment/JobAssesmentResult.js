@@ -9,9 +9,22 @@ import { useEffect } from "react";
 function JobAssesmentResult() {
   const { result, percentageResult } = useSelector((state) => state.Assessment);
   const { jobDetails} = useSelector((state) => state.Job);
+  const User = useSelector((state) => state.User.UserDetails);
+const userData=User.userDetails;
+// console.log(userData);
   const email = localStorage.getItem("email");
   const navigateTO = useNavigate();
   const dispatchTO = useDispatch();
+
+  const currentDate = new Date();
+  const day = currentDate.getDate();
+  const month = currentDate.getMonth() + 1; // January is 0, so we add 1
+  const year = currentDate.getFullYear();
+  
+  const AppliedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+  
+  console.log(AppliedDate); //this is date of application
+  
 
   const handleDoneButtonClick = (e,item) => {
     e.preventDefault();
@@ -19,7 +32,9 @@ function JobAssesmentResult() {
       .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
         ...item,
         email,
-        percentageResult
+        userData,
+        percentageResult,
+        AppliedDate
       })
       .then((response) => {
         if (response.data.success) {

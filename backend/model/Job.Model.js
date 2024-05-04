@@ -32,23 +32,23 @@ const jobSchema = new mongoose.Schema(
         },
         skilRequired: [
             {
-              name: { type: String },
-              index: { type: Number }
+                name: { type: String },
+                index: { type: Number }
             }
-          ],
+        ],
         jobExperience: {
             type: String,
             required: true,
         },
-        education:{
+        education: {
             type: String,
             // required: true,
         },
-        responsibility:{
+        responsibility: {
             type: String,
             // required: true,
         },
-        howToApply:{
+        howToApply: {
             type: String,
             // required: true,
         },
@@ -61,12 +61,9 @@ const jobSchema = new mongoose.Schema(
         },
         appliedBy: [
             {
-                userEmail: {
-                    type: String,
-                },
-                percentageResult:{
-                    type:String
-                }
+                type: mongoose.Schema.Types.Mixed, // Store any type of data
+                required: true,
+
             }
         ],
         mcq: [
@@ -87,7 +84,7 @@ const jobSchema = new mongoose.Schema(
                     type: String,
                 }
             }
-    ]
+        ]
     }
 
 );

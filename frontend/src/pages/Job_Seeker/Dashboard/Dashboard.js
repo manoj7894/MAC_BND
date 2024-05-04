@@ -21,10 +21,12 @@ import {
   handleSavedJob,
   handleRemoveSavedJob,
 } from "../../../Redux/ReduxSlice";
+import {fetchUserData}  from "../../../Redux/UserSlice";
 function Dashboard() {
   const { email, savedJob, appliedJob } = useSelector(
     (state) => state.Assessment.currentUser
   );
+
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [BestMatch, setBestmatch] = useState([]);
@@ -42,6 +44,7 @@ function Dashboard() {
             response.data.jobs.sort((a, b) => b.createdAt - a.createdAt)
           );
           setBestmatch(response.data.jobs);
+          dispatch(fetchUserData(email))
           setLoading(false);
         } else {
           setAllJobData([]);
@@ -52,7 +55,7 @@ function Dashboard() {
         toast.error(`Server failed to load! Reload your page`);
         setLoading(false);
       });
-  }, []);
+  }, [email,dispatch]);
 
   const handleSaveToLaterClick = (e, item) => {
     e.preventDefault();

@@ -161,7 +161,7 @@ function MyResume() {
 
           <div className={ResumeStyle.Resume_Collection_container}>
             {resume_type === "myresume" ? (
-              <CurrentResume />
+              <CurrentResume email={email}/>
             ) : (
               <PreviousResume />
             )}
