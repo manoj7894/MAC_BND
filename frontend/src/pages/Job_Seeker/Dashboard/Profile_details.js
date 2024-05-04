@@ -51,6 +51,18 @@ const Profile_details = () => {
 
   const firstResumeFilename = getFirstResumeFilename();
 
+
+  const currentDate = new Date();
+const day = currentDate.getDate();
+const month = currentDate.getMonth() + 1; // January is 0, so we add 1
+const year = currentDate.getFullYear();
+
+const AppliedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
+
+console.log(AppliedDate); //this is date of application
+
+ 
+
   const formatISODateForInput = (isoDate) => {
     if (!isoDate) return '';
     const date = new Date(isoDate);
@@ -59,45 +71,51 @@ const Profile_details = () => {
 
   const handleApply = (e, item) => {
     e.preventDefault();
-    dispatch(fetchJobDetails(item._id || " "));
-    if (Job.mcq.length !== 0) {     //if there will be any skill test mcq questions for user then it will be true
-      if (!cancelpopup && !start_popup) {
-        setstart_popup(!start_popup);
-      }
-    }
-    else {
-      e.preventDefault();
-      setIsLoading(true);
-      axios
-        .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-          ...item,
-          email,
-          applicationStatus: [
-            {
-              JobStatus: 'In-Progress',
-              StatusText: 'Applied',
-              updatedAt: Date.now()
-            }, {
-              JobStatus: 'In-Progress',
-              StatusText: 'Application Sent',
-              updatedAt: Date.now()
-            }
-          ]
-        })
-        .then((response) => {
-          if (response.data.success) {
-            toast.success(`${response.data.msg}`);
-            dispatch(handleAppliedJob(item._id));
-            dispatch(handleRemoveSavedJob(item._id));
-            setIsLoading(false);
-            navigateTO(-1)
-          } else {
-            toast.error(`${response.data.msg}`);
-            setIsLoading(false);
+
+    dispatch(fetchJobDetails(item._id||" "));
+ if(Job.mcq.length!==0){     //if there will be any skill test mcq questions for user then it will be true
+  if(!cancelpopup&&!start_popup){
+    setstart_popup(!start_popup);
+   }
+ }
+ else{
+  e.preventDefault();
+   setIsLoading(true);
+    axios
+      .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
+        ...item,
+        userData,
+        email,
+        AppliedDate,
+        applicationStatus: [
+          {
+            JobStatus: 'In-Progress',
+            StatusText: 'Applied',
+            updatedAt: Date.now()
+          }, {
+            JobStatus: 'In-Progress',
+            StatusText: 'Application Sent',
+            updatedAt: Date.now()
           }
+        ]
+
+      })
+      .then((response) => {
+        if (response.data.success) {
+          toast.success(`${response.data.msg}`);
+          dispatch(handleAppliedJob(item._id));
+          dispatch(handleRemoveSavedJob(item._id));
+          setIsLoading(false);
+          navigateTO(-1)
+        } else {
+          toast.error(`${response.data.msg}`);
+
+    dispatch(fetchJobDetails(item._id || " "));
+  }
         })
         .catch((error) => {
           toast.error(`server failed! Try again ${error.message}`);
+
           setIsLoading(false);
         });
     }

@@ -3,10 +3,10 @@ import ResumeStyle from "../MyResume.module.css";
 import axios from "axios";
 import PdfComp from "../PdfComp";
 
-const CurrentResume = () => {
+const CurrentResume = ({email}) => {
   const [latestResume, setLatestResume] = useState(null); // Initialize latestResume as null
-  // console.log(latestResume);
-  const email = localStorage.getItem("email");
+  console.log(email);
+  // const email = localStorage.getItem("email");
 
   useEffect(() => {
     const fetchResumes = async () => {
