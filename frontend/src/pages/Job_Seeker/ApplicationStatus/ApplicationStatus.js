@@ -295,7 +295,7 @@ function StatusPopup({ popupType, CbTogglePopup, jobStatus }) {
         }
 
         {
-          jobStatus.some((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase()) && <li className={`Status__StatusTimeLineListItem completedStep`}>Shortlisted{calculateDate(jobStatus.filter((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase())[0]?.updatedAt)}</li>
+          jobStatus.some((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase()) && <li className={`Status__StatusTimeLineListItem completedStep  Shortlisted`}>Shortlisted{calculateDate(jobStatus.filter((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase())[0]?.updatedAt)}</li>
         }
 
         {
