@@ -86,7 +86,19 @@ console.log(AppliedDate); //this is date of application
         ...item,
         userData,
         email,
-        AppliedDate
+        AppliedDate,
+        applicationStatus: [
+          {
+            JobStatus: 'In-Progress',
+            StatusText: 'Applied',
+            updatedAt: Date.now()
+          }, {
+            JobStatus: 'In-Progress',
+            StatusText: 'Application Sent',
+            updatedAt: Date.now()
+          }
+        ]
+
       })
       .then((response) => {
         if (response.data.success) {
@@ -99,41 +111,7 @@ console.log(AppliedDate); //this is date of application
           toast.error(`${response.data.msg}`);
 
     dispatch(fetchJobDetails(item._id || " "));
-    if (Job.mcq.length !== 0) {     //if there will be any skill test mcq questions for user then it will be true
-      if (!cancelpopup && !start_popup) {
-        setstart_popup(!start_popup);
-      }
-    }
-    else {
-      e.preventDefault();
-      setIsLoading(true);
-      axios
-        .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-          ...item,
-          email,
-          applicationStatus: [
-            {
-              JobStatus: 'In-Progress',
-              StatusText: 'Applied',
-              updatedAt: Date.now()
-            }, {
-              JobStatus: 'In-Progress',
-              StatusText: 'Application Sent',
-              updatedAt: Date.now()
-            }
-          ]
-        })
-        .then((response) => {
-          if (response.data.success) {
-            toast.success(`${response.data.msg}`);
-            dispatch(handleAppliedJob(item._id));
-            dispatch(handleRemoveSavedJob(item._id));
-            setIsLoading(false);
-            navigateTO(-1)
-          } else {
-            toast.error(`${response.data.msg}`);
-            setIsLoading(false);
-          }
+  }
         })
         .catch((error) => {
           toast.error(`server failed! Try again ${error.message}`);

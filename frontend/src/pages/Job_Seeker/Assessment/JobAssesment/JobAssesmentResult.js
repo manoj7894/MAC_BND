@@ -35,9 +35,7 @@ const userData=User.userDetails;
 
         userData,
         percentageResult,
-        AppliedDate
-
-        percentageResult,
+        AppliedDate,
         applicationStatus: [
           {
             JobStatus: 'In-Progress',
