@@ -18,9 +18,7 @@ const CurrentResume = ({email}) => {
         // console.log(resumesData);
 
         if (resumesData.length > 0) {
-          const sortedResumes = resumesData.sort(
-            (a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt)
-          );
+          const sortedResumes = resumesData.sort((a, b) => new Date(b.uploadedAt) - new Date(a.uploadedAt));
           setLatestResume(sortedResumes[0]);
         } else {
           setLatestResume(null);
@@ -31,7 +29,7 @@ const CurrentResume = ({email}) => {
     };
 
     fetchResumes();
-  }, [email, latestResume]);
+  },[email]);
 
   return (
     <div className={ResumeStyle.Current_Resume_Container}>
