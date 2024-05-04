@@ -19,7 +19,18 @@ function JobAssesmentResult() {
       .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
         ...item,
         email,
-        percentageResult
+        percentageResult,
+        applicationStatus: [
+          {
+            JobStatus: 'In-Progress',
+            StatusText: 'Applied',
+            updatedAt: Date.now()
+          }, {
+            JobStatus: 'In-Progress',
+            StatusText: 'Application Sent',
+            updatedAt: Date.now()
+          }
+        ]
       })
       .then((response) => {
         if (response.data.success) {
