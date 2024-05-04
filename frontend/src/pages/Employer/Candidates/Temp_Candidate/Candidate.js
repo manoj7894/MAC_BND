@@ -20,7 +20,7 @@ function Candidate() {
     const [showBokkmarks, setBoomarks] = useState(true)
     const [showBkProfile, setshowBkProfile] = useState(true)
     const [toogleBookMark, setToggleBookmark] = useState(true)
-    const [progress, setProgress] = useState(20);
+    // const [progress, setProgress] = useState(20);
     const radius = 30;
     const circumference = 2 * Math.PI * radius;
     // const offset = circumference - (progress / 100) * circumference;
@@ -123,56 +123,56 @@ function Candidate() {
                 "Attachments": 3
             },
         ])
-    const testArrewrwrwer = [
-        {
-            "Candidate Name": "Ayush Sachdev",
-            "Rating": 4,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-        {
-            "Candidate Name": "ssss Sachdev",
-            "Rating": 5,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-        {
-            "Candidate Name": "NNNN Sachdev",
-            "Rating": 3,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-        {
-            "Candidate Name": "tepqwq Sachdev",
-            "Rating": 1,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-        {
-            "Candidate Name": "POEpwqd Sachdev",
-            "Rating": 5,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-        {
-            "Candidate Name": "DWQD Sachdev",
-            "Rating": 2,
-            "Stages": "Full Satck",
-            "Applied Role": "Web developer",
-            "Application Date": "12.03.23",
-            "Attachments": 3
-        },
-    ]
+    // const testArrewrwrwer = [
+    //     {
+    //         "Candidate Name": "Ayush Sachdev",
+    //         "Rating": 4,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    //     {
+    //         "Candidate Name": "ssss Sachdev",
+    //         "Rating": 5,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    //     {
+    //         "Candidate Name": "NNNN Sachdev",
+    //         "Rating": 3,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    //     {
+    //         "Candidate Name": "tepqwq Sachdev",
+    //         "Rating": 1,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    //     {
+    //         "Candidate Name": "POEpwqd Sachdev",
+    //         "Rating": 5,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    //     {
+    //         "Candidate Name": "DWQD Sachdev",
+    //         "Rating": 2,
+    //         "Stages": "Full Satck",
+    //         "Applied Role": "Web developer",
+    //         "Application Date": "12.03.23",
+    //         "Attachments": 3
+    //     },
+    // ]
 
 
     const [isAscending, setIsAscending] = useState(true)
@@ -218,15 +218,15 @@ function Candidate() {
         }
     };
 
-    const [appliedPerc, setAppliedPerc] = useState(20)
-    const [rejectedPerc, setRejectedPerc] = useState(99)
-    const [pBkmedPerc, setPBMEDPerc] = useState(35)
-    const [shortlistedPerc, setShortlistedPerc] = useState(17)
+    const [appliedPerc] = useState(20)
+    const [rejectedPerc] = useState(99)
+    const [pBkmedPerc] = useState(35)
+    const [shortlistedPerc] = useState(17)
 
     const [applied, setApplied] = useState()
     const [rejected, setRejected] = useState()
     const [pBkmed, setPBMED] = useState()
-    const [shortlisted, setShortlisted] = useState()
+    const [shortlisted] = useState()
     const [Selectedid, setSelectedid] = useState()
     const [SeeResume, setSeeResume] = useState(false)
 
@@ -272,6 +272,7 @@ function Candidate() {
         console.log(page)
         setCurrentPage(page);
     };
+    console.log(currentPage);
     // const [newArr, setNewArr] = useState([])
     // useEffect(() => {
     //     const startIndex = (currentPage - 1) * itemsPerPage;
