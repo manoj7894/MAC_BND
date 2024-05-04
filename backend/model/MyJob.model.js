@@ -51,7 +51,11 @@ const myJobSchema = new mongoose.Schema(
             required: true,
         },
         applicationStatus: [{
+
             JobStatus: {
+                type: String
+            },
+            StatusText:{
                 type: String
             },
             updatedAt: {
