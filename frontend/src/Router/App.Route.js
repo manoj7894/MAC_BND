@@ -31,26 +31,16 @@ const AnalyticsReportComponent = lazy(() =>
 );
 const MYJobs = lazy(() => import("../pages/Job_Seeker/MyJobs/MyJobs.js"));
 const MYResume = lazy(() => import("../pages/Job_Seeker/MyResume/MyResume.js"));
-const Application = lazy(() =>
-  import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js")
-);
-const Interviews = lazy(() =>
-  import("../pages/Job_Seeker/InterviewScheduled/Interview.js")
-);
+const Application = lazy(() => import("../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js"));
+const Status = lazy(() => import('../pages/Job_Seeker/ApplicationStatus/ApplicationStatus.js').then(module => ({ default: module.Status })));;
+const Interviews = lazy(() => import("../pages/Job_Seeker/InterviewScheduled/Interview.js"));
 const Settings = lazy(() => import("../pages/Job_Seeker/Settings/Setting.js"));
-const JobListDetailedView = lazy(() =>
-  import("../pages/Job_Seeker/Dashboard/DetailedView.js")
-);
-const ProfileDetails = lazy(() =>
-  import("../pages/Job_Seeker/Dashboard/Profile_details.js")
-);
-const CandidateProfileDetails = lazy(() =>
-  import("../pages/Job_Seeker/EditMyProfile/EditProfile.js")
-);
-const AssesmentInstruction =lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/AssesmentInstruction.js"));
-const JobAssesment= lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesment.js")) ;
-const JobAssesmentResult =lazy(()=>import ("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesmentResult.js"));
-
+const JobListDetailedView = lazy(() => import("../pages/Job_Seeker/Dashboard/DetailedView.js"));
+const ProfileDetails = lazy(() => import("../pages/Job_Seeker/Dashboard/Profile_details.js"));
+const CandidateProfileDetails = lazy(() => import("../pages/Job_Seeker/EditMyProfile/EditProfile.js"));
+const AssesmentInstruction = lazy(() => import("../pages/Job_Seeker/Assessment/JobAssesment/AssesmentInstruction.js"));
+const JobAssesment = lazy(() => import("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesment.js"));
+const JobAssesmentResult = lazy(() => import("../pages/Job_Seeker/Assessment/JobAssesment/JobAssesmentResult.js"));
 const ChatBot = lazy(() => import("../pages/Job_Seeker/Chatbot/ChatBot.js"));
 const Chatarea = lazy(() => import("../pages/Job_Seeker/Chatbot/Chatarea.js"));
 
@@ -100,7 +90,8 @@ const InterviewScheduled = lazy(() =>
 const CreateInterview = lazy(() =>
   import("../pages/Employer/InterviewScheduled/CreateInterview.js")
 );
-const Chatbot = lazy(() => import("../pages/Employer/ChatBot/Chatbot.js"));
+const EmployerChatBot = lazy(() => import("../pages/Employer/ChatBot/EmployerChatBot.js"));
+const ChatArea = lazy(() => import("../pages/Employer/ChatBot/Chatarea.js"));
 const Setting = lazy(() => import("../pages/Employer/Settings/Setting.js"));
 const EditProfile = lazy(() =>
   import("../pages/Employer/Settings/EditProfile.js")
@@ -157,12 +148,16 @@ function JobSeekerRoutes() {
         <Route path="/analytics/yearly" element={<Suspense>    <AnalyticsReportComponent />  </Suspense>} />
         <Route path="/myjobs" element={<Suspense>    <MYJobs />  </Suspense>} />
         <Route path="/myresume" element={<Suspense>    <MYResume />  </Suspense>} />
-        <Route path="/application" element={<Suspense>    <Application />  </Suspense>} />
+
+        <Route path="/application" element={<Suspense>    <Application />  </Suspense>}>
+          <Route path="/application/:status" element={<Suspense> <Status />  </Suspense>} />
+        </Route>
+
         <Route path="/interviews" element={<Suspense>    <Interviews />  </Suspense>} />
         <Route path="/settings" element={<Suspense>    <Settings />  </Suspense>} />
         <Route path="/settings/editprofile" element={<Suspense>    <CandidateProfileDetails />  </Suspense>} />
-        <Route path="/dashboard/:id" element={<Suspense>    {" "}    <JobListDetailedView />{" "}  </Suspense>} />
-        <Route path="/dashboard/profile_details" element={<Suspense>    {" "}    <ProfileDetails />{" "}  </Suspense>} />
+        <Route path="/dashboard/:id" element={<Suspense>        <JobListDetailedView />  </Suspense>} />
+        <Route path="/dashboard/profile_details" element={<Suspense>        <ProfileDetails />  </Suspense>} />
       </Route>
 
       <Route
@@ -197,11 +192,11 @@ function JobSeekerRoutes() {
           </Suspense>
         }
       />
-       <Route
+      <Route
         path="/job-assesment-test"
         element={
           <Suspense>
-            <JobAssesment/>
+            <JobAssesment />
           </Suspense>
         }
       />
@@ -213,7 +208,7 @@ function JobSeekerRoutes() {
           </Suspense>
         }
       />
-     
+
 
       <Route path="/assessment-Instructions" element={<Suspense>  <InstructionPage /></Suspense>} />
       <Route path="/assessment-test" element={<Suspense>  <SelfAssessmentPage /></Suspense>} />
@@ -244,7 +239,8 @@ function EmployerRoutes() {
         <Route path="/candidates" element={<Suspense>    <Candidates />  </Suspense>} />
         <Route path="/interview_scheduled" element={<Suspense>    <InterviewScheduled />  </Suspense>} />
         <Route path="/schedule-interview" element={<Suspense>    <CreateInterview />  </Suspense>} />
-        <Route path="/chatbot" element={<Suspense>    <Chatbot />  </Suspense>} />
+        <Route path="/chatbot" element={<Suspense>    <EmployerChatBot />  </Suspense>} />
+        <Route path="/Chatarea" element={<Suspense>    <ChatArea />  </Suspense>} />
         <Route path="/Setting" element={<Suspense>    <Setting />  </Suspense>} />
         <Route path="/Setting/Editprofile" element={<Suspense>    <EditProfile />  </Suspense>} />
       </Route>
@@ -257,14 +253,14 @@ function EmployerRoutes() {
 function AuthRouter() {
   return (
     <Routes>
-      <Route path="/login" element={<Suspense>  {" "}  <LoginPage />{" "}</Suspense>} />
-      <Route path="/user-signup" element={<Suspense>  {" "}  <Signup />{" "}</Suspense>} />
-      <Route path="/hr-login" element={<Suspense>  {" "}  <HrLogin />{" "}</Suspense>} />
-      <Route path="/reset-password/:token" element={<Suspense>  {" "}  <ResetPassword />{" "}</Suspense>} />
-      <Route path="/forgot-password" element={<Suspense>  {" "}  <ForgotPassword />{" "}</Suspense>} />
-      <Route path="/hr/reset-password/:token" element={<Suspense>  {" "}  <HrResetPassword />{" "}</Suspense>} />
-      <Route path="/hr/forgot-password" element={<Suspense>  {" "}  <HrForgotPassword />{" "}</Suspense>} />
-      <Route path="/*" element={<Suspense>  {" "}  <LoginPage />{" "}</Suspense>} />
+      <Route path="/login" element={<Suspense>    <LoginPage /></Suspense>} />
+      <Route path="/user-signup" element={<Suspense>    <Signup /></Suspense>} />
+      <Route path="/hr-login" element={<Suspense>    <HrLogin /></Suspense>} />
+      <Route path="/reset-password/:token" element={<Suspense>    <ResetPassword /></Suspense>} />
+      <Route path="/forgot-password" element={<Suspense>    <ForgotPassword /></Suspense>} />
+      <Route path="/hr/reset-password/:token" element={<Suspense>    <HrResetPassword /></Suspense>} />
+      <Route path="/hr/forgot-password" element={<Suspense>    <HrForgotPassword /></Suspense>} />
+      <Route path="/*" element={<Suspense>    <LoginPage /></Suspense>} />
     </Routes>
   );
 }
