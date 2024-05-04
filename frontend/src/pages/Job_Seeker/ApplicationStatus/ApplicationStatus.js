@@ -112,7 +112,7 @@ function Status() {
       .then((response) => {
         if (response.data.success) {
           setAppliedJOB(response.data.appliedJob);
-          setFilterAppliedJOB(response.data.appliedJob.filter((data) => data.applicationStatus.some((statusData) => statusData.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase())));
+          setFilterAppliedJOB(response.data.appliedJob.filter((data) => data.applicationStatus.every((statusData) => statusData.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase())));
           setLoading(false);
         } else {
           setAppliedJOB([]);
@@ -127,7 +127,19 @@ function Status() {
   }, []);
 
   useEffect(() => {
-    const filterJob = appliedJOB?.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === pathname.split("/")[2].toLowerCase()));
+    let filterJob;
+    if (pathname === '/application/In-Progress') {
+      filterJob = appliedJOB?.filter((data) => data.applicationStatus.every((status) => status.JobStatus.toLowerCase() === "In-Progress".toLocaleLowerCase()));
+    }
+
+    if (pathname === '/application/Shortlisted') {
+      filterJob = appliedJOB?.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === "Shortlisted".toLocaleLowerCase()));
+    }
+
+    if (pathname === '/application/Not-Shortlisted') {
+      filterJob = appliedJOB?.filter((data) => data.applicationStatus.some((status) => status.JobStatus.toLowerCase() === "Not-Shortlisted".toLocaleLowerCase()));
+    }
+
     setFilterAppliedJOB(filterJob)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
@@ -269,15 +281,27 @@ function StatusPopup({ popupType, CbTogglePopup, jobStatus }) {
       }
 
       <ul className={ApplicationStyle.Status__poupBox_StatusTimeLineList}>
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Applied') && ApplicationStyle.completedStep}`}>Applied{calculateDate(jobStatus.filter((data) => data.StatusText === 'Applied')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Sent') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}`}>Application Sent{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Sent')[0]?.updatedAt)}</li>
+        <li className={`Status__StatusTimeLineListItem ${jobStatus?.some((data) => data.StatusText.toLowerCase() === 'Applied'.toLowerCase()) && 'completedStep'}`}>Applied{calculateDate(jobStatus.filter((data) => data.StatusText === 'Applied')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Application Viewed') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}}`}>Application Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Viewed')[0]?.updatedAt)}</li>
+        <li className={`Status__StatusTimeLineListItem ${jobStatus?.some((data) => data.StatusText.toLowerCase() === 'Application Sent'.toLowerCase()) && 'completedStep'}`}>Application Sent{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Sent')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem} ${jobStatus?.some((data) => data.StatusText === 'Resume Viewed') ? ApplicationStyle.completedStep : ApplicationStyle.NOTcompletedStep}}`}>Resume Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Resume Viewed')[0]?.updatedAt)}</li>
+        <li className={`Status__StatusTimeLineListItem ${jobStatus?.some((data) => data.StatusText.toLowerCase() === 'Application Viewed'.toLowerCase()) && 'completedStep'}`}>Application Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Application Viewed')[0]?.updatedAt)}</li>
 
-        <li className={`${ApplicationStyle.Status__StatusTimeLineListItem}`}>Waiting for recruiter</li>
+        <li className={`Status__StatusTimeLineListItem ${jobStatus?.some((data) => data.StatusText.toLowerCase() === 'Resume Viewed'.toLowerCase()) && 'completedStep'}`}>Resume Viewed{calculateDate(jobStatus.filter((data) => data.StatusText === 'Resume Viewed')[0]?.updatedAt)}</li>
+
+        {
+          jobStatus.every((data) => data.JobStatus.toLocaleLowerCase() === "In-Progress".toLocaleLowerCase()) && <li className={`Status__StatusTimeLineListItem`}>Waiting for recruiter</li>
+        }
+
+        {
+          jobStatus.some((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase()) && <li className={`Status__StatusTimeLineListItem completedStep`}>Shortlisted{calculateDate(jobStatus.filter((data) => data.JobStatus.toLocaleLowerCase() === "Shortlisted".toLocaleLowerCase())[0]?.updatedAt)}</li>
+        }
+
+        {
+          jobStatus.some((data) => data.JobStatus.toLocaleLowerCase() === "Not-Shortlisted".toLocaleLowerCase()) && <li className={`Status__StatusTimeLineListItem completedStepNotSelected Status__StatusTimeLineListItemNotSelected`}>Not-Shortlisted{calculateDate(jobStatus.filter((data) => data.JobStatus.toLocaleLowerCase() === "Not-Shortlisted".toLocaleLowerCase())[0]?.updatedAt)}</li>
+        }
+
       </ul>
 
       <button className={ApplicationStyle.Status_popupbuttons} onClick={() => CbTogglePopup(false)}>OK, GOT IT</button>
