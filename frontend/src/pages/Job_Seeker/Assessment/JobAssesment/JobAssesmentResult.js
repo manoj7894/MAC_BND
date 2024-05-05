@@ -23,7 +23,7 @@ const userData=User.userDetails;
   
   const AppliedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
   
-  console.log(AppliedDate); //this is date of application
+  // console.log(AppliedDate); //this is date of application
   
 
   const handleDoneButtonClick = (e,item) => {
