@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import pages from "../Pages.module.css";
-import userImg from '../../../Assets/user.png'
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
+// import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
+// import { FaBookmark } from "react-icons/fa"; //bookmarked
 
 const HrJobDetail = ({ jobId }) => {
   const [job, setJob] = useState(null);
@@ -83,6 +84,7 @@ const HrJobDetail = ({ jobId }) => {
                       <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
                       <p style={{ fontSize: '15px' }}>{user.biography}</p>
                     </section>
+                    {/* bookmark here */}
                   </header>
                   <body className={pages.__appliedBody}>
                     <span>Location - <strong>{user.location}</strong></span>
