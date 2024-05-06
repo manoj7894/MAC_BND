@@ -24,10 +24,20 @@ const HrJobDetail = ({ jobId }) => {
     fetchData();
   }, [jobId]);
 
-  const handleUserCardClick = (e, userEmail) => {
+  const handleUserCardClick = (e, userEmail, userJobID) => {
     e.preventDefault();
     setShowApplicantDetails(true);
     setUsers(userEmail)
+
+    // update the application status of the user in the applied collection
+    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${userEmail}`, {
+      applicationStatus: {
+        JobStatus: 'In-Progress',
+        StatusText: 'Application Viewed',
+        updatedAt: Date.now()
+      },
+      userJobID
+    })
   }
 
   return (
@@ -83,7 +93,7 @@ const HrJobDetail = ({ jobId }) => {
           {
             job?.appliedBy?.map((user) => {
               return (
-                <div className={pages.__appliedUsers} key={user._id} onClick={(e)=> handleUserCardClick(e, user?.email)}>
+                <div className={pages.__appliedUsers} key={user._id} onClick={(e) => handleUserCardClick(e, user?.email, user?.jobID)}>
                   <div className={pages.__appliedHeader}>
                     <img className={pages.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
                     <section>

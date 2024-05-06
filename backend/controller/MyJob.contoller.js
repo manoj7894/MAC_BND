@@ -133,6 +133,19 @@ const removeAppliedJob = async (req, res) => {
     }
 }
 
+const updateApplicationStatus = async (req, res) => {
+    const { email } = req.params;
+    const { applicationStatus, userJobID } = req.body;
+
+    const filterdAppliedJob = await appliedJobCollection.findOne({ jobID: userJobID, userEmail: email })
+
+    if (!filterdAppliedJob?.applicationStatus.some((status) => status.StatusText.toLowerCase() === applicationStatus.StatusText.toLowerCase())) {
+        await appliedJobCollection.updateOne({ jobID: userJobID, userEmail: email }, {
+            $push: { applicationStatus: applicationStatus }
+        });
+    }
+
+}
 
 //! Saved job related controllers
 const createSavedJob = async (req, res) => {
@@ -236,4 +249,5 @@ module.exports = {
     createSavedJob,
     getSavedJob,
     removeSavedJob,
+    updateApplicationStatus
 }
