@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import axios from "axios";
 import pages from "../Pages.module.css";
 import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 function ApplicantsDetails({ jobData, selectedUser }) {
   const [selectedUserEmail, setSelectedUserEmail] = useState(selectedUser)
   const [userDetails, setUserDetails] = useState([]);
@@ -26,7 +28,18 @@ function ApplicantsDetails({ jobData, selectedUser }) {
       })
     })
   }
-
+  const handleSeeResumeClick = (e, userEmail, userJobID) => {
+    e.preventDefault();
+    // update the application status of the user in the applied collection
+    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${userEmail}`, {
+      applicationStatus: {
+        JobStatus: 'In-Progress',
+        StatusText: 'Resume Viewed',
+        updatedAt: Date.now()
+      },
+      userJobID
+    })
+  }
   return (
     <div className={pages.__applicationDetailsContainer}>
 
@@ -97,7 +110,8 @@ function ApplicantsDetails({ jobData, selectedUser }) {
                 {user.note ?? 'N/A'}
               </>
               <div className={pages.__applicantButtons}>
-                <button className={pages.__applicantBtn}>See Resume</button>
+                <button className={pages.__applicantBtn} onClick={(e) => handleSeeResumeClick(e, user?.email, user?.jobID)}>See Resume</button>
+
                 <button className={pages.__applicantBtn} style={{ background: 'blue', padding: '0 4em' }}>Schedule Interview</button>
               </div>
             </div>
