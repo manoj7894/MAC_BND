@@ -166,8 +166,9 @@ p {
     font-size: 15px;
     text-align: justify;
 }
+
 /* Applicant & details--------- */
-.__appliedUserList{
+.__appliedUserList {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -175,13 +176,8 @@ p {
     gap: 1em;
     margin: 1em 0;
 }
-.__appliedUsersSpace{
-    /* border: 1px solid green; */
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.__appliedUsers{
+
+.__appliedUsers {
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     width: 350px;
     height: 18em;
@@ -192,28 +188,40 @@ p {
     /* gap: 1em; */
     justify-content: space-around;
 }
-.__userPF{
+
+.__appliedUsers:hover {
+    box-shadow: none;
+    cursor: pointer;
+    outline: 1px solid rgba(0, 0, 0, 0.589);
+}
+
+.__userPF {
+    border: 1px solid rgba(128, 128, 128, 0.164);
     width: 4em;
     height: 4em;
     border-radius: 50%;
     object-fit: cover;
 }
-.__appliedHeader{
+
+.__appliedHeader {
     display: flex;
     gap: 20px;
 }
-.__appliedBody{
+
+.__appliedBody {
     display: flex;
     justify-content: space-between;
     font-size: 15px;
 }
-.__appliedSkills{
+
+.__appliedSkills {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
-.__appliedSkills span{
+
+.__appliedSkills span {
     padding: 2px .8em;
     border-radius: 5px;
     background: rgb(214, 214, 214);
@@ -221,23 +229,67 @@ p {
 }
 
 /* Applicant Details--------- */
-.__applicantDetails{
-    /* border: 1px solid red; */
-    width: calc(100vw - 680px);
+.__applicationDetailsContainer {
+    margin: 10px 0px;
+    width: 100%;
+    height: 550px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.__applicantDetails__ListBox {
+    /* border: 2px solid blue; */
+    width: 320px;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.__Secondary_appliedUsers {
+    width: 100%;
+    box-shadow: none;
+    border: 1px solid black;
+    margin-bottom: 20px;
+}
+.__active_appliedUsers{
+border: none;
+outline: none;
+background-color: rgba(168, 192, 255, 0.2);
+}
+.__Secondary_appliedUsers:hover{
+    cursor: pointer;
+    outline: none;
+}
+.__applicantDetails_Container {
+    width: calc(100% - 335px);
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-    padding: 1em;
+    height: fit-content;
+    align-self: flex-start;
+    max-height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.__applicantDetails {
     display: flex;
     flex-direction: column;
+    padding: 0.3em 1em;
     gap: 1em;
 }
-.__applicantButtons{
+
+.__applicantButtons {
     /* border: 1px solid blue; */
     width: 100%;
     display: flex;
     justify-content: space-around;
     margin: 1em 0;
 }
-.__applicantBtn{
+
+.__applicantBtn {
     font-weight: 500;
     background: orange;
     color: white;

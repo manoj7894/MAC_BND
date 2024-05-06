@@ -157,29 +157,29 @@ export default function HRDashboard() {
 
           {!selectedJobId && (
             <div className={pages.__latest_Post}>
-              <header className={pages.__latest_Post_Header}>
+              <div className={pages.__latest_Post_Header}>
                 <h3>Latest Post</h3>
                 <p className=''>see all</p>
-              </header>
+              </div>
               <section className={pages.__latestPosts}>
                 {sortedJob.map((jobs) => (
                   <div className={`${pages.__user_Post} ${selectedJobId === jobs._id ? pages.activeCard : ''}`} key={jobs._id} onClick={() => handleJobCardClick(jobs._id)}>
-                    <header className={pages.__user_Post_Header}>
+                    <div className={pages.__user_Post_Header}>
                       <img className={pages.__user_PostImg} src={user} alt="" />
                       <div>
                         <h3 style={{ fontSize: '20px' }}>{localStorage.name}</h3>
                         <span className={pages.__user_Position}>HR Executive</span>
                       </div>
                       <FontAwesomeIcon icon={faTrash} title="delete post" className={pages.createPost_BtnDelete} onClick={() => handleDelete(jobs._id)} />
-                    </header>
+                    </div>
                     <div className={pages.__user_Post_body}>
                       <img className={pages.__latestPosts_Img} src={jobs.jobPoster} alt="" />
                       <p className={pages.__user_Post_info}>{jobs.jobDescription}</p>
                     </div>
-                    <footer className={pages.__user_Post_Footer}>
+                    <div className={pages.__user_Post_Footer}>
                       <h6 className={pages.__user_Post_Timestamp}>{formattedDate(jobs.createdAt)}</h6>
                       <button className={pages.__btn_Repost}>Repost</button>
-                    </footer>
+                    </div>
                   </div>
                 ))}
               </section>

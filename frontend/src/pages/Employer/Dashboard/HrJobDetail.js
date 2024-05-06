@@ -3,11 +3,13 @@ import axios from "axios";
 import pages from "../Pages.module.css";
 import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
 // import { FaBookmark } from "react-icons/fa"; //bookmarked
+import ApplicantsDetails from "./ApplicantsDetails.js"
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
 const HrJobDetail = ({ jobId }) => {
   const [job, setJob] = useState(null);
-  // const [users, setUsers] = useState([]);
+  const [ShowApplicantDetails, setShowApplicantDetails] = useState(false)
+  const [selectedUser, setUsers] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,13 +17,18 @@ const HrJobDetail = ({ jobId }) => {
         const response = await axios.get(`${baseUrl}/jobs/job/${jobId}`);
         const selectedJob = response.data.jobs;
         setJob(selectedJob);
-        console.log(response);
       } catch (error) {
         console.error("Error fetching job details:", error);
       }
     };
     fetchData();
   }, [jobId]);
+
+  const handleUserCardClick = (e, userEmail) => {
+    e.preventDefault();
+    setShowApplicantDetails(true);
+    setUsers(userEmail)
+  }
 
   return (
     <>
@@ -49,49 +56,48 @@ const HrJobDetail = ({ jobId }) => {
         <div className={pages.hr_job_detail_location}>
           <div style={{ display: 'flex' }}>
             <p className={pages.hr_job_detail_location_childrens}>
-              Location -{" "}
+              Location -
               <span>
                 <strong>{job && job.location}</strong>
               </span>
             </p>
             <p className={pages.hr_job_detail_location_childrens}>
-              Type -{" "}
+              Type -
               <span>
                 <strong>{job && job.employmentType}</strong>
               </span>
             </p>
           </div>
           <p className={pages.hr_job_detail_location_childrens}>
-            Salary -{" "}
+            Salary -
             <span>
               <strong>{job && job.salaryRange}</strong>
             </span>
           </p>
         </div>
-        {/* <hr /> */}
+
       </div>
 
-      {/* Users Applied-------- */}
-      <div className={pages.__appliedUserList}>
-        {
-          job?.appliedBy?.map((user) => {
-            return (
-              <div className={pages.__appliedUsersSpace}>
-                <div className={pages.__appliedUsers} key={user._id}>
-                  <header className={pages.__appliedHeader}>
-                    <img className={pages.__userPF} src={user.profileImage} alt="" />
+      {
+        ShowApplicantDetails ? <ApplicantsDetails jobData={job} selectedUser={selectedUser} /> : <div className={pages.__appliedUserList}>
+          {
+            job?.appliedBy?.map((user) => {
+              return (
+                <div className={pages.__appliedUsers} key={user._id} onClick={(e)=> handleUserCardClick(e, user?.email)}>
+                  <div className={pages.__appliedHeader}>
+                    <img className={pages.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
                     <section>
                       <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
                       <p style={{ fontSize: '15px' }}>{user.biography}</p>
                     </section>
                     {/* bookmark here */}
-                    <FaRegBookmark style={{fontSize:'20px'}}/>
-                  </header>
-                  <body className={pages.__appliedBody}>
+                    <FaRegBookmark style={{ fontSize: '20px' }} />
+                  </div>
+                  <div className={pages.__appliedBody}>
                     <span>Location - <strong>{user.location}</strong></span>
                     <span>Type - <strong>{user.employmentType}</strong></span>
-                  </body>
-                  <footer>
+                  </div>
+                  <div>
                     <h6>Skills</h6>
                     <div className={pages.__appliedSkills}>
                       {
@@ -102,63 +108,14 @@ const HrJobDetail = ({ jobId }) => {
                         })
                       }
                     </div>
-                  </footer>
-                </div>
-
-                {/* Applicant Details--------- */}
-                <div className={pages.__applicantDetails}>
-                  <header className={pages.__appliedHeader}>
-                    <img className={pages.__userPF} src={user.profileImage} alt="" />
-                    <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
-                    {/* <FaRegBookmark/> */}
-                  </header>
-                  <p style={{ textAlign: 'justify' }}>{user.biography}</p>
-                  <div className="__applicantPlace">
-                    <span>State - <strong>{user.state}</strong></span>
-                    <span>Country - <strong>{user.country}</strong></span>
-                  </div>
-                  <footer>
-                    <h6>Skills</h6>
-                    <div className={pages.__appliedSkills}>
-                      {
-                        user.skills?.map(skill => {
-                          return (
-                            <span key={skill._id}>{skill.name}</span>
-                          )
-                        })
-                      }
-                    </div>
-                  </footer>
-                  <p>
-                    <h6>Appicant Note:</h6>
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                    {user.biography}
-                  </p>
-                  <div className={pages.__applicantButtons}>
-                    <button className={pages.__applicantBtn}>See Resume</button>
-                    <button className={pages.__applicantBtn} style={{background:'blue', padding:'0 4em'}}>Schedule Interview</button>
                   </div>
                 </div>
+              )
+            })
+          }
+        </div>
+      }
 
-              </div>
-            )
-          })
-        }
-
-
-      </div>
     </>
   );
 };
