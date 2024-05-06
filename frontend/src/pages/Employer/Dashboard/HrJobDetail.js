@@ -85,7 +85,7 @@ const HrJobDetail = ({ jobId }) => {
                       <p style={{ fontSize: '15px' }}>{user.biography}</p>
                     </section>
                     {/* bookmark here */}
-                    <FaRegBookmark/>
+                    <FaRegBookmark style={{fontSize:'20px'}}/>
                   </header>
                   <body className={pages.__appliedBody}>
                     <span>Location - <strong>{user.location}</strong></span>
