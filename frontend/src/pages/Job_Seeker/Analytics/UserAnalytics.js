@@ -403,7 +403,7 @@ function SplineChart() {
     ],
   });
 
-  (setData())
+  console.log(setData);
   return (
     <div style={{ height: "420px" }}>
       <Line data={data}>Hello</Line>
