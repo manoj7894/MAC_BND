@@ -72,43 +72,89 @@ const HrJobDetail = ({ jobId }) => {
 
       {/* Users Applied-------- */}
       <div className={pages.__appliedUserList}>
-      {
-        job?.appliedBy?.map((user) => {
-          return (
-              <div className={pages.__appliedUsers} key={user._id}>
-                <header className={pages.__appliedHeader}>
-                  <img className={pages.__userPF} src={user.profileImage} alt="" />
-                  <section>
+        {
+          job?.appliedBy?.map((user) => {
+            return (
+              <div className={pages.__appliedUsersSpace}>
+                <div className={pages.__appliedUsers} key={user._id}>
+                  <header className={pages.__appliedHeader}>
+                    <img className={pages.__userPF} src={user.profileImage} alt="" />
+                    <section>
+                      <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
+                      <p style={{ fontSize: '15px' }}>{user.biography}</p>
+                    </section>
+                  </header>
+                  <body className={pages.__appliedBody}>
+                    <span>Location - <strong>{user.location}</strong></span>
+                    <span>Type - <strong>{user.employmentType}</strong></span>
+                  </body>
+                  <footer>
+                    <h6>Skills</h6>
+                    <div className={pages.__appliedSkills}>
+                      {
+                        user.skills?.map(skill => {
+                          return (
+                            <span key={skill._id}>{skill.name}</span>
+                          )
+                        })
+                      }
+                    </div>
+                  </footer>
+                </div>
+
+                {/* Applicant Details--------- */}
+                <div className={pages.__applicantDetails}>
+                  <header className={pages.__appliedHeader}>
+                    <img className={pages.__userPF} src={user.profileImage} alt="" />
                     <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
-                    <p style={{ fontSize: '15px' }}>{user.biography}</p>
-                  </section>
-                </header>
-                <body className={pages.__appliedBody}>
-                  <span>Location - <strong>{user.location}</strong></span>
-                  <span>Type - <strong>{user.employmentType}</strong></span>
-                </body>
-                <footer>
-                  <h6>Skills</h6>
-                  <div className={pages.__appliedSkills}>
-                    {
-                      user.skills?.map(skill => {
-                        return (
-                          <span key={skill._id}>{skill.name}</span>
-                        )
-                      })
-                    }
+                  </header>
+                  <p style={{ textAlign: 'justify' }}>{user.biography}</p>
+                  <div className="__applicantPlace">
+                    <span>State - <strong>{user.state}</strong></span>
+                    <span>Country - <strong>{user.country}</strong></span>
                   </div>
-                </footer>
+                  <footer>
+                    <h6>Skills</h6>
+                    <div className={pages.__appliedSkills}>
+                      {
+                        user.skills?.map(skill => {
+                          return (
+                            <span key={skill._id}>{skill.name}</span>
+                          )
+                        })
+                      }
+                    </div>
+                  </footer>
+                  <p>
+                    <h6>Appicant Note:</h6>
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                    {user.biography}
+                  </p>
+                  <div className={pages.__applicantButtons}>
+                    <button className={pages.__applicantBtn}>See Resume</button>
+                    <button className={pages.__applicantBtn}>Schedule Interview</button>
+                  </div>
+                </div>
+
               </div>
-          )
-        })
-      }
+            )
+          })
+        }
+
+
       </div>
-
-
-      {/* User Details--------- */}
-
-
     </>
   );
 };
