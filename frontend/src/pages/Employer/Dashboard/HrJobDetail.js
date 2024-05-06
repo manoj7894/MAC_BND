@@ -146,7 +146,7 @@ const HrJobDetail = ({ jobId }) => {
                   </p>
                   <div className={pages.__applicantButtons}>
                     <button className={pages.__applicantBtn}>See Resume</button>
-                    <button className={pages.__applicantBtn}>Schedule Interview</button>
+                    <button className={pages.__applicantBtn} style={{background:'blue', padding:'0 4em'}}>Schedule Interview</button>
                   </div>
                 </div>
 
