@@ -172,7 +172,7 @@ p {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content:space-between;
+    justify-content: space-between;
     gap: 1em;
     margin: 1em 0;
 }
@@ -208,7 +208,8 @@ p {
     gap: 20px;
     position: relative;
 }
-.__bookmark{
+
+.__bookmark {
     font-size: 20px;
     position: absolute;
     right: 3vw;
@@ -231,7 +232,7 @@ p {
 .__appliedSkills span {
     padding: 2px 1em;
     border-radius: 15px;
-    background: rgb(255, 255, 255);
+    background: rgb(226, 226, 226);
     font-size: 15px;
 }
 
@@ -248,7 +249,7 @@ p {
 
 .__applicantDetails__ListBox {
     /* border: 2px solid blue; */
-    width: 320px;
+    width: 350px;
     height: 100%;
     overflow: hidden;
     overflow-y: auto;
@@ -264,6 +265,7 @@ p {
 
 .__active_appliedUsers {
     outline: none;
+    /* width: 348px; */
     border: 2px solid rgba(0, 0, 255, 0.245);
     /* outline: 2px solid blue; */
     border-radius: 15px;
@@ -297,7 +299,8 @@ p {
     gap: 1em;
 
 }
-.__applicantPlace{
+
+.__applicantPlace {
     display: flex;
     gap: 3em;
 }
