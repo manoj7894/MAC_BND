@@ -31,7 +31,7 @@ const CurrentResume = () => {
     };
 
     fetchResumes();
-  }, [email, latestResume]);
+  }, [email]);
 
   return (
     <div className={ResumeStyle.Current_Resume_Container}>

@@ -9,7 +9,6 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import userAnalyticsStyle from "./Analytics.module.css";
-
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -23,6 +22,7 @@ import {
   PointElement,
   Filler,
 } from "chart.js";
+import axios from 'axios'
 import FrequencyChart from "./Frequency";
 ChartJS.register(
   Title,
@@ -35,6 +35,8 @@ ChartJS.register(
   Filler
 );
 
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
+
 function UserAnalytics() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
@@ -44,13 +46,14 @@ function UserAnalytics() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const period = pathname.split('/')[2];
+
   return (
     <>
       <div className={userAnalyticsStyle.analyticsPage__box}>
         <AnalyticsPageNavbar />
-        {/* <div className={userAnalyticsStyle.analyticsPage__outletContainer}>
-          <Outlet />
-        </div> */}
+         <AnalyticsPageCarousel period={period} />
         <AnalyticsReportComponent/>
       </div>
     </>
@@ -130,7 +133,6 @@ function AnalyticsReportComponent() {
   ];
   return (
     <section className={userAnalyticsStyle.analyticsReportComponent__container}>
-      <AnalyticsPageCarousel />
 
       <div className={userAnalyticsStyle.analyticsPage__analysis__Box}>
         <div className={userAnalyticsStyle.analysisBox__header}>
@@ -225,22 +227,73 @@ function AnalyticsReportComponent() {
   );
 }
 
-function AnalyticsPageCarousel() {
+function AnalyticsPageCarousel({ period }) {
+  const [email, setEmail] = useState(null); 
+  const [loginFrequency, setLoginFrequency] = useState(null);
+  const [timeSpent, setTimeSpent] = useState(null);
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const storedEmail = localStorage.getItem("email");
+        setEmail(storedEmail);
+      } catch (error) {
+        console.error('Error fetching user email:', error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (email) {
+          let timeSpentResponse;
+          if (period === 'weekly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/weekly?email=${email}`);
+          } else if (period === 'monthly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/monthly?email=${email}`);
+          } else if (period === 'yearly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/yearly?email=${email}`);
+          }
+          setTimeSpent(timeSpentResponse.data.timeSpent);
+
+          let loginFrequencyResponse;
+          if (period === 'weekly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/weekly?email=${email}`);
+          } else if (period === 'monthly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/monthly?email=${email}`);
+          } else if (period === 'yearly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/yearly?email=${email}`);
+          }
+          setLoginFrequency(loginFrequencyResponse.data.loginFrequency);
+        }
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      }
+    };
+
+    fetchData();
+  }, [period, email]); 
+
+
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
       items: 2,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
   };
 
@@ -263,12 +316,11 @@ function AnalyticsPageCarousel() {
       cardID: 3,
       cardICON: clockICON,
       cardTitle: "Time Spent",
-      cardData: "15 Min",
+      cardData: `${timeSpent} Min`, 
       cardBG: "#CBF0FB",
     },
     {
       cardID: 4,
-
       cardICON: activeICON,
       cardTitle: "Active users",
       cardData: "5000",
@@ -278,7 +330,7 @@ function AnalyticsPageCarousel() {
       cardID: 5,
       cardICON: loginICON,
       cardTitle: "Login Frequency",
-      cardData: "3 Times",
+      cardData: `${loginFrequency} Times`, 
       cardBG: "#f9bbbb",
     },
   ];
@@ -350,7 +402,8 @@ function SplineChart() {
       },
     ],
   });
-  console.log(setData);
+
+  (setData())
   return (
     <div style={{ height: "420px" }}>
       <Line data={data}>Hello</Line>

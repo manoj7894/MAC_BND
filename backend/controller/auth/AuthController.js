@@ -2,10 +2,11 @@ const User = require("../../model/users/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const { uploadonCloudinary } = require("../../utility/cloudinary")
+const { uploadonCloudinary } = require("../../utility/cloudinary");
 const dotenv = require("dotenv");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
+const UserSession = require("../../model/users/UserSession");
 
 const getUser = async (req, res) => {
   try {
@@ -54,7 +55,8 @@ const signUp = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Adjust company_end_date to null if received as "null" from the frontend
-    const adjustedCompanyEndDate = company_end_date === "null" ? null : company_end_date;
+    const adjustedCompanyEndDate =
+      company_end_date === "null" ? null : company_end_date;
 
     const newUser = new User({
       email,
@@ -84,6 +86,13 @@ const signUp = async (req, res) => {
     });
     await newUser.save();
 
+    const newUserSession = new UserSession({
+      userId: newUser._id,
+      startTime: new Date(),
+      endTime: null,
+    });
+    await newUserSession.save();
+
     const token = jwt.sign({ userId: newUser._id }, SECRET_KEY, {
       expiresIn: "2d",
     });
@@ -98,7 +107,7 @@ const signUp = async (req, res) => {
       appliedJob: [],
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -120,6 +129,23 @@ const login = async (req, res) => {
     }
 
     const name = user.name;
+
+    let userSession = await UserSession.findOne({
+      userId: user._id,
+      endTime: null,
+    });
+    if (!userSession) {
+      userSession = new UserSession({
+        userId: user._id,
+        startTime: new Date(),
+        endTime: null,
+      });
+    } else {
+      userSession.startTime = new Date();
+    }
+
+    await userSession.save();
+
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "2d",
     });
@@ -134,6 +160,37 @@ const login = async (req, res) => {
       appliedJob: user.userAppliedJob,
     });
   } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the endTime of the active session for the user
+    const session = await UserSession.findOneAndUpdate(
+      { userId: user._id, endTime: null },
+      { endTime: new Date() },
+      { new: true }
+    );
+
+    if (!session) {
+      return res.status(404).json({ message: "Active session not found" });
+    }
+
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -205,29 +262,43 @@ const updateUserField = async (req, res) => {
   try {
     const { email } = req.params;
     const updateFields = {};
-    const result = req.file && await uploadonCloudinary(req.file.path);
-    req.body.profileImage =  result &&  result?.secure_url;
+    const result = req.file && (await uploadonCloudinary(req.file.path));
+    req.body.profileImage = result && result?.secure_url;
 
-    req.body.skills = req.body.skills?.length > 0 ? req.body.skills?.split(",").map((skill, index) => ({ name: skill.trim(), index })) : ""
+    req.body.skills =
+      req.body.skills?.length > 0
+        ? req.body.skills
+            ?.split(",")
+            .map((skill, index) => ({ name: skill.trim(), index }))
+        : "";
 
     for (const key in req.body) {
-      if (req.body[key] !== 'null' && req.body[key] !== '' && req.body[key] !== ' ' && req.body[key]) {
+      if (
+        req.body[key] !== "null" &&
+        req.body[key] !== "" &&
+        req.body[key] !== " " &&
+        req.body[key]
+      ) {
         updateFields[key] = req.body[key];
       }
     }
 
-    const findUser = await User.findOneAndUpdate({ email: email }, updateFields, { new: true });
+    const findUser = await User.findOneAndUpdate(
+      { email: email },
+      updateFields,
+      { new: true }
+    );
 
     if (findUser) {
       res.status(200).json({
         success: true,
-        msg: "User details updated successfully"
-      })
-    }else{
+        msg: "User details updated successfully",
+      });
+    } else {
       res.status(404).json({
         success: false,
-        msg: "No user found to update"
-      })
+        msg: "No user found to update",
+      });
     }
   } catch (error) {
     console.error("Error updating user:", error);
@@ -242,4 +313,5 @@ module.exports = {
   resetPassword,
   getUser,
   updateUserField,
+  logout,
 };
