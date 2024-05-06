@@ -71,11 +71,12 @@ function ApplicantsDetails({ jobData, selectedUser }) {
           userDetails?.map((user, index) => {
             return <div className={pages.__applicantDetails} key={user._id}>
               <div className={pages.__appliedHeader}>
-                <img className={pages.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
-                <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
+                  <img className={pages.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
+                  <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
+                <FaRegBookmark className={pages.__bookmark} />
               </div>
               <p style={{ textAlign: 'justify' }}>{user.biography}</p>
-              <div className="__applicantPlace">
+              <div className={pages.__applicantPlace}>
                 <span>State - <strong>{user.state}</strong></span>
                 <span>Country - <strong>{user.country}</strong></span>
               </div>
