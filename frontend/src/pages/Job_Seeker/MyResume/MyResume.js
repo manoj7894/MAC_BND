@@ -12,7 +12,6 @@ function MyResume() {
   const [btn_Popup, setbtnPopup] = useState(false);
   const email = localStorage.getItem("email");
   const [selectedFile, setSelectedFile] = useState();
-
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setSelectedFile(file);
@@ -20,7 +19,6 @@ function MyResume() {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-
     if (!selectedFile) {
       console.error("No file selected");
       return;
@@ -31,14 +29,11 @@ function MyResume() {
     formData.append("resumefile", selectedFile);
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/resume/upload",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const response = await axios.post("http://localhost:8080/resume/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
       );
       toast.success(response.data.message);
       // After successful upload, toggle the upload popup
@@ -109,7 +104,7 @@ function MyResume() {
 
           <div className={ResumeStyle.Resume_Collection_container}>
             {resume_type === "myresume" ? (
-              <CurrentResume email={email}/>
+              <CurrentResume email={email} />
             ) : (
               <PreviousResume />
             )}

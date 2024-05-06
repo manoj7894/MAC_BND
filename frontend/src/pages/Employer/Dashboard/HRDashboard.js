@@ -35,12 +35,7 @@ export default function HRDashboard() {
 
   const loadJobPost = () => {
     setLoading(true);
-    axios
-      .get(
-        `http://localhost:8080/api/jobs/get-job/${localStorage.getItem(
-          "email"
-        )}`
-      )
+    axios.get(`http://localhost:8080/api/jobs/get-job/${localStorage.getItem("email")}`)
       .then((response) => {
         setJobPost(response.data.jobs);
         setSortedJob(
@@ -81,8 +76,7 @@ export default function HRDashboard() {
 
   const handleDelete = async (postID) => {
     try {
-      await axios
-        .delete(`http://localhost:8080/api/jobs/delete-job/${postID}`)
+      await axios.delete(`http://localhost:8080/api/jobs/delete-job/${postID}`)
         .then((response) => {
           if (response.data.success) {
             toast.success(`Job deleted successfully`);
@@ -100,7 +94,7 @@ export default function HRDashboard() {
       {loading ? <Loader /> : (
         <>
           <header className={pages.__dashboard_Header}>
-            <h2>Dashboard</h2>
+            <h2 style={{fontWeight:'700'}}>Dashboard</h2>
             <div className={pages.__dropdown}>
               <select className={pages.selectOption} value={selectedSort} onChange={handleSortBy}>
                 <option className={pages.options} value="">Sort By</option>
