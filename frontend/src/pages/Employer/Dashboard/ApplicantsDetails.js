@@ -92,21 +92,8 @@ function ApplicantsDetails({ jobData, selectedUser }) {
                 </div>
               </div>
               <>
-                <h6>Appicant Note:</h6>
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
-                {user.biography}
+                <h6>Appilcant Note :</h6>
+                {user.note ?? 'N/A'}
               </>
               <div className={pages.__applicantButtons}>
                 <button className={pages.__applicantBtn}>See Resume</button>
