@@ -10,19 +10,28 @@ function ViewPdf({ CbTogglePDF, SelectedResume }) {
     setLoading(true);
     axios
       .get(`http://localhost:8080/${SelectedResume?.userResume?.path}`)
-      .then(() => {
-        setLoading(false);
+      .then((response) => {
+        if(response.status === 200){
+            setLoading(false);
+        }else{
+            setLoading(false);
+        }
       })
       .catch((error) => {
         setError(true);
         setLoading(false);
       });
   }, [SelectedResume.userResume?.path]);
-  
+
+  const handleClosePopup = (e)=>{
+    e.preventDefault();
+    setLoading(false);
+    CbTogglePDF(false)
+  }
   return (
     <section className={pageStyle.__viewPDF_mainContainer}>
         <GiTireIronCross
-          onClick={() => CbTogglePDF(false)}
+          onClick={handleClosePopup}
           className={pageStyle.__viewPDF_CloseButton}
         />
       <div className={pageStyle.__viewPDFBox}>
@@ -41,7 +50,6 @@ function ViewPdf({ CbTogglePDF, SelectedResume }) {
                 width="100%"
                 height="100%"
                 title="user-resume"
-                frameborder="0"
               />
             )}
           </>
