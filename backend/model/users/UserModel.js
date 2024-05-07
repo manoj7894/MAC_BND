@@ -112,8 +112,13 @@ const userSchema = new mongoose.Schema({
       jobID: {
         type: String,
       },
+      appliedAt: {
+        type: Date,
+        default: Date.now
+      }
     },
   ],
+  
   userSavedJob: [
     {
       jobID: {
