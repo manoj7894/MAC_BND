@@ -5,6 +5,7 @@ const getJobViewedAnalytics = async (req, res) => {
 
   try {
     const jobs = await Job.find({ "jobViews.userEmail": userEmail });
+
     const jobViewsData = {};
     const currentYear = new Date().getFullYear();
     const months = Array.from({ length: 12 }, (_, i) =>
@@ -15,15 +16,13 @@ const getJobViewedAnalytics = async (req, res) => {
     });
 
     jobs.forEach((job) => {
-      const viewedJobsByMonth = {};
       job.jobViews.forEach((view) => {
         const monthYear = new Date(view.viewedAt).toLocaleString("default", {
           month: "short",
         });
-        viewedJobsByMonth[monthYear] = (viewedJobsByMonth[monthYear] || 0) + 1;
-      });
-      Object.entries(viewedJobsByMonth).forEach(([monthYear, count]) => {
-        jobViewsData[monthYear] += count;
+        if (view.userEmail === userEmail) {
+          jobViewsData[monthYear] += 1;
+        }
       });
     });
 
@@ -33,6 +32,9 @@ const getJobViewedAnalytics = async (req, res) => {
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+
+
 
 const updateJobViews = async (req, res) => {
   const { jobId } = req.params;
