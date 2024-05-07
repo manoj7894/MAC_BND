@@ -84,60 +84,95 @@ function AnalyticsPageNavbar() {
   );
 }
 
+const dummyData = [
+  {
+    name: "Jan",
+    value: 250,
+  },
+  {
+    name: "Feb",
+    value: 200,
+  },
+  {
+    name: "Mar",
+    value: 150,
+  },
+  {
+    name: "Apr",
+    value: 200,
+  },
+  {
+    name: "Jun",
+    value: 50,
+  },
+  {
+    name: "Jul",
+    value: 150,
+  },
+  {
+    name: "Aug",
+    value: 100,
+  },
+  {
+    name: "Sep",
+    value: 120,
+  },
+  {
+    name: "Oct",
+    value: 220,
+  },
+  {
+    name: "Nov",
+    value: 180,
+  },
+  {
+    name: "Dec",
+    value: 210,
+  },
+];
+
 function AnalyticsReportComponent() {
-  const dummyData = [
-    {
-      name: "Jan",
-      value: 250,
-    },
-    {
-      name: "Feb",
-      value: 200,
-    },
-    {
-      name: "Mar",
-      value: 150,
-    },
-    {
-      name: "Apr",
-      value: 200,
-    },
-    {
-      name: "Jun",
-      value: 50,
-    },
-    {
-      name: "Jul",
-      value: 150,
-    },
-    {
-      name: "Aug",
-      value: 100,
-    },
-    {
-      name: "Sep",
-      value: 120,
-    },
-    {
-      name: "Oct",
-      value: 220,
-    },
-    {
-      name: "Nov",
-      value: 180,
-    },
-    {
-      name: "Dec",
-      value: 210,
-    },
-  ];
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [jobViewData, setjobViewData] = useState([]);
+
+   useEffect(() => {
+     const fetchAnalyticsData = async () => {
+      const email = localStorage.getItem("email")
+       try {
+         const response = await axios.get(`${baseUrl}/analytics/job-application?email=${email}`)
+         setAnalyticsData(response.data);
+        //  console.log(response.data)
+       } catch (error) {
+         console.error('Error fetching analytics data:', error);
+       }
+     };
+ 
+     fetchAnalyticsData();
+   }, []); 
+
+   useEffect(() => {
+    const fetchJobViewData = async () => {
+     const email = localStorage.getItem("email")
+     try {
+      const response = await axios.get(`${baseUrl}/jobs/get-job-views?userEmail=${email}`);
+      const data = response.data.jobViewsData;
+
+      // Convert jobViewsData object to array of objects
+      const jobViewsArray = Object.keys(data).map(month => ({ month, views: data[month] }));
+      setjobViewData(jobViewsArray);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      }
+    };
+
+    fetchJobViewData();
+  }, []);
   return (
     <section className={userAnalyticsStyle.analyticsReportComponent__container}>
-
       <div className={userAnalyticsStyle.analyticsPage__analysis__Box}>
         <div className={userAnalyticsStyle.analysisBox__header}>
           <h2 className={userAnalyticsStyle.analysisBox__header__primaryText}>
-            Job Application analytics
+            Job Application Analytics
           </h2>
           <span className={userAnalyticsStyle.analysisBox__header__secondaryText}>
             Success rate
@@ -145,10 +180,10 @@ function AnalyticsReportComponent() {
         </div>
         <div style={{ height: "400px", width:'80%', marginLeft:'69px', marginTop:'20px' }}>
           <ResponsiveContainer>
-            <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} axisLine={false} tickLine={false} />
-              <YAxis axisLine={false} tickLine={false}/>
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
+            <BarChart data={analyticsData}>
+              <XAxis dataKey="month" axisLine={false} tickLine={false}  />
+              <YAxis axisLine={false} tickLine={false} />
+              <Bar dataKey="jobApplications" fill="#00296B" barSize={35} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -165,11 +200,6 @@ function AnalyticsReportComponent() {
         <div className={userAnalyticsStyle.spline_chart_design} style={{height:'400px', width:'80%', marginLeft:'100px'}}>
           <ResponsiveContainer>
             <SplineChart />
-            {/* <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} />
-              <YAxis />
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
-            </BarChart> */}
           </ResponsiveContainer>
         </div>
       </div>
@@ -200,15 +230,15 @@ function AnalyticsReportComponent() {
           </span>
         </div>
 
-        <div style={{height:'400px', width:'80%', marginLeft:'100px', marginTop:'30px'}}>
-          <ResponsiveContainer>
-            <BarChart data={dummyData}>
-            <XAxis dataKey={"name"}  axisLine={false} tickLine={false} />
-              <YAxis  axisLine={false} tickLine={false} />
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        <div style={{ height: '400px', width: '80%', marginLeft: '100px', marginTop: '30px' }}>
+        <ResponsiveContainer>
+          <BarChart data={jobViewData}>
+            <XAxis dataKey="month" axisLine={false} tickLine={false} />
+            <YAxis axisLine={false} tickLine={false}/>
+            <Bar dataKey="views" fill="#00296B" barSize={35} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
       </div>
 
       <div className={userAnalyticsStyle.analyticsPage__analysis__Box}>
@@ -403,7 +433,7 @@ function SplineChart() {
     ],
   });
 
-  console.log(setData);
+  // console.log(setData);
   return (
     <div style={{ height: "420px" }}>
       <Line data={data}>Hello</Line>

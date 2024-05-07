@@ -83,7 +83,7 @@
 }
 
 .AnalyticsPageCarousel_Card {
-  /* height: 150px; */
+  width: 20vw;
   height: 120px;
   border-radius: 11.84px;
   margin: 0px 10px;

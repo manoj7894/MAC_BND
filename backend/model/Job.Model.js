@@ -84,10 +84,20 @@ const jobSchema = new mongoose.Schema(
                     type: String,
                 }
             }
-        ]
-    }
-
+        ],
+        jobViews: [{
+           userEmail: {
+            type: String,
+            required: true,
+        },
+            viewedAt: {
+                type: Date,
+                default: Date.now
+            }
+        }]
+    },
 );
+
 
 
 const jobCollection = mongoose.model('jobs', jobSchema);

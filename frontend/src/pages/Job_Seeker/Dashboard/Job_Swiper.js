@@ -4,9 +4,25 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import DashBoardStyle from "./DashboardMain.module.css";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
+import axios from "axios";
+
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
 
 export default function JobSeekerSwiper({ allJobs }) {
+
+
+  const handleView = async (e, jobId) =>{
+    try {
+      const email = localStorage.getItem('email');
+      axios.post(`${baseUrl}/jobs/update-job-views/${jobId}?userEmail=${email}`);
+  
+    } catch (error) {
+      console.error('Error updating job views:', error);
+    }
+  
+  }
+
   const colors = [
     "rgba(203, 240, 251, 1)",
     "rgba(249, 187, 187, 1)",
@@ -50,6 +66,7 @@ export default function JobSeekerSwiper({ allJobs }) {
           <Link
             to={`/dashboard/${item._id}`}
             className={DashBoardStyle.LINKswiperCard}
+            onClick={(e)=>handleView(e,item._id)}
           >
             <div
               className={DashBoardStyle.matched_job_full}

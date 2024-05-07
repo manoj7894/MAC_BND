@@ -23,6 +23,8 @@ import {
   handleRemoveSavedJob,
 } from "../../../Redux/ReduxSlice";
 
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
+
 export default function JobListDetailedView() {
   const { email, savedJob, appliedJob } = useSelector(
     (state) => state.Assessment.currentUser
@@ -35,6 +37,22 @@ export default function JobListDetailedView() {
   const [IsLoading, setLoading] = useState(false);
   const { id } = useParams();
 
+const handleView = async () =>{
+  try {
+    const pathname = window.location.pathname;
+    const segments = pathname.split('/');
+    const jobId = segments[segments.length - 1]; 
+
+    const email = localStorage.getItem('email');
+    axios.post(`${baseUrl}/jobs/update-job-views/${jobId}?userEmail=${email}`);
+
+  } catch (error) {
+    console.error('Error updating job views:', error);
+  }
+
+}
+
+
   const loadJobDetails = (e, jobID) => {
     setJobDetailsLoad(true);
     axios
@@ -42,7 +60,7 @@ export default function JobListDetailedView() {
       .then((response) => {
         if (response.data.success) {
           setJobDetails(response.data.jobs);
-          // console.log(response.data.jobs)
+          console.log(response.data.jobs)
           setJobDetailsLoad(false);
         } else {
           setJobDetails([]);
@@ -97,31 +115,6 @@ export default function JobListDetailedView() {
       });
   };
 
-  // const handleApplyButtonClick = (e, item) => {
-  //   e.preventDefault();
-  //   setJobDetailsLoad(true);
-  //   axios
-  //     .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
-  //       ...item,
-  //       email,
-  //     })
-  //     .then((response) => {
-  //       if (response.data.success) {
-  //         toast.success(`${response.data.msg}`);
-  //         dispatch(handleAppliedJob(item._id));
-  //         dispatch(handleRemoveSavedJob(item._id));
-  //         setJobDetailsLoad(false);
-  //       } else {
-  //         toast.error(`${response.data.msg}`);
-  //         setJobDetailsLoad(false);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       toast.error(`server failed! Try again ${error.message}`);
-  //       setJobDetailsLoad(false);
-  //     });
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -167,6 +160,7 @@ export default function JobListDetailedView() {
       // navigateTO('/dashboard/profile_details')
     };
 
+     
   return (
     <div
       className={`${UserDashBoardStyle.detailed_view_full_full} mainViewDetailsPage`}
@@ -185,6 +179,7 @@ export default function JobListDetailedView() {
                   key={item._id}
                   onClick={(e) => loadJobDetails(e, item._id)}
                 >
+                  <div onClick={handleView}>
                   <div className={UserDashBoardStyle.detailed_view_full}>
                     <div
                       className={`${UserDashBoardStyle.detail_list_view_full}
@@ -334,6 +329,7 @@ export default function JobListDetailedView() {
                         </div>
                       </div>
                     </div>
+                  </div>
                   </div>
                 </NavLink>
               ))}
