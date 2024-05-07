@@ -6,9 +6,9 @@ import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
 import ApplicantsDetails from "./ApplicantsDetails.js"
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 
-const HrJobDetail = ({ jobId }) => {
+const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
   const [job, setJob] = useState(null);
-  const [ShowApplicantDetails, setShowApplicantDetails] = useState(false)
+  // const [ShowApplicantDetails, setShowApplicantDetails] = useState(false)
   const [selectedUser, setUsers] = useState([]);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const HrJobDetail = ({ jobId }) => {
 
   const handleUserCardClick = (e, userEmail, userJobID) => {
     e.preventDefault();
-    setShowApplicantDetails(true);
+    CbToggleDetails(true);
     setUsers(userEmail)
 
     // update the application status of the user in the applied collection
@@ -89,7 +89,7 @@ const HrJobDetail = ({ jobId }) => {
       </div>
 
       {
-        ShowApplicantDetails ? <ApplicantsDetails jobData={job} selectedUser={selectedUser} /> : <div className={hrdashboard.__appliedUserList}>
+        ShowApplicantDetails ? <ApplicantsDetails CbToogleDetails={CbToggleDetails} jobData={job} selectedUser={selectedUser} /> : <div className={hrdashboard.__appliedUserList}>
           {
             job?.appliedBy?.map((user) => {
               return (

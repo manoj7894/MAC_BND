@@ -25,6 +25,7 @@ export default function HRDashboard() {
   const [selectedSort, setSelectedSort] = useState('Sort By');
   const [loading, setLoading] = useState(false);
   const [selectedJobId, setSelectedJobId] = useState(null);
+  const [ShowApplicantDetails, setShowApplicantDetails] = useState(false)
 
   const formattedDate = (timestamp) => {
     if (!timestamp) {
@@ -66,6 +67,7 @@ export default function HRDashboard() {
   };
 
   const handleJobCardClick = (jobId) => {
+    setShowApplicantDetails(false)
     // If the clicked card is already selected, toggle to show latest posts
     if (selectedJobId === jobId) {
       setSelectedJobId(null); // Reset selectedJobId to show latest posts
@@ -94,7 +96,7 @@ export default function HRDashboard() {
       {loading ? <Loader /> : (
         <>
           <header className={hrdashboard.__dashboard_Header}>
-            <h2 style={{fontWeight:'700'}}>Dashboard</h2>
+            <h2 style={{ fontWeight: '700' }}>Dashboard</h2>
             <div className={hrdashboard.__dropdown}>
               <select className={hrdashboard.selectOption} value={selectedSort} onChange={handleSortBy}>
                 <option className={hrdashboard.options} value="">Sort By</option>
@@ -150,7 +152,8 @@ export default function HRDashboard() {
           {selectedJobId && (
             <div className={hrdashboard.__latest_Post}>
               <section className={hrdashboard.__latestPosts}>
-                <HrJobDetail jobId={selectedJobId} />
+                <HrJobDetail jobId={selectedJobId} ShowApplicantDetails={ShowApplicantDetails}
+                  CbToggleDetails={setShowApplicantDetails} />
               </section>
             </div>
           )}
