@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react'
 import axios from "axios";
 import hrdashboard from './HrDashboard.module.css'
 import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
+import ViewPdf from './ViewPdf';
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 function ApplicantsDetails({ jobData, selectedUser }) {
   const [selectedUserEmail, setSelectedUserEmail] = useState(selectedUser)
   const [userDetails, setUserDetails] = useState([]);
+  const [ShowPDF, SetshowPDF] = useState(false);
+  const [SelectedResume, setSelectedResume] = useState(null)
 
   useEffect(() => {
     setUserDetails(jobData?.appliedBy?.filter((data) => data.email === selectedUserEmail))
@@ -28,18 +31,31 @@ function ApplicantsDetails({ jobData, selectedUser }) {
       })
     })
   }
-  const handleSeeResumeClick = (e, userEmail, userJobID) => {
+
+  const handleSeeResumeClick = (e, user) => {
     e.preventDefault();
     // update the application status of the user in the applied collection
-    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${userEmail}`, {
+    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${user?.email}`, {
       applicationStatus: {
         JobStatus: 'In-Progress',
         StatusText: 'Resume Viewed',
         updatedAt: Date.now()
       },
-      userJobID
+      userJobID : user?.jobID
+    });
+
+    SetshowPDF(true)
+    setSelectedResume({
+      userProfile : user?.profileImage,
+      userResume : user?.resume[0]
     })
   }
+
+  const handleUserBookmark = (e, user) => {
+    e.preventDefault();
+    // console.log(user)
+  }
+
   return (
     <div className={hrdashboard.__applicationDetailsContainer}>
 
@@ -84,9 +100,9 @@ function ApplicantsDetails({ jobData, selectedUser }) {
           userDetails?.map((user, index) => {
             return <div className={hrdashboard.__applicantDetails} key={user._id}>
               <div className={hrdashboard.__appliedHeader}>
-                  <img className={hrdashboard.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
-                  <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
-                <FaRegBookmark className={hrdashboard.__bookmark} />
+                <img className={hrdashboard.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
+                <span style={{ fontSize: '20px' }}><strong>{user.name}</strong></span>
+                <FaRegBookmark className={hrdashboard.__bookmark} onClick={(e) => handleUserBookmark(e, user)} />
               </div>
               <p style={{ textAlign: 'justify' }}>{user.biography}</p>
               <div className={hrdashboard.__applicantPlace}>
@@ -110,7 +126,7 @@ function ApplicantsDetails({ jobData, selectedUser }) {
                 {user.note ?? 'N/A'}
               </>
               <div className={hrdashboard.__applicantButtons}>
-                <button className={hrdashboard.__applicantBtn} onClick={(e) => handleSeeResumeClick(e, user?.email, user?.jobID)}>See Resume</button>
+                <button className={hrdashboard.__applicantBtn} onClick={(e) => handleSeeResumeClick(e, user)}>See Resume</button>
 
                 <button className={hrdashboard.__applicantBtn} style={{ background: 'blue', padding: '0 4em' }}>Schedule Interview</button>
               </div>
@@ -118,6 +134,10 @@ function ApplicantsDetails({ jobData, selectedUser }) {
           })
         }
       </div>
+
+      {
+        ShowPDF && <ViewPdf CbTogglePDF={SetshowPDF} SelectedResume={SelectedResume}/>
+      }
 
     </div>
   )
