@@ -85,7 +85,7 @@ function CreatePostPreview() {
               <span className={pages.__PostPreviewPage__imgUploadedText}>Image Uploaded</span>
             </span>
             <p className={pages.__PostPreviewPage_PosterName}>
-              {state?.selectedImg?.name?.slice(0, 10)}
+              {state?.selectedImg?.name}
             </p>
           </div>
 

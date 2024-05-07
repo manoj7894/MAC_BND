@@ -4,17 +4,18 @@ const User = require("../model/users/UserModel");
 
 const createAppliedJob = async (req, res) => {
     try {
-        const { _id,email, userData,AppliedDate, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt,applicationStatus,percentageResult } = req.body;
+        const { _id, email, userData, AppliedDate, jobTitle, employeeEmail, jobPoster, jobDescription, employmentType, location, salaryRange, skilRequired, jobExperience, createdAt, applicationStatus, percentageResult } = req.body;
 
+        // console.log(req.body)
         // Current USER
         const mongooseUser = await User.findOne({ email: email });
 
         // add the applied job appliedjobCollection
         const mongooseResponse = await appliedJobCollection.create({
-            jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: Date.now(), userEmail: email, applicationStatus : applicationStatus
+            jobID: _id, jobTitle: jobTitle, jobPoster: jobPoster, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, skilRequired: skilRequired, employeeEmail: employeeEmail, jobExperience: jobExperience, createdAt: Date.now(), userEmail: email, applicationStatus: applicationStatus
         });
-        const userjobdes={
-            jobID: _id, jobTitle: jobTitle, jobDescription: jobDescription, employmentType: employmentType,location: location, salaryRange: salaryRange,testResult:percentageResult,...userData,AppliedDate:AppliedDate
+        const userjobdes = {
+            jobID: _id, jobTitle: jobTitle, jobDescription: jobDescription, employmentType: employmentType, location: location, salaryRange: salaryRange, testResult: percentageResult, ...userData, AppliedDate: AppliedDate
         }
 
         // update the jobo collection applicationCount by 1 and also update the applidBy data in collection with user emailID everytime any user applied for jobs
@@ -75,7 +76,7 @@ const getAppliedJob = async (req, res) => {
 }
 
 const getApplicantsForJob = async (req, res) => {
-    
+
     try {
         const jobId = req.params.jobId;
 
@@ -203,7 +204,7 @@ const removeSavedJob = async (req, res) => {
             userEmail: email,
         });
         const mongooseUser = await User.findOne({ email: email });
-        
+
         await User.updateOne({ email }, {
             userSavedJob: mongooseUser.userSavedJob.filter((data) => data.jobID !== jobId)
         });
