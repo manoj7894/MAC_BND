@@ -16,21 +16,25 @@ function ApplicantsDetails({ jobData, selectedUser }) {
   }, [selectedUserEmail]);
 
   const handleToggleCardActive = (e, email) => {
-    // set the selected user email
+    // Set the selected user email
     setSelectedUserEmail(email);
 
-    // Toggling the active class of userCard
-    const userCard = document.querySelectorAll(".appliedUserCard");
-    userCard.forEach((card) => {
-      card.addEventListener("click", (e) => {
-        card.classList.remove(`${hrdashboard.__active_appliedUsers}`);
-        userCard.forEach((item) => {
-          item.classList.remove(`${hrdashboard.__active_appliedUsers}`);
-        });
-        card.classList.add(`${hrdashboard.__active_appliedUsers}`);
-      })
-    })
+    // Get the clicked card element specifically
+    const clickedCard = e.currentTarget;
+
+    // Toggle the active class on the clicked card
+    clickedCard.classList.toggle(`${hrdashboard.__active_appliedUsers}`);
+
+    // Optionally remove the active class from other cards (if desired)
+    if (clickedCard.classList.contains(`${hrdashboard.__active_appliedUsers}`)) {
+      document.querySelectorAll(".appliedUserCard").forEach((card) => {
+        if (card !== clickedCard) {
+          card.classList.remove(`${hrdashboard.__active_appliedUsers}`);
+        }
+      });
+    }
   }
+
 
   const handleSeeResumeClick = (e, user) => {
     e.preventDefault();
@@ -41,13 +45,13 @@ function ApplicantsDetails({ jobData, selectedUser }) {
         StatusText: 'Resume Viewed',
         updatedAt: Date.now()
       },
-      userJobID : user?.jobID
+      userJobID: user?.jobID
     });
 
     SetshowPDF(true)
     setSelectedResume({
-      userProfile : user?.profileImage,
-      userResume : user?.resume[0]
+      userProfile: user?.profileImage,
+      userResume: user?.resume[0]
     })
   }
 
@@ -136,7 +140,7 @@ function ApplicantsDetails({ jobData, selectedUser }) {
       </div>
 
       {
-        ShowPDF && <ViewPdf CbTogglePDF={SetshowPDF} SelectedResume={SelectedResume}/>
+        ShowPDF && <ViewPdf CbTogglePDF={SetshowPDF} SelectedResume={SelectedResume} />
       }
 
     </div>
