@@ -14,6 +14,7 @@ const {
 } = require("../controller/Job.controller");
 
 const mcqController = require("../controller/InterviewSchedule/AptitudeRoundController");
+const { getJobViewedAnalytics,updateJobViews } = require("../controller/UserAnalytics/JobViewedAnalytics");
 
 jobRoutes.post("/create-job", uploadPhoto, create);
 
@@ -37,5 +38,8 @@ jobRoutes.patch('/:id', mcqController.updateMCQ);
 
 // Route to delete an MCQ
 jobRoutes.delete('/:id', mcqController.deleteMCQ);
+
+jobRoutes.get('/get-job-views', getJobViewedAnalytics)
+jobRoutes.post('/update-job-views/:jobId', updateJobViews)
 
 module.exports = jobRoutes;
