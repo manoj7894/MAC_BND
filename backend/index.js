@@ -34,9 +34,6 @@ app.use("/api/aptitude", AptitudeQuestionRouter);
 const jobRoutes = require("./Routes/Job.Route");
 app.use("/api/jobs", jobRoutes);
 
-
-const Port = process.env.PORT;
-
 // Resume Routes
 const ResumeRoutes = require("./Routes/ResumeRoutes.js");
 app.use("/resume", ResumeRoutes);
@@ -46,11 +43,19 @@ app.use("/uploads", express.static("uploads"));
 const myJobRoutes = require("./Routes/MyJob.Route");
 app.use("/api/user/My-jobs", myJobRoutes);
 
+
+// !Bookmarked Routes
+const { bookmarkRoutes } = require("./Routes/Bookmark.Route.js");
+app.use("/api/user/bookmarkd", bookmarkRoutes)
+
+
+const Port = process.env.PORT;
+
 app.listen(Port, async () => {
   try {
     await ConnectDb();
     console.log(`SERVER STARED  : http://localhost:${process.env.PORT}`);
   } catch (err) {
-    console.log(`SOMETHING WENT WRONG : ${err}`); 
+    console.log(`SOMETHING WENT WRONG : ${err}`);
   }
 });

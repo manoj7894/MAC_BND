@@ -4,6 +4,7 @@ import hrdashboard from "./HrDashboard.module.css";
 import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
 import ViewPdf from "./ViewPdf";
 import { GiTireIronCross } from "react-icons/gi";
+import toast from 'react-hot-toast'
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
   const [selectedUserEmail, setSelectedUserEmail] = useState(selectedUser);
@@ -61,7 +62,12 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
 
   const handleUserBookmark = (e, user) => {
     e.preventDefault();
-    // console.log(user)
+
+    axios.post(`${baseUrl}/user/bookmarkd/create-bookamark/${localStorage.getItem('email')}`, user).then((response) => {
+      console.log(response)
+    }).catch((error) => {
+      toast.error(`${error.message}`)
+    })
   };
 
   return (
@@ -128,7 +134,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         </div>
 
         <div className={hrdashboard.__applicantDetails_Container}>
-          {userDetails?.map((user, index) => {
+          {userDetails?.map((user) => {
             return (
               <div className={hrdashboard.__applicantDetails} key={user._id}>
                 <div className={hrdashboard.__appliedHeader}>
