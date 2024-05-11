@@ -80,7 +80,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
     axios.post(`${baseUrl}/user/bookmarkd/create-bookamark/${localStorage.getItem('email')}`, user).then((response) => {
       if (response.data.success) {
         toast.success(response.data.msg);
-      }else{
+      } else {
         toast.error(response.data.msg);
       }
     }).catch((error) => {
@@ -96,7 +96,17 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         jobTitle: user.jobTitle,
       })
     );
+    axios.delete(`${baseUrl}/user/bookmarkd/delete-bookmark/${localStorage.getItem('email')}-${ user.email}-${user.jobTitle}`).then((response) => {
+      if (response.data.success) {
+        toast.success(response.data.msg);
+      } else {
+        toast.error(response.data.msg);
+      }
+    }).catch((error) => {
+      toast.error(`${error.message}`)
+    })
   };
+  
   return (
     <>
       <h1 className={hrdashboard.__applicationDetails_Header}>
@@ -111,12 +121,10 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
           {jobData?.appliedBy?.map((user) => {
             return (
               <div
-                className={`appliedUserCard ${hrdashboard.__appliedUsers} ${
-                  hrdashboard.__Secondary_appliedUsers
-                } ${
-                  user.email === selectedUser &&
+                className={`appliedUserCard ${hrdashboard.__appliedUsers} ${hrdashboard.__Secondary_appliedUsers
+                  } ${user.email === selectedUser &&
                   hrdashboard.__active_appliedUsers
-                }`}
+                  }`}
                 key={user._id}
                 onClick={(e) => handleToggleCardActive(e, user.email)}
               >
@@ -185,10 +193,9 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   <span style={{ fontSize: "20px" }}>
                     <strong>{user.name}</strong>
                   </span>
-                  {bookmarkUser.some(
+                  {bookmarkUser?.some(
                     (data) =>
-                      data.email === user.email &&
-                      data.job_title === user.jobTitle
+                      data.email === user.email
                   ) ? (
                     <FaBookmark
                       className={hrdashboard.__bookmark}

@@ -129,7 +129,6 @@ const ReduxSlice = createSlice({
     },
 
     handleRemoveBookmark(state, action) {
-      console.log(action.payload);
       let filteredData = state.currentUser.bookmarkUser.filter(
         (data) => data.Job_title !== action.payload.Job_title && data.email !== action.payload.email
       );

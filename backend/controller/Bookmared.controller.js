@@ -31,7 +31,7 @@ const createBookmark = async (req, res) => {
             $push: {
                 bookmarkUser: {
                     email: email,
-                    Job_title: jobTitle,
+                    job_title: jobTitle,
                 }
             },
         });
@@ -49,7 +49,6 @@ const createBookmark = async (req, res) => {
         }
 
     } catch (error) {
-        console.log(error)
         res.status(500).send(`Internal server Error : ${error.message}`)
     }
 
@@ -79,9 +78,32 @@ const getBookmark = async (req, res) => {
 
 const removeBookmark = async (req, res) => {
 
-    const { HrEmail } = req.params;
-
+    const [employeeEmail, email, Job_title] = req.params.HrEmail.split("-");
     try {
+        const mongooseResponse = await bookmarkedCollection.findOneAndDelete({
+            employeeEmail: employeeEmail,
+            email: email,
+            Job_title: Job_title,
+        });
+        const mongooseUser = await HrUser.findOne({ email: employeeEmail });
+
+        await HrUser.updateOne({ email: employeeEmail }, {
+            bookmarkUser: mongooseUser.bookmarkUser.filter((data) => data.email !== email && data.Job_title !== Job_title)
+        });
+
+        if (mongooseResponse) {
+            return res.status(200).json({
+                success: true,
+                msg: "User removed from  bookmarked collection"
+            })
+
+        } else {
+            return res.status(200).json({
+                success: false,
+                msg: "Something went wrong, Try again later"
+            })
+        }
+
 
     } catch (error) {
         res.status(500).send(`Internal server Error : ${error.message}`)
