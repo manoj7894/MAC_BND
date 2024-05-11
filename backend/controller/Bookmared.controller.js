@@ -7,7 +7,6 @@ const createBookmark = async (req, res) => {
     const { HrEmail } = req.params;
     const { email, profileImage, name, jobTitle
         , biography, country, job_title, employmentType, jobDescription, skills, resume, location } = req.body;
-
     try {
 
         // Matching the current HR - Email and User - Email with 
@@ -22,7 +21,7 @@ const createBookmark = async (req, res) => {
             employmentType: employmentType,
             jobDescription: jobDescription,
             skills: skills,
-            resume: resume[0],
+            resume: resume,
             location: location
         });
 
@@ -49,6 +48,7 @@ const createBookmark = async (req, res) => {
         }
 
     } catch (error) {
+        console.log(error)
         res.status(500).send(`Internal server Error : ${error.message}`)
     }
 
@@ -80,7 +80,7 @@ const removeBookmark = async (req, res) => {
 
     const [employeeEmail, email, Job_title] = req.params.HrEmail.split("-");
     try {
-        const mongooseResponse = await bookmarkedCollection.findOneAndDelete({
+        const mongooseResponse = await bookmarkedCollection.deleteMany({
             employeeEmail: employeeEmail,
             email: email,
             Job_title: Job_title,
@@ -88,7 +88,7 @@ const removeBookmark = async (req, res) => {
         const mongooseUser = await HrUser.findOne({ email: employeeEmail });
 
         await HrUser.updateOne({ email: employeeEmail }, {
-            bookmarkUser: mongooseUser.bookmarkUser.filter((data) => data.email !== email && data.Job_title !== Job_title)
+            bookmarkUser: mongooseUser.bookmarkUser.filter((data) => data.email === email).filter((data) => data.job_title !== Job_title)
         });
 
         if (mongooseResponse) {

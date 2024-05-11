@@ -34,9 +34,16 @@ const BookmarkedSchema = new mongoose.Schema({
             index: { type: Number },
         },
     ],
-    resume: {
-        type: String,
-    },
+    resume: [
+        {
+            filename: String,
+            path: String,
+            uploadedAt: {
+                type: Date,
+                default: Date.now,
+            },
+        },
+    ],
     location: {
         type: String,
     },

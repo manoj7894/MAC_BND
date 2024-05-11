@@ -106,7 +106,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
       toast.error(`${error.message}`)
     })
   };
-  
+
   return (
     <>
       <h1 className={hrdashboard.__applicationDetails_Header}>
@@ -195,7 +195,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   </span>
                   {bookmarkUser?.some(
                     (data) =>
-                      data.email === user.email
+                      data.email === user.email  && data.job_title ===user.jobTitle
                   ) ? (
                     <FaBookmark
                       className={hrdashboard.__bookmark}
