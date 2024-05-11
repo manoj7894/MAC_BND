@@ -77,16 +77,15 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         jobTitle: user.jobTitle,
       })
     );
-    // console.log(user)
-    // axios.post(`${baseUrl}/user/bookmarkd/create-bookamark/${localStorage.getItem('email')}`, user).then((response) => {
-    //   if (response.data.success) {
-    //     toast.success(response.data.msg);
-    //   }else{
-    //     toast.error(response.data.msg);
-    //   }
-    // }).catch((error) => {
-    //   toast.error(`${error.message}`)
-    // })
+    axios.post(`${baseUrl}/user/bookmarkd/create-bookamark/${localStorage.getItem('email')}`, user).then((response) => {
+      if (response.data.success) {
+        toast.success(response.data.msg);
+      }else{
+        toast.error(response.data.msg);
+      }
+    }).catch((error) => {
+      toast.error(`${error.message}`)
+    })
   };
 
   const handleRemoveUserBookmark = (e, user) => {

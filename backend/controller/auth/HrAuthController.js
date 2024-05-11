@@ -48,7 +48,8 @@ const signUp = async (req, res) => {
       email,
       jobTitle,
       department,
-      companyName
+      companyName,
+      bookmarkUser : []
     });
   } catch (error) {
     console.error('Error:', error);
