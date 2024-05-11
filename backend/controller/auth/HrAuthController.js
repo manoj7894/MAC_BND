@@ -83,6 +83,7 @@ const login = async (req, res) => {
       jobTitle: hr.jobTitle,
       department: hr.department,
       companyName: hr.companyName,
+      bookmarkUser : hr.bookmarkUser,
       userType : 'employee'
     });
   } catch (error) {

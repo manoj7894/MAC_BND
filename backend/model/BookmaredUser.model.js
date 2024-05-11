@@ -1,17 +1,47 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const BookmarkedSchema = new mongoose.Schema(
-    {
-        employeeEmail: {
-            type: String,
-            required: true
-        },
-        email : { type: String, required: true},
-        Job_title : { type: String, required: true},
+const BookmarkedSchema = new mongoose.Schema({
+    employeeEmail: {
+        type: String,
     },
-);
+    email: {
+        type: String,
+    },
+    Job_title: {
+        type: String,
+    },
+    profileImage: {
+        type: String,
+    },
+    name: {
+        type: String,
+    },
+    biography: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    employmentType: {
+        type: String,
+    },
+    jobDescription: {
+        type: String,
+    },
+    skills: [
+        {
+            name: { type: String },
+            index: { type: Number },
+        },
+    ],
+    resume: {
+        type: String,
+    },
+    location: {
+        type: String,
+    },
+});
 
-
-const bookmarkedCollection = mongoose.model('BookmarkedUser', BookmarkedSchema);
+const bookmarkedCollection = mongoose.model("BookmarkedUser", BookmarkedSchema);
 
 module.exports = bookmarkedCollection;
