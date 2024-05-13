@@ -28,13 +28,6 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
     CbToggleDetails(true);
     setUsers(userEmail)
 
-    // Sending the notification to the user
-    socket.emit("HrSendNotification", JSON.stringify({
-      userEmail: userEmail,
-      NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
-      updatedAt: Date.now()
-    }));
-
     // update the application status of the user in the applied collection
     axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${userEmail}`, {
       applicationStatus: {
@@ -43,6 +36,15 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
         updatedAt: Date.now()
       },
       userJobID
+    }).then((response) => {
+      if (response.data.status) {
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: userEmail,
+          NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          updatedAt: Date.now()
+        }));
+      }
     })
   }
   return (

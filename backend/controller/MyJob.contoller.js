@@ -143,6 +143,15 @@ const updateApplicationStatus = async (req, res) => {
         await appliedJobCollection.updateOne({ jobID: userJobID, userEmail: email }, {
             $push: { applicationStatus: applicationStatus }
         });
+        res.status(200).json({
+            status: true,
+            msg: "Application status updated"
+        })
+    } else {
+        res.status(200).json({
+            status: false,
+            msg: "Application status already updated"
+        })
     }
 
 }

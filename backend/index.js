@@ -79,6 +79,8 @@ io.on("connection", (socket) => {
         socketId: socket.id
       })
     }
+
+    console.log(connectedUser)
   })
 
 

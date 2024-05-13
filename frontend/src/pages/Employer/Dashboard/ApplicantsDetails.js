@@ -34,13 +34,6 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
     // Set the selected user email
     setSelectedUserEmail(email);
 
-    // Sending the notification to the user
-    socket.emit("HrSendNotification", JSON.stringify({
-      userEmail: email,
-      NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
-      updatedAt: Date.now()
-    }));
-
 
     // update the application status of the user in the applied collection
     axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${email}`, {
@@ -50,6 +43,15 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         updatedAt: Date.now()
       },
       userJobID
+    }).then((response) => {
+      if (response.data.status) {
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: email,
+          NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          updatedAt: Date.now()
+        }));
+      }
     })
 
     // Get the clicked card element specifically
@@ -80,7 +82,17 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         updatedAt: Date.now(),
       },
       userJobID: user?.jobID,
-    });
+    }).then((response) => {
+      if (response.data.status) {
+        console.log(response.data)
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: user?.email,
+          NotificatioNText: `Your Resume for ${user?.jobTitle} has been viewed by hr`,
+          updatedAt: Date.now()
+        }));
+      }
+    })
 
     SetshowPDF(true);
     setSelectedResume({
