@@ -30,16 +30,28 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUserEmail]);
 
-  const handleToggleCardActive = (e, email,jobTitle) => {
+  const handleToggleCardActive = (e, email, jobTitle, userJobID) => {
     // Set the selected user email
     setSelectedUserEmail(email);
 
-     // Sending the notification to the user
-     socket.emit("HrSendNotification", JSON.stringify({
+    // Sending the notification to the user
+    socket.emit("HrSendNotification", JSON.stringify({
       userEmail: email,
       NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
       updatedAt: Date.now()
     }));
+
+
+    // update the application status of the user in the applied collection
+    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${email}`, {
+      applicationStatus: {
+        JobStatus: 'In-Progress',
+        StatusText: 'Application Viewed',
+        updatedAt: Date.now()
+      },
+      userJobID
+    })
+
     // Get the clicked card element specifically
     const clickedCard = e.currentTarget;
 
@@ -104,7 +116,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         jobTitle: user.jobTitle,
       })
     );
-    axios.delete(`${baseUrl}/user/bookmarkd/delete-bookmark/${localStorage.getItem('email')}-${ user.email}-${user.jobTitle}`).then((response) => {
+    axios.delete(`${baseUrl}/user/bookmarkd/delete-bookmark/${localStorage.getItem('email')}-${user.email}-${user.jobTitle}`).then((response) => {
       if (response.data.success) {
         toast.success(response.data.msg);
       } else {
@@ -134,7 +146,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   hrdashboard.__active_appliedUsers
                   }`}
                 key={user._id}
-                onClick={(e) => handleToggleCardActive(e, user.email, user?.jobTitle
+                onClick={(e) => handleToggleCardActive(e, user.email, user?.jobTitle, user?.jobID
                 )}
               >
                 <div className={hrdashboard.__appliedHeader}>
@@ -204,7 +216,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   </span>
                   {bookmarkUser?.some(
                     (data) =>
-                      data.email === user.email  && data.job_title ===user.jobTitle
+                      data.email === user.email && data.job_title === user.jobTitle
                   ) ? (
                     <FaBookmark
                       className={hrdashboard.__bookmark}
