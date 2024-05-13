@@ -15,9 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client"
+import Badge from '@mui/material/Badge';
 function JobSeekerLayout() {
-  const socket = io("http://localhost:8080");
-  const {email } = useSelector((state) => state.Assessment.currentUser);
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
   const dispatch = useDispatch();
@@ -51,21 +50,6 @@ function JobSeekerLayout() {
     setToggleFilter(!ToggleFilter);
   };
 
-  // use Effect for socket only
-useEffect(() => {
-  socket.emit("userConnect", JSON.stringify({
-    userEmail : email,
-  }));
-// eslint-disable-next-line react-hooks/exhaustive-deps
-},[])
-
-  useEffect(() => {
-    socket.on("receiveNotification", (data) => {
-      console.log(data);
-    });
-
-  }, [socket]);
-
   return (
     <section className={JobSeekerStyle.JobSeeker_Layout_Container}>
       <div className={JobSeekerStyle.LayoutContainer__LeftSideContainer}>
@@ -98,6 +82,9 @@ export default JobSeekerLayout;
 
 // Topnavbar Components
 function DashboardTopComponent({ CbToggle }) {
+  const socket = io("http://localhost:8080");
+  const { email } = useSelector((state) => state.Assessment.currentUser);
+  const [AllNotification, setAllnotification] = useState([])
   const [isListening, setIsListening] = useState(false);
   const [searhOption, setSearchOption] = useState({
     searchText: "",
@@ -311,7 +298,25 @@ function DashboardTopComponent({ CbToggle }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searhOption]);
 
+  // use Effect for socket only
+  useEffect(() => {
+    socket.emit("userConnect", JSON.stringify({
+      userEmail: email,
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
+  useEffect(() => {
+    socket.on("receiveNotification", (data) => {
+      const updatedNotifications = [...AllNotification, JSON.parse(data)];
+      setAllnotification(updatedNotifications);
+      console.log(JSON.parse(data));
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
+
+  console.log(AllNotification)
   return (
     <div className={JobSeekerStyle.Dashboard_TopHeader_Container}>
       <div className={JobSeekerStyle.searchFormContainer}>
@@ -377,7 +382,10 @@ function DashboardTopComponent({ CbToggle }) {
       <div className={JobSeekerStyle.FilterAndNotificationBox}>
         <VscSettings className={JobSeekerStyle.filterBox_ICON} onClick={CbToggle} />
 
-        <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
+
+        <Badge color="primary" badgeContent={AllNotification.length}>
+          <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
+        </Badge>
       </div>
     </div>
   );

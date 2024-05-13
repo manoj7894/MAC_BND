@@ -48,6 +48,9 @@ app.use("/api/user/My-jobs", myJobRoutes);
 const { bookmarkRoutes } = require("./Routes/Bookmark.Route.js");
 app.use("/api/user/bookmarkd", bookmarkRoutes)
 
+// ! Notifications Route
+const {notificationRoutes} = require("./Routes/Notification.Route.js");
+app.use("/api/user/notifications", notificationRoutes)
 
 const Port = process.env.PORT;
 
@@ -68,6 +71,7 @@ io.on("connection", (socket) => {
     } else {
       connectedUser.push({ email: JSON.parse(data).userEmail, socketId: socket.id });
     }
+    console.log(connectedUser)
   })
 
 
