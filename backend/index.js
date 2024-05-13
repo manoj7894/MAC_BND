@@ -62,14 +62,12 @@ const io = require("socket.io")(httpServer, {
 })
 io.on("connection", (socket) => {
   socket.on("userConnect", (data) => {
-
     const user = connectedUser?.find(user => user.email === JSON.parse(data).userEmail);
     if (user) {
       user.socketId = socket.id;
     } else {
       connectedUser.push({ email: JSON.parse(data).userEmail, socketId: socket.id });
     }
-    console.log(connectedUser)
   })
 
 

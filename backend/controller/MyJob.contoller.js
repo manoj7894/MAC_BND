@@ -111,6 +111,9 @@ const removeAppliedJob = async (req, res) => {
             jobID: jobId,
             userEmail: email,
         });
+
+        const mongooseUser = await User.findOne({ email });
+
         await User.updateOne({ email }, {
             userSavedJob: mongooseUser.userSavedJob.filter((data) => data.jobID !== jobId)
         });
@@ -128,7 +131,7 @@ const removeAppliedJob = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            msg: `server failed! Try again ${error.message}`
+            msg: `${error.message}`
         })
     }
 }
