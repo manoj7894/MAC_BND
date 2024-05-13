@@ -16,6 +16,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRobot, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client"
 import Badge from '@mui/material/Badge';
+import axios from "axios";
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
 function JobSeekerLayout() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
@@ -84,7 +86,8 @@ export default JobSeekerLayout;
 function DashboardTopComponent({ CbToggle }) {
   const socket = io("http://localhost:8080");
   const { email } = useSelector((state) => state.Assessment.currentUser);
-  const [AllNotification, setAllnotification] = useState([])
+  const [AllNotification, setAllnotification] = useState([]);
+  const [notificationCount, setNotificationCount] = useState(0);
   const [isListening, setIsListening] = useState(false);
   const [searhOption, setSearchOption] = useState({
     searchText: "",
@@ -298,96 +301,119 @@ function DashboardTopComponent({ CbToggle }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searhOption]);
 
+  // !Load Notifications
+  const LoadNotifications = () => {
+    axios.get(`${baseUrl}/user/notifications/get-notification/${email}`).then((response) => {
+      if (response.data.success) {
+        setAllnotification(response.data.notification);
+        setNotificationCount(response.data.notification.length);
+      } else {
+        setAllnotification([]);
+        setNotificationCount(0);
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
+  }
   // use Effect for socket only
+
   useEffect(() => {
     socket.emit("userConnect", JSON.stringify({
       userEmail: email,
     }));
+    LoadNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     socket.on("receiveNotification", (data) => {
-      const updatedNotifications = [...AllNotification, JSON.parse(data)];
-      setAllnotification(updatedNotifications);
-      console.log(JSON.parse(data));
+      setNotificationCount((prevState) => prevState + 1);
+      axios.post(`${baseUrl}/user/notifications/save-notification`, JSON.parse(data)).then((response) => {
+        if (response.data.success) {
+          LoadNotifications()
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
     });
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
-
-  console.log(AllNotification)
   return (
-    <div className={JobSeekerStyle.Dashboard_TopHeader_Container}>
-      <div className={JobSeekerStyle.searchFormContainer}>
-        <form className={JobSeekerStyle.DashboardSearchBarBox} onSubmit={(e) => e.preventDefault()}>
-          <div className={JobSeekerStyle.SearchInputBox}>
-            <div className={JobSeekerStyle.SearchICONBox}>
-              <CiSearch className={JobSeekerStyle.SearchICON} />
-            </div>
-            <input
-              type="text"
-              name="searchText"
-              id="searchText"
-              autoComplete="off"
-              className={JobSeekerStyle.SearchInput}
-              placeholder="Job tittle, keyword, company"
-              onChange={handleSearchInputChange}
-              value={searhOption.searchText}
-            />
-          </div>
-
-          <div className={JobSeekerStyle.SearchSelectBox}>
-            <div className={JobSeekerStyle.SearchICONBox}>
-              <TiLocation className={JobSeekerStyle.SearchICON} />
-            </div>
-            <select
-              name="Location"
-              id="Location"
-              className={JobSeekerStyle.SearchSelectInput}
-              onChange={handleSearchInputChange}
-            >
-              <option className={JobSeekerStyle.SeachSelectOPTION} value="">
-                Select your location
-              </option>
-
-              {allCities.map((city, index) => {
-                return (
-                  <option
-                    key={index}
-                    className={JobSeekerStyle.SeachSelectOPTION}
-                    value={city}
-                  >
-                    {city}
-                  </option>
-                );
-              })}
-            </select>
-
-            {isListening ? (
-              <IoMicOutline
-                className={JobSeekerStyle.Search_MICICON}
-                onClick={toggleMicListening}
+    <>
+      <div className={JobSeekerStyle.Dashboard_TopHeader_Container}>
+        <div className={JobSeekerStyle.searchFormContainer}>
+          <form className={JobSeekerStyle.DashboardSearchBarBox} onSubmit={(e) => e.preventDefault()}>
+            <div className={JobSeekerStyle.SearchInputBox}>
+              <div className={JobSeekerStyle.SearchICONBox}>
+                <CiSearch className={JobSeekerStyle.SearchICON} />
+              </div>
+              <input
+                type="text"
+                name="searchText"
+                id="searchText"
+                autoComplete="off"
+                className={JobSeekerStyle.SearchInput}
+                placeholder="Job tittle, keyword, company"
+                onChange={handleSearchInputChange}
+                value={searhOption.searchText}
               />
-            ) : (
-              <IoMicOffOutline
-                className={JobSeekerStyle.Search_MICICON}
-                onClick={toggleMicListening}
-              />
-            )}
-          </div>
-        </form>
+            </div>
+
+            <div className={JobSeekerStyle.SearchSelectBox}>
+              <div className={JobSeekerStyle.SearchICONBox}>
+                <TiLocation className={JobSeekerStyle.SearchICON} />
+              </div>
+              <select
+                name="Location"
+                id="Location"
+                className={JobSeekerStyle.SearchSelectInput}
+                onChange={handleSearchInputChange}
+              >
+                <option className={JobSeekerStyle.SeachSelectOPTION} value="">
+                  Select your location
+                </option>
+
+                {allCities.map((city, index) => {
+                  return (
+                    <option
+                      key={index}
+                      className={JobSeekerStyle.SeachSelectOPTION}
+                      value={city}
+                    >
+                      {city}
+                    </option>
+                  );
+                })}
+              </select>
+
+              {isListening ? (
+                <IoMicOutline
+                  className={JobSeekerStyle.Search_MICICON}
+                  onClick={toggleMicListening}
+                />
+              ) : (
+                <IoMicOffOutline
+                  className={JobSeekerStyle.Search_MICICON}
+                  onClick={toggleMicListening}
+                />
+              )}
+            </div>
+          </form>
+        </div>
+
+        <div className={JobSeekerStyle.FilterAndNotificationBox}>
+          <VscSettings className={JobSeekerStyle.filterBox_ICON} onClick={CbToggle} />
+
+
+          <Badge color="primary" badgeContent={notificationCount}>
+            <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
+          </Badge>
+        </div>
       </div>
+      <NotificationBox notificationData={AllNotification} notificationCounter={notificationCount}/>
+    </>
 
-      <div className={JobSeekerStyle.FilterAndNotificationBox}>
-        <VscSettings className={JobSeekerStyle.filterBox_ICON} onClick={CbToggle} />
-
-
-        <Badge color="primary" badgeContent={AllNotification.length}>
-          <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
-        </Badge>
-      </div>
-    </div>
   );
 }
 
@@ -412,3 +438,12 @@ function ChatbotNavbar() {
   )
 }
 
+
+function NotificationBox({notificationData, notificationCounter}) {
+  return <div className={JobSeekerStyle.notificationBox__container}>
+    <aside className={JobSeekerStyle.notificationBox}>
+      <h1 className={JobSeekerStyle.notificationBox_header}>Notifications  <span>{notificationCounter}</span></h1>
+
+    </aside>
+  </div>
+}

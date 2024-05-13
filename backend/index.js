@@ -71,7 +71,6 @@ io.on("connection", (socket) => {
     } else {
       connectedUser.push({ email: JSON.parse(data).userEmail, socketId: socket.id });
     }
-    console.log(connectedUser)
   })
 
 
@@ -84,9 +83,9 @@ io.on("connection", (socket) => {
   });
 
 
-  socket.on("disconnect", () => {
-    console.log("user disconnected");
-  });
+  // socket.on("disconnect", () => {
+  //   console.log("user disconnected");
+  // });
 })
 
 httpServer.listen(Port, async () => {

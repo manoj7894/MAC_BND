@@ -1,9 +1,10 @@
-const { saveNotification, getNotification } = require("../controller/Notification.controller.js");
+const { saveNotification, getNotification,deleteNotification } = require("../controller/Notification.controller.js");
 
 const notificationRoutes = require("express").Router();
 
-notificationRoutes.post("/create-notification", saveNotification);
-notificationRoutes.get("/create-notification/:email", getNotification);
+notificationRoutes.post("/save-notification", saveNotification);
+notificationRoutes.get("/get-notification/:email", getNotification);
+notificationRoutes.delete("/delete-notification/:email", deleteNotification);
 
 module.exports = {
     notificationRoutes,

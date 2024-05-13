@@ -74,6 +74,13 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
 
   const handleSeeResumeClick = (e, user) => {
     e.preventDefault();
+
+    socket.emit("HrSendNotification", JSON.stringify({
+      userEmail: user?.email,
+      NotificatioNText: `Your Resume for ${user?.jobTitle} has been viewed by hr`,
+      updatedAt: Date.now()
+    }));
+
     // update the application status of the user in the applied collection
     axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${user?.email}`, {
       applicationStatus: {
@@ -84,7 +91,6 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
       userJobID: user?.jobID,
     }).then((response) => {
       if (response.data.status) {
-        console.log(response.data)
         // Sending the notification to the user
         socket.emit("HrSendNotification", JSON.stringify({
           userEmail: user?.email,
