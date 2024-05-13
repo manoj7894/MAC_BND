@@ -51,7 +51,52 @@ app.use("/api/user/bookmarkd", bookmarkRoutes)
 
 const Port = process.env.PORT;
 
-app.listen(Port, async () => {
+
+
+
+
+
+
+
+// Socket IO 
+const httpServer = require('http').createServer(app);
+const connectedUser = []
+const io = require("socket.io")(httpServer, {
+  cors: {
+    origin: "*",
+  }
+})
+io.on("connection", (socket) => {
+  socket.on("userConnect", (data) => {
+    if (connectedUser.length === 0) {
+      connectedUser.push({
+        email: JSON.parse(data).userEmail,
+        socketId: socket.id
+      })
+    }else if (connectedUser?.every((user) => user.email !== JSON.parse(data).userEmail)) {
+      connectedUser.push({
+        email: JSON.parse(data).userEmail,
+        socketId: socket.id
+      })
+    }
+  })
+
+
+  socket.on("HrSendNotification", (data) => {
+    const currentSocketID = connectedUser.filter(user => user.email === JSON.parse(data).userEmail)[0]?.socketId;
+
+    if (currentSocketID) {
+      io.to(currentSocketID).emit("receiveNotification", data)
+    }
+  });
+
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+})
+
+httpServer.listen(Port, async () => {
   try {
     await ConnectDb();
     console.log(`SERVER STARED  : http://localhost:${process.env.PORT}`);

@@ -12,8 +12,10 @@ import {
   handleBookmark,
   handleRemoveBookmark,
 } from "../../../Redux/ReduxSlice";
+import { io } from "socket.io-client"
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
+  const socket = io("http://localhost:8080")
   const { bookmarkUser } = useSelector((state) => state.Assessment.currentUser);
   const dispatch = useDispatch();
   const [selectedUserEmail, setSelectedUserEmail] = useState(selectedUser);
@@ -28,10 +30,16 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUserEmail]);
 
-  const handleToggleCardActive = (e, email) => {
+  const handleToggleCardActive = (e, email,jobTitle) => {
     // Set the selected user email
     setSelectedUserEmail(email);
 
+     // Sending the notification to the user
+     socket.emit("HrSendNotification", JSON.stringify({
+      userEmail: email,
+      NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+      updatedAt: Date.now()
+    }));
     // Get the clicked card element specifically
     const clickedCard = e.currentTarget;
 
@@ -126,7 +134,8 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   hrdashboard.__active_appliedUsers
                   }`}
                 key={user._id}
-                onClick={(e) => handleToggleCardActive(e, user.email)}
+                onClick={(e) => handleToggleCardActive(e, user.email, user?.jobTitle
+                )}
               >
                 <div className={hrdashboard.__appliedHeader}>
                   <img
