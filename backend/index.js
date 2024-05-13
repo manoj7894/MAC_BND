@@ -52,12 +52,6 @@ app.use("/api/user/bookmarkd", bookmarkRoutes)
 const Port = process.env.PORT;
 
 
-
-
-
-
-
-
 // Socket IO 
 const httpServer = require('http').createServer(app);
 const connectedUser = []
@@ -68,18 +62,13 @@ const io = require("socket.io")(httpServer, {
 })
 io.on("connection", (socket) => {
   socket.on("userConnect", (data) => {
-    if (connectedUser.length === 0) {
-      connectedUser.push({
-        email: JSON.parse(data).userEmail,
-        socketId: socket.id
-      })
-    }else if (connectedUser?.every((user) => user.email !== JSON.parse(data).userEmail)) {
-      connectedUser.push({
-        email: JSON.parse(data).userEmail,
-        socketId: socket.id
-      })
-    }
 
+    const user = connectedUser?.find(user => user.email === JSON.parse(data).userEmail);
+    if (user) {
+      user.socketId = socket.id;
+    } else {
+      connectedUser.push({ email: JSON.parse(data).userEmail, socketId: socket.id });
+    }
     console.log(connectedUser)
   })
 
