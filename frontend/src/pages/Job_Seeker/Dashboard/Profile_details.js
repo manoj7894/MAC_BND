@@ -16,16 +16,10 @@ const Profile_details = () => {
   const navigateTO = useNavigate()
   const dispatch = useDispatch()
   const Job = useLocation().state
-  // console.log(Job._id)
 
   const email = localStorage.getItem("email");
-  // const username = localStorage.getItem("name");
   const [userData, setuserData] = useState([]);
-  console.log(userData);
   const [name, setname] = useState([])
-
-  // const resumes=userData.resume[0].filename
-  // console.log(resumes);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,11 +42,9 @@ const Profile_details = () => {
   const firstResumeFilename = getFirstResumeFilename();
   const currentDate = new Date();
   const day = currentDate.getDate();
-  const month = currentDate.getMonth() + 1; // January is 0, so we add 1
+  const month = currentDate.getMonth() + 1; 
   const year = currentDate.getFullYear();
   const AppliedDate = `${day < 10 ? '0' : ''}${day}-${month < 10 ? '0' : ''}${month}-${year}`;
-
-  // console.log(AppliedDate); //this is date of application
 
   const formatISODateForInput = (isoDate) => {
     if (!isoDate) return '';
