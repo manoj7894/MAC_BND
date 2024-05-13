@@ -17,7 +17,7 @@ import { faRobot, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client"
 function JobSeekerLayout() {
   const socket = io("http://localhost:8080");
-  const { name, email } = useSelector((state) => state.Assessment.currentUser);
+  const {email } = useSelector((state) => state.Assessment.currentUser);
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
   const dispatch = useDispatch();
