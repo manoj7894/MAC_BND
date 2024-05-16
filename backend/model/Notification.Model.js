@@ -10,6 +10,9 @@ const notificationSchema = new mongoose.Schema({
     notificationLink : {
         type : String,
     },
+    notificationStatus : {
+        type : String,
+    },
     notificationTime : {
         type: Number,
     }

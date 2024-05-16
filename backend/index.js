@@ -71,6 +71,7 @@ io.on("connection", (socket) => {
     } else {
       connectedUser.push({ email: JSON.parse(data).userEmail, socketId: socket.id });
     }
+    console.log(connectedUser)
   })
 
 

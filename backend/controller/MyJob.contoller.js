@@ -143,13 +143,21 @@ const updateApplicationStatus = async (req, res) => {
     const filterdAppliedJob = await appliedJobCollection.findOne({ jobID: userJobID, userEmail: email })
 
     if (!filterdAppliedJob?.applicationStatus.some((status) => status.StatusText.toLowerCase() === applicationStatus.StatusText.toLowerCase())) {
-        await appliedJobCollection.updateOne({ jobID: userJobID, userEmail: email }, {
+        const mongooseUpdateResponse = await appliedJobCollection.updateOne({ jobID: userJobID, userEmail: email }, {
             $push: { applicationStatus: applicationStatus }
         });
-        res.status(200).json({
-            status: true,
-            msg: "Application status updated"
-        })
+        if (mongooseUpdateResponse.modifiedCount > 0) {
+            res.status(200).json({
+                status: true,
+                msg: "Application status updated"
+            })
+        } else {
+            res.status(200).json({
+                status: false,
+                msg: "Application status Already updated"
+            })
+        }
+
     } else {
         res.status(200).json({
             status: false,

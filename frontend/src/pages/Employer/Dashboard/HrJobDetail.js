@@ -42,6 +42,7 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
         socket.emit("HrSendNotification", JSON.stringify({
           userEmail: userEmail,
           NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
           updatedAt: Date.now()
         }));
       }

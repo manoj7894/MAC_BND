@@ -8,8 +8,9 @@ import { useDispatch } from "react-redux";
 import { handleAppliedJob, handleRemoveSavedJob } from "../../../Redux/ReduxSlice";
 import Loader from "../../Common-Components/Loaders/Loader";
 import { fetchJobDetails } from "../../../Redux/JobSlice";
-
+import { io } from "socket.io-client"
 const Profile_details = () => {
+  const socket = io("http://localhost:8080")
   const [start_popup, setstart_popup] = useState(false);
   const [cancelpopup, setcancelpopup] = useState(false);
   const [IsLoading, setIsLoading] = useState(false);
@@ -52,9 +53,10 @@ const Profile_details = () => {
     return date.toISOString().split('T')[0]; // Extract and format YYYY-MM-DD
   };
 
+
   const handleApply = (e, item) => {
     e.preventDefault();
-
+    console.log(item)
     dispatch(fetchJobDetails(item._id || " "));
     if (Job.mcq.length !== 0) {     //if there will be any skill test mcq questions for user then it will be true
       if (!cancelpopup && !start_popup) {
@@ -63,7 +65,6 @@ const Profile_details = () => {
     }
     else {
       e.preventDefault();
-      setIsLoading(true);
       axios
         .post(`http://localhost:8080/api/user/My-jobs/create/apply-job`, {
           ...item,
@@ -81,11 +82,16 @@ const Profile_details = () => {
               updatedAt: Date.now()
             }
           ]
-
         })
         .then((response) => {
           if (response.data.success) {
             toast.success(`${response.data.msg}`);
+            socket.emit("HrSendNotification", JSON.stringify({
+              userEmail: item?.employeeEmail,
+              NotificatioNText: `${userData?.name} applied for ${item?.jobTitle} job role.`,
+              notificationStatus : 'Unread',
+              updatedAt: Date.now()
+            }));
             dispatch(handleAppliedJob(item._id));
             dispatch(handleRemoveSavedJob(item._id));
             setIsLoading(false);

@@ -49,21 +49,16 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         socket.emit("HrSendNotification", JSON.stringify({
           userEmail: email,
           NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
           updatedAt: Date.now()
         }));
       }
     })
 
-    // Get the clicked card element specifically
     const clickedCard = e.currentTarget;
 
-    // Toggle the active class on the clicked card
     clickedCard.classList.add(`${hrdashboard.__active_appliedUsers}`);
-
-    // Optionally remove the active class from other cards (if desired)
-    if (
-      clickedCard.classList.contains(`${hrdashboard.__active_appliedUsers}`)
-    ) {
+    if ( clickedCard.classList.contains(`${hrdashboard.__active_appliedUsers}`)) {
       document.querySelectorAll(".appliedUserCard").forEach((card) => {
         if (card !== clickedCard) {
           card.classList.remove(`${hrdashboard.__active_appliedUsers}`);
@@ -74,12 +69,6 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
 
   const handleSeeResumeClick = (e, user) => {
     e.preventDefault();
-
-    socket.emit("HrSendNotification", JSON.stringify({
-      userEmail: user?.email,
-      NotificatioNText: `Your Resume for ${user?.jobTitle} has been viewed by hr`,
-      updatedAt: Date.now()
-    }));
 
     // update the application status of the user in the applied collection
     axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${user?.email}`, {
@@ -95,6 +84,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         socket.emit("HrSendNotification", JSON.stringify({
           userEmail: user?.email,
           NotificatioNText: `Your Resume for ${user?.jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
           updatedAt: Date.now()
         }));
       }

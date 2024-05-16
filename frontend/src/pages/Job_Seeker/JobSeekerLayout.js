@@ -17,6 +17,7 @@ import { faRobot, faVolumeHigh } from "@fortawesome/free-solid-svg-icons";
 import { io } from "socket.io-client"
 import Badge from '@mui/material/Badge';
 import axios from "axios";
+import NotificationBox from "../Common-Components/NotificationBox";
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
 function JobSeekerLayout() {
   const { pathname } = useLocation();
@@ -86,8 +87,8 @@ export default JobSeekerLayout;
 function DashboardTopComponent({ CbToggle }) {
   const socket = io("http://localhost:8080");
   const { email } = useSelector((state) => state.Assessment.currentUser);
-  const [AllNotification, setAllnotification] = useState([]);
   const [notificationCount, setNotificationCount] = useState(0);
+  const [ToggleNotification, SetToggleNotification] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [searhOption, setSearchOption] = useState({
     searchText: "",
@@ -305,10 +306,8 @@ function DashboardTopComponent({ CbToggle }) {
   const LoadNotifications = () => {
     axios.get(`${baseUrl}/user/notifications/get-notification/${email}`).then((response) => {
       if (response.data.success) {
-        setAllnotification(response.data.notification);
-        setNotificationCount(response.data.notification.length);
+        setNotificationCount(response.data.notification.filter((data) => data.notificationStatus.toLowerCase() === 'Unread'.toLowerCase()).length);
       } else {
-        setAllnotification([]);
         setNotificationCount(0);
       }
     }).catch((error) => {
@@ -318,16 +317,13 @@ function DashboardTopComponent({ CbToggle }) {
   // use Effect for socket only
 
   useEffect(() => {
-    socket.emit("userConnect", JSON.stringify({
-      userEmail: email,
-    }));
+    socket.emit("userConnect", JSON.stringify({userEmail: email}));
     LoadNotifications();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
     socket.on("receiveNotification", (data) => {
-      setNotificationCount((prevState) => prevState + 1);
       axios.post(`${baseUrl}/user/notifications/save-notification`, JSON.parse(data)).then((response) => {
         if (response.data.success) {
           LoadNotifications()
@@ -407,11 +403,15 @@ function DashboardTopComponent({ CbToggle }) {
 
 
           <Badge color="primary" badgeContent={notificationCount}>
-            <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} />
+            <IoIosNotificationsOutline className={JobSeekerStyle.filterBox_ICON} onClick={(e) => SetToggleNotification(!ToggleNotification)} />
           </Badge>
         </div>
       </div>
-      <NotificationBox notificationData={AllNotification} notificationCounter={notificationCount}/>
+
+      {
+        ToggleNotification && <NotificationBox notificationCounter={setNotificationCount} CbCloseNotification={SetToggleNotification} />
+      }
+
     </>
 
   );
@@ -436,14 +436,4 @@ function ChatbotNavbar() {
       {/* to keep this header part , this component should blank */}
     </>
   )
-}
-
-
-function NotificationBox({notificationData, notificationCounter}) {
-  return <div className={JobSeekerStyle.notificationBox__container}>
-    <aside className={JobSeekerStyle.notificationBox}>
-      <h1 className={JobSeekerStyle.notificationBox_header}>Notifications  <span>{notificationCounter}</span></h1>
-
-    </aside>
-  </div>
 }

@@ -494,6 +494,7 @@ p {
     background-color: rgba(0, 0, 0, 0.46);
     overflow: hidden;
     scrollbar-width: none;
+    z-index: 10;
 }
 
 .__viewPDF_CloseButton {
