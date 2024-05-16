@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import hrdashboard from './HrDashboard.module.css'
-import { FaRegBookmark } from "react-icons/fa"; //not-bookmark
-// import { FaBookmark } from "react-icons/fa"; //bookmarked
+import { FaRegBookmark } from "react-icons/fa";
 import ApplicantsDetails from "./ApplicantsDetails.js"
+import { io } from "socket.io-client"
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
-
 const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
+  const socket = io("http://localhost:8080")
   const [job, setJob] = useState(null);
-  // const [ShowApplicantDetails, setShowApplicantDetails] = useState(false)
   const [selectedUser, setUsers] = useState([]);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
     fetchData();
   }, [jobId]);
 
-  const handleUserCardClick = (e, userEmail, userJobID) => {
+  const handleUserCardClick = (e, userEmail, userJobID, jobTitle) => {
     e.preventDefault();
     CbToggleDetails(true);
     setUsers(userEmail)
@@ -37,9 +36,18 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
         updatedAt: Date.now()
       },
       userJobID
+    }).then((response) => {
+      if (response.data.status) {
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: userEmail,
+          NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
+          updatedAt: Date.now()
+        }));
+      }
     })
   }
-
   return (
     <>
       <div className={hrdashboard._jobDetails} key={job && job._id}>
@@ -93,7 +101,7 @@ const HrJobDetail = ({ jobId, ShowApplicantDetails, CbToggleDetails }) => {
           {
             job?.appliedBy?.map((user) => {
               return (
-                <div className={hrdashboard.__appliedUsers} key={user._id} onClick={(e) => handleUserCardClick(e, user?.email, user?.jobID)}>
+                <div className={hrdashboard.__appliedUsers} key={user._id} onClick={(e) => handleUserCardClick(e, user?.email, user?.jobID, user?.jobTitle)}>
                   <div className={hrdashboard.__appliedHeader}>
                     <img className={hrdashboard.__userPF} src={user.profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'} alt="" onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }} />
                     <section>

@@ -29,7 +29,7 @@ function StatusPopup({ popupType, CbTogglePopup, jobStatus }) {
 
       return (
         <span className={ApplicationStyle.Status__poupBox_date}>
-          {day >= 10 ? "0" + day : day} {monthObj[month]}{" "}
+          {day < 10 ? "0" + day : day} {monthObj[month]}{" "}
         </span>
       );
     }

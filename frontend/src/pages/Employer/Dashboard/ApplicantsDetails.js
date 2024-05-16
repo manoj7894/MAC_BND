@@ -12,8 +12,10 @@ import {
   handleBookmark,
   handleRemoveBookmark,
 } from "../../../Redux/ReduxSlice";
+import { io } from "socket.io-client"
 const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL;
 function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
+  const socket = io("http://localhost:8080")
   const { bookmarkUser } = useSelector((state) => state.Assessment.currentUser);
   const dispatch = useDispatch();
   const [selectedUserEmail, setSelectedUserEmail] = useState(selectedUser);
@@ -28,20 +30,35 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedUserEmail]);
 
-  const handleToggleCardActive = (e, email) => {
+  const handleToggleCardActive = (e, email, jobTitle, userJobID) => {
     // Set the selected user email
     setSelectedUserEmail(email);
 
-    // Get the clicked card element specifically
+
+    // update the application status of the user in the applied collection
+    axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${email}`, {
+      applicationStatus: {
+        JobStatus: 'In-Progress',
+        StatusText: 'Application Viewed',
+        updatedAt: Date.now()
+      },
+      userJobID
+    }).then((response) => {
+      if (response.data.status) {
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: email,
+          NotificatioNText: `Your application for ${jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
+          updatedAt: Date.now()
+        }));
+      }
+    })
+
     const clickedCard = e.currentTarget;
 
-    // Toggle the active class on the clicked card
     clickedCard.classList.add(`${hrdashboard.__active_appliedUsers}`);
-
-    // Optionally remove the active class from other cards (if desired)
-    if (
-      clickedCard.classList.contains(`${hrdashboard.__active_appliedUsers}`)
-    ) {
+    if ( clickedCard.classList.contains(`${hrdashboard.__active_appliedUsers}`)) {
       document.querySelectorAll(".appliedUserCard").forEach((card) => {
         if (card !== clickedCard) {
           card.classList.remove(`${hrdashboard.__active_appliedUsers}`);
@@ -52,6 +69,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
 
   const handleSeeResumeClick = (e, user) => {
     e.preventDefault();
+
     // update the application status of the user in the applied collection
     axios.patch(`${baseUrl}/user/My-jobs/applicationStatus/${user?.email}`, {
       applicationStatus: {
@@ -60,7 +78,17 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         updatedAt: Date.now(),
       },
       userJobID: user?.jobID,
-    });
+    }).then((response) => {
+      if (response.data.status) {
+        // Sending the notification to the user
+        socket.emit("HrSendNotification", JSON.stringify({
+          userEmail: user?.email,
+          NotificatioNText: `Your Resume for ${user?.jobTitle} has been viewed by hr`,
+          notificationStatus : 'Unread',
+          updatedAt: Date.now()
+        }));
+      }
+    })
 
     SetshowPDF(true);
     setSelectedResume({
@@ -96,7 +124,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
         jobTitle: user.jobTitle,
       })
     );
-    axios.delete(`${baseUrl}/user/bookmarkd/delete-bookmark/${localStorage.getItem('email')}-${ user.email}-${user.jobTitle}`).then((response) => {
+    axios.delete(`${baseUrl}/user/bookmarkd/delete-bookmark/${localStorage.getItem('email')}-${user.email}-${user.jobTitle}`).then((response) => {
       if (response.data.success) {
         toast.success(response.data.msg);
       } else {
@@ -126,7 +154,8 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   hrdashboard.__active_appliedUsers
                   }`}
                 key={user._id}
-                onClick={(e) => handleToggleCardActive(e, user.email)}
+                onClick={(e) => handleToggleCardActive(e, user.email, user?.jobTitle, user?.jobID
+                )}
               >
                 <div className={hrdashboard.__appliedHeader}>
                   <img
@@ -195,7 +224,7 @@ function ApplicantsDetails({ jobData, selectedUser, CbToogleDetails }) {
                   </span>
                   {bookmarkUser?.some(
                     (data) =>
-                      data.email === user.email  && data.job_title ===user.jobTitle
+                      data.email === user.email && data.job_title === user.jobTitle
                   ) ? (
                     <FaBookmark
                       className={hrdashboard.__bookmark}
