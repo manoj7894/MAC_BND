@@ -26,8 +26,8 @@ const hrSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  experience:{
-    type:String
+  experience: {
+    type: String
   },
   userType: {
     type: String,
@@ -35,16 +35,16 @@ const hrSchema = new mongoose.Schema({
   course: {
     type: String,
   },
-  gender:{
-    type:String
+  gender: {
+    type: String
   },
-  website:{
-    type:String
+  website: {
+    type: String
   },
-  marital_status:{
-    type:String
+  marital_status: {
+    type: String
   },
- 
+
   profileImage: {
     filename: String,
     path: String,
@@ -56,6 +56,16 @@ const hrSchema = new mongoose.Schema({
   biography: {
     type: String,
   },
+  bookmarkUser: [
+    {
+      email: {
+        type: String,
+      },
+      job_title: {
+        type: String,
+      }
+    },
+  ]
 });
 
 const HrUser = mongoose.model("HrUser", hrSchema);

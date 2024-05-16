@@ -48,7 +48,8 @@ const signUp = async (req, res) => {
       email,
       jobTitle,
       department,
-      companyName
+      companyName,
+      bookmarkUser : []
     });
   } catch (error) {
     console.error('Error:', error);
@@ -83,6 +84,7 @@ const login = async (req, res) => {
       jobTitle: hr.jobTitle,
       department: hr.department,
       companyName: hr.companyName,
+      bookmarkUser : hr.bookmarkUser,
       userType : 'employee'
     });
   } catch (error) {
