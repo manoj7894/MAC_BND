@@ -46,12 +46,7 @@ const hrSchema = new mongoose.Schema({
   },
 
   profileImage: {
-    filename: String,
-    path: String,
-    uploadedAt: {
-      type: Date,
-      default: Date.now,
-    },
+    type: String,
   },
   biography: {
     type: String,
