@@ -74,13 +74,6 @@ function SideNavbar() {
   const { name,profileImage } = useSelector((state) => state.Assessment.currentUser);
   const email = localStorage.getItem("email")
 
-  // const handleLogoutClick = () => {
-  //   dispatch(handleUserLogOut());
-  //   toast.success(`${name} Logged out !!`)
-  //   setTimeout(() => {
-  //     navigateTO("/login")
-  //   }, 1000);
-  // }
 
   const handleLogoutClick = async () => {
     try {
@@ -133,7 +126,8 @@ function SideNavbar() {
           })}
         </nav>
 
-        <div className={navStyle.sidenavBar__profileBox}>
+       <div>
+       <div className={navStyle.sidenavBar__profileBox}>
           <Tooltip title="Profile" arrow placement="right-end">
             <img
               src={profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'}
@@ -155,6 +149,7 @@ function SideNavbar() {
           <RiLogoutCircleRLine className={navStyle.logOutButtonICON} />
           Log Out
         </button>
+       </div>
       </div>
     </>
   );
