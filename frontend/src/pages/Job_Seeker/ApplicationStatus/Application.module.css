@@ -417,6 +417,7 @@ li {
 
 /* Application status popup  */
 .Status__StatusTimeLineListItem {
+    display: block;
     list-style-type: none;
     position: relative;
     font-size: 16px;

@@ -195,6 +195,7 @@ p {
     background-color: rgba(255, 184, 0, 1);
     padding: 5px;
     height: fit-content;
+    width: fit-content;
     padding: .2em 2em;
     border-radius: 30px;
     text-align: center;
