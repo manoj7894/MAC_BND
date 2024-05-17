@@ -1,13 +1,13 @@
 import React from "react";
 import navStyle from "./SideNav.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faRobot,faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { FaHouse } from "react-icons/fa6";
 import { FaEnvelopeOpenText } from "react-icons/fa";
-import { IoChatbubblesOutline } from "react-icons/io5";
+import { HiBriefcase } from "react-icons/hi";
 import { SiSimpleanalytics } from "react-icons/si";
-import { PiBriefcaseBold } from "react-icons/pi";
 import { GrDocumentText } from "react-icons/gr";
 import { GoSmiley } from "react-icons/go";
-import { SlCalender } from "react-icons/sl";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -34,7 +34,7 @@ const menuItems = [
   {
     path: "/chatbot",
     name: "Chat bot",
-    icon: <IoChatbubblesOutline className={navStyle.JobSeeker_navITEMICON} />,
+    icon:<FontAwesomeIcon icon={faRobot} className={navStyle.JobSeeker_navITEMICON}/>,
   },
   {
     path: "/analytics",
@@ -44,7 +44,7 @@ const menuItems = [
   {
     path: "/myjobs",
     name: "My jobs",
-    icon: <PiBriefcaseBold className={navStyle.JobSeeker_navITEMICON} />,
+    icon: <HiBriefcase className={navStyle.JobSeeker_navITEMICON} />,
   },
   {
     path: "/myresume",
@@ -59,7 +59,7 @@ const menuItems = [
   {
     path: "/interviews",
     name: "Interview Scheduled",
-    icon: <SlCalender className={navStyle.JobSeeker_navITEMICON} />,
+    icon: <FontAwesomeIcon icon={faCalendarDays} className={navStyle.JobSeeker_navITEMICON}/> ,
   },
   {
     path: "/settings",
