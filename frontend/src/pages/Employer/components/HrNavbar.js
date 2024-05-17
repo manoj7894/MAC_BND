@@ -18,7 +18,6 @@ export default function HR_Navbar() {
   const tabScreen = useMediaQuery({ maxWidth: 950 })
   const dispatch = useDispatch();
   const { name,profileImage } = useSelector((state) => state.Assessment.currentUser);
-  console.log(name,profileImage);
 
   const handleLogoutClick = () => {
     dispatch(handleUserLogOut());

@@ -67,6 +67,7 @@ function EditProfile() {
       }
 
     }).catch((error) => {
+      console.log(error)
       toast.error(`Something went wrong : ${error.msg}`);
       loadUserData();
     })
@@ -80,16 +81,19 @@ function EditProfile() {
       .get(`${baseURL}/hr/get-hr?email=${email}`)
       .then((response) => {
         if (response.data) {
+          console.log(response.data.hrDetails)
           const { name, email, profileImage } = response.data.hrDetails
 
           setUserDetails({ name, email,profileImage});
 
           localStorage.setItem("profileImage", response.data.hrDetails?.profileImage);
           localStorage.setItem("name", response.data.hrDetails?.name);
+          localStorage.setItem("email", response.data.hrDetails?.email);
           setIsLoading(false);
         }
       })
       .catch((error) => {
+        console.log(error)
         setIsLoading(false);
         toast.error(`Something went wrong ${error.message}`);
       });
