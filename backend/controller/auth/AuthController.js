@@ -2,11 +2,11 @@ const User = require("../../model/users/UserModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
-const multer = require("multer");
-
+const { uploadonCloudinary } = require("../../utility/cloudinary");
 const dotenv = require("dotenv");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
+const UserSession = require("../../model/users/UserSession");
 
 const getUser = async (req, res) => {
   try {
@@ -15,10 +15,9 @@ const getUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
+    user.password = undefined;
 
-    res.json({
-      user
-    });
+    res.json({ userDetails: user, success: true });
   } catch (error) {
     res.status(500).json({ message: "Internal server error" });
   }
@@ -26,13 +25,25 @@ const getUser = async (req, res) => {
 
 const signUp = async (req, res) => {
   try {
-    const { name, email, password, conf_password } = req.body;
+    const {
+      name,
+      email,
+      password,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title,
+      company,
+      company_start_date,
+      company_end_date,
+    } = req.body;
     const resumeFileName = req.file;
-
-    // // Ensure passwords match
-    // if (password !== conf_password) {
-    //   return res.status(400).json({ message: 'Passwords do not match' });
-    // }
 
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -43,15 +54,44 @@ const signUp = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Adjust company_end_date to null if received as "null" from the frontend
+    const adjustedCompanyEndDate =
+      company_end_date === "null" ? null : company_end_date;
+
     const newUser = new User({
       email,
       password: hashedPassword,
       name,
+      phone_number,
+      dob,
+      country,
+      state,
+      college,
+      course,
+      course_start_date,
+      course_end_date,
+      percentage,
+      job_title: req.body.job_title || null,
+      company: req.body.company || null,
+      company_start_date: req.body.company_start_date || null,
+      company_end_date: adjustedCompanyEndDate,
+      profileImage: req.body.profileImage || null,
+      biography: req.body.biography || null,
+      skills: req.body.skills || null,
+      note: req.body.note || null,
+
       resume: resumeFileName,
       savedJob: [],
       appliedJob: [],
     });
     await newUser.save();
+
+    const newUserSession = new UserSession({
+      userId: newUser._id,
+      startTime: new Date(),
+      endTime: null,
+    });
+    await newUserSession.save();
 
     const token = jwt.sign({ userId: newUser._id }, SECRET_KEY, {
       expiresIn: "2d",
@@ -67,6 +107,7 @@ const signUp = async (req, res) => {
       appliedJob: [],
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -88,6 +129,23 @@ const login = async (req, res) => {
     }
 
     const name = user.name;
+
+    let userSession = await UserSession.findOne({
+      userId: user._id,
+      endTime: null,
+    });
+    if (!userSession) {
+      userSession = new UserSession({
+        userId: user._id,
+        startTime: new Date(),
+        endTime: null,
+      });
+    } else {
+      userSession.startTime = new Date();
+    }
+
+    await userSession.save();
+
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "2d",
     });
@@ -97,10 +155,42 @@ const login = async (req, res) => {
       name,
       email,
       userType: "user",
+      profileImage: user.profileImage,
       savedJob: user.userSavedJob,
       appliedJob: user.userAppliedJob,
     });
   } catch (error) {
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+const logout = async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Find the user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the endTime of the active session for the user
+    const session = await UserSession.findOneAndUpdate(
+      { userId: user._id, endTime: null },
+      { endTime: new Date() },
+      { new: true }
+    );
+
+    if (!session) {
+      return res.status(404).json({ message: "Active session not found" });
+    }
+
+    return res.status(200).json({ message: "Logout successful" });
+  } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -117,7 +207,6 @@ const forgotPassword = async (req, res) => {
     const token = jwt.sign({ userId: user._id }, SECRET_KEY, {
       expiresIn: "5m",
     });
-
 
     var transporter = nodemailer.createTransport({
       service: "gmail",
@@ -169,4 +258,60 @@ const resetPassword = async (req, res) => {
   }
 };
 
-module.exports = { signUp, login, forgotPassword, resetPassword, getUser };
+const updateUserField = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const updateFields = {};
+    const result = req.file && (await uploadonCloudinary(req.file.path));
+    req.body.profileImage = result && result?.secure_url;
+
+    req.body.skills =
+      req.body.skills?.length > 0
+        ? req.body.skills
+            ?.split(",")
+            .map((skill, index) => ({ name: skill.trim(), index }))
+        : "";
+
+    for (const key in req.body) {
+      if (
+        req.body[key] !== "null" &&
+        req.body[key] !== "" &&
+        req.body[key] !== " " &&
+        req.body[key]
+      ) {
+        updateFields[key] = req.body[key];
+      }
+    }
+
+    const findUser = await User.findOneAndUpdate(
+      { email: email },
+      updateFields,
+      { new: true }
+    );
+
+    if (findUser) {
+      res.status(200).json({
+        success: true,
+        msg: "User details updated successfully",
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        msg: "No user found to update",
+      });
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+module.exports = {
+  signUp,
+  login,
+  forgotPassword,
+  resetPassword,
+  getUser,
+  updateUserField,
+  logout,
+};

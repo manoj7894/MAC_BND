@@ -169,7 +169,7 @@
   list-style: none;
   gap: 10px;
 }
-li {
+.date_month {
   font-family: inter;
   color: rgba(10, 17, 47, 1);
   border: 0.5px solid rgba(228, 228, 231, 1);
@@ -618,4 +618,288 @@ li {
   align-items: center;
   margin-top: 20px;
   margin-left: 100px;
+}
+
+@media screen and (min-width: 1200px) and (max-width: 1299px) {
+  .area_chart_pay_per_time {
+    width: 37% !important;
+  }
+  .history_money {
+    width: 31%;
+  }
+  .payment_history_title_title {
+    padding: 15px;
+  }
+
+  .payment_history_user {
+    gap: 5px;
+  }
+  .history_user_role {
+    font-size: 12px;
+  }
+  .withdraw_section {
+    padding: 20px;
+  }
+
+  .white_box,
+  .blue_box {
+    padding: 28px;
+  }
+
+  .paypal_icon {
+    width: 30%;
+  }
+}
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+  .payroll_outstanding,
+  .upcoming_money {
+    padding: 10px;
+  }
+
+  .upcoming_date {
+    font-size: 20px;
+  }
+  .withdraw_section {
+    padding: 10px;
+  }
+  .paypal_area_chart_title {
+    padding: 15px 10px 0px 10px;
+  }
+  .area_chart_title {
+    padding: 18px;
+  }
+  .area_chart_payment {
+    font-size: 35px;
+  }
+  .area_chart_title {
+    padding: 0px;
+  }
+  .date_month {
+    font-size: 9px;
+  }
+  .area_chart_pay_per_time {
+    width: 42% !important;
+  }
+  .payment_history_title_title {
+    padding: 5px;
+    margin-top: 0px;
+  }
+  .history_money {
+    width: 50%;
+  }
+  .history_money_date {
+    font-size: 12px;
+  }
+  .paypal_area_chart_full {
+    margin-top: 20px;
+  }
+  .area_chart_pay_per {
+    width: 25%;
+  }
+  .history_money_date,
+  .history_money_off {
+    font-size: 11px;
+  }
+  .history_money_date_time,
+  .history_money_date_off {
+    font-size: 10px;
+  }
+  .history_money_off_button_button {
+    font-size: 11px;
+  }
+  .payment_history_user {
+    gap: 5px;
+    width: 100%;
+  }
+  .history_user_name {
+    font-size: 14px;
+  }
+  .history_user_role {
+    font-size: 11px;
+  }
+  .outstanding_title_paid {
+    padding: 12px;
+  }
+  .payroll_outstanding {
+    gap: 5px;
+  }
+  .payroll_outstanding_image {
+    width: 20%;
+  }
+  .user_payslip_full_full {
+    padding: 5px;
+  }
+  .user_payslip {
+    font-size: 10px;
+    width: 40%;
+  }
+  .employee_details_main {
+    margin-bottom: 15px;
+  }
+  .blue_box {
+    padding: 20px;
+  }
+  .white_box {
+    padding: 10px;
+  }
+  .paypal_verified_button {
+    width: 50%;
+  }
+  .paypal_verified_connected {
+    font-size: 13px;
+  }
+  .blue_box_date,
+  .white_box_date {
+    font-size: 18px;
+  }
+
+  .finalchart {
+    width: 250px !important;
+    height: 250px !important;
+  }
+  .summary_last_full {
+    padding: 0px;
+  }
+  .view {
+    width: 40%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  .upcoming_money {
+    padding: 10px;
+  }
+  .payroll_outstanding {
+    padding: 10px;
+  }
+  .upcoming_title,
+  .outstanding_title {
+    font-size: 15px;
+  }
+  .upcoming_date {
+    font-size: 20px;
+  }
+  .withdraw_section {
+    padding: 10px;
+  }
+  .paypal_verified_connected {
+    font-size: 12px;
+  }
+  .paypal_verified_button {
+    width: 40%;
+  }
+  .withdraw_title {
+    font-size: 15px;
+  }
+  .paypal_area_chart_title {
+    padding: 10px 10px 0px 10px;
+  }
+  .area_chart_title {
+    font-size: 15px;
+  }
+  .area_chart_payment {
+    font-size: 25px;
+  }
+  .area_chart_pay_per_time {
+    width: 50%;
+  }
+  .date_month {
+    font-size: 9px;
+  }
+  .area_chart_pay_per {
+    width: 30%;
+  }
+  .payment_history_title_title {
+    padding: 5px;
+  }
+  .history_user_name {
+    font-size: 15px;
+  }
+  .history_user_role {
+    font-size: 11px;
+  }
+  .history_money {
+    width: 40%;
+  }
+  .history_money_date {
+    font-size: 12px;
+  }
+  .history_money_off_button_button {
+    font-size: 11px;
+  }
+  .history_money_off {
+    font-size: 12px;
+  }
+  .history_money_date {
+    font-size: 11px;
+  }
+  .history_money_date_time {
+    font-size: 11px;
+  }
+  .payment_history_user {
+    gap: 5px;
+  }
+  .history_user_name {
+    font-size: 12px;
+  }
+  .history_user_role {
+    font-size: 9px;
+  }
+  .Payroll_history_title {
+    font-size: 15px;
+  }
+  .outstanding_title_paid {
+    padding: 5px;
+  }
+  .payroll_outstanding {
+    padding: 5px;
+  }
+  .payroll_outstanding_image {
+    width: 50%;
+  }
+  .outstanding_title_two {
+    font-size: 14px;
+  }
+  .user_payslip_full_full {
+    padding: 5px;
+  }
+  .user_payslip {
+    font-size: 9px;
+    padding: 10px;
+    width: 40%;
+  }
+  .blue_box {
+    padding: 10px;
+  }
+  .white_box {
+    padding: 10px;
+  }
+  .white_box_title {
+    font-size: 11px;
+  }
+  .blue_box_date {
+    font-size: 18px;
+  }
+  .finalchart {
+    width: 200px !important;
+    height: 200px !important;
+  }
+  .view {
+    width: 55%;
+  }
+  .history_money {
+    font-size: 12px;
+    width: 50%;
+  }
+  .history_money_date {
+    font-size: 10px;
+  }
+  .history_title {
+    font-size: 14px;
+  }
+  .payment_history_all {
+    font-size: 12px;
+  }
+  .paypal_verified_connected {
+    font-size: 11px;
+  }
 }

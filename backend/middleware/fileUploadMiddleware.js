@@ -26,7 +26,7 @@ const photoFilter = (req, file, cb) => {
   if (file.mimetype.includes('image/')) {
     cb(null, true);
   } else {
-    cb(new Error('Only PDF files are allowed'), false);
+    cb(new Error('Only JPG/PNG files are allowed'), false);
   }
 };
 
@@ -44,4 +44,11 @@ const uploadPhoto = multer({
   fileFilter: photoFilter
 }).single('jobPoster');
 
-module.exports = { upload, uploadPhoto }
+//upload Profile-Photo
+const uploadProfile = multer({
+  storage: storage,
+  limits: { fileSize: 2000000 }, // Limit file size to 2MB
+  fileFilter: photoFilter
+}).single('profileImage');
+
+module.exports = { upload, uploadPhoto, uploadProfile }

@@ -21,10 +21,12 @@ import {
   handleSavedJob,
   handleRemoveSavedJob,
 } from "../../../Redux/ReduxSlice";
+import {fetchUserData}  from "../../../Redux/UserSlice";
 function Dashboard() {
   const { email, savedJob, appliedJob } = useSelector(
     (state) => state.Assessment.currentUser
   );
+
   const dispatch = useDispatch();
   const [allJobsData, setAllJobData] = useState([]);
   const [BestMatch, setBestmatch] = useState([]);
@@ -42,6 +44,7 @@ function Dashboard() {
             response.data.jobs.sort((a, b) => b.createdAt - a.createdAt)
           );
           setBestmatch(response.data.jobs);
+          dispatch(fetchUserData(email))
           setLoading(false);
         } else {
           setAllJobData([]);
@@ -52,7 +55,7 @@ function Dashboard() {
         toast.error(`Server failed to load! Reload your page`);
         setLoading(false);
       });
-  }, []);
+  }, [email,dispatch]);
 
   const handleSaveToLaterClick = (e, item) => {
     e.preventDefault();
@@ -78,7 +81,8 @@ function Dashboard() {
     e.preventDefault();
     axios
       .delete(
-        `http://localhost:8080/api/user/My-jobs/delete/save-job/${email + "-" + jobId
+        `http://localhost:8080/api/user/My-jobs/delete/save-job/${
+          email + "-" + jobId
         }`
       )
       .then((response) => {
@@ -97,14 +101,22 @@ function Dashboard() {
   const loadFilteredData = () => {
     let FilteredData = BestMatch.filter(
       (job) =>
-        FilterOptions?.JobType.some((data) => job.employmentType.toLowerCase() === data.toLowerCase()) ||
+        FilterOptions?.JobType.some(
+          (data) => job.employmentType.toLowerCase() === data.toLowerCase()
+        ) ||
         FilterOptions?.JobCategory.some(
           (data) => job.employmentType === data
         ) ||
         FilterOptions?.JobLevel.some((data) => job.jobExperience === data) ||
-
-        FilterOptions.SalaryRange.some((data)=> {
-          return (Number(data.split("-")[0]) >= Number(job.salaryRange.split("-")[0])) && ( Number(data.split("-")[1]) <= Number(job.salaryRange.split("-")[1]))
+        FilterOptions.SalaryRange.some((data) => {
+          return (
+            Number(data.split("-")[0]) >=
+              Number(job.salaryRange.split("-")[0]) &&
+            Number(data.split("-")[1]) <= Number(job.salaryRange.split("-")[1])
+          );
+        }) ||
+        FilterOptions.SalaryRange.some((data) => {
+          return Number(job.salaryRange.split("+")[0]) >= 15;
         })
     );
     setAllJobData(FilteredData);
@@ -115,7 +127,7 @@ function Dashboard() {
       FilterOptions?.JobCategory?.length > 0 ||
       FilterOptions?.JobLevel?.length > 0 ||
       FilterOptions?.JobType?.length > 0 ||
-      FilterOptions?.SalaryRange.length >0
+      FilterOptions?.SalaryRange.length > 0
     ) {
       loadFilteredData();
     } else {
@@ -141,11 +153,14 @@ function Dashboard() {
           job.employmentType
             .toLowerCase()
             .includes(SearchOptions.searchText.trim().toLowerCase()) ||
-          job.skilRequired.some((skil) =>
-            skil
+          job?.skilRequired?.some((skil) =>
+            skil.name
               .toLowerCase()
               .includes(SearchOptions.searchText.trim().toLowerCase())
-          )
+          ) ||
+          job?.location
+            .toLowerCase()
+            .includes(SearchOptions.searchText.trim().toLowerCase())
       );
       setAllJobData(FilteredData);
     } else {
@@ -294,38 +309,38 @@ function Dashboard() {
                               {appliedJob?.every(
                                 (data) => data.jobID !== item?._id
                               ) && (
-                                  <div
-                                    className={
-                                      DashBoardStyle.rec_company_offer_fav
-                                    }
-                                  >
-                                    {savedJob?.some(
-                                      (data) => data.jobID === item?._id
-                                    ) ? (
-                                      <img
-                                        src={fav_filled_icon}
-                                        alt="Favorite Icon"
-                                        className={
-                                          DashBoardStyle.rec_company_offer_fav_image
-                                        }
-                                        onClick={(e) =>
-                                          handleRemoveSaveClick(e, item?._id)
-                                        }
-                                      />
-                                    ) : (
-                                      <img
-                                        src={fav_icon}
-                                        alt="Favorite Icon"
-                                        className={
-                                          DashBoardStyle.rec_company_offer_fav_image
-                                        }
-                                        onClick={(e) =>
-                                          handleSaveToLaterClick(e, item)
-                                        }
-                                      />
-                                    )}
-                                  </div>
-                                )}
+                                <div
+                                  className={
+                                    DashBoardStyle.rec_company_offer_fav
+                                  }
+                                >
+                                  {savedJob?.some(
+                                    (data) => data.jobID === item?._id
+                                  ) ? (
+                                    <img
+                                      src={fav_filled_icon}
+                                      alt="Favorite Icon"
+                                      className={
+                                        DashBoardStyle.rec_company_offer_fav_image
+                                      }
+                                      onClick={(e) =>
+                                        handleRemoveSaveClick(e, item?._id)
+                                      }
+                                    />
+                                  ) : (
+                                    <img
+                                      src={fav_icon}
+                                      alt="Favorite Icon"
+                                      className={
+                                        DashBoardStyle.rec_company_offer_fav_image
+                                      }
+                                      onClick={(e) =>
+                                        handleSaveToLaterClick(e, item)
+                                      }
+                                    />
+                                  )}
+                                </div>
+                              )}
 
                               <div
                                 className={

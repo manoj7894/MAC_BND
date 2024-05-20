@@ -1,9 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import assessmentStyle from "./Assessment.module.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { handleClearResult } from "../../../Redux/ReduxSlice";
 import { useNavigate } from "react-router-dom";
+
 function AssessmentResult() {
   const { result, percentageResult } = useSelector((state) => state.Assessment);
   const navigateTO = useNavigate();
@@ -15,11 +16,11 @@ function AssessmentResult() {
     dispatchTO(handleClearResult());
   };
 
-  useEffect(() => {
-    if (percentageResult === 0) {
-      navigateTO("/assessment");
-    }
-  }, [percentageResult]);
+  // useEffect(() => {
+  //   if (percentageResult === 0) {
+  //     navigateTO("/assessment");
+  //   }
+  // }, [percentageResult]);
   return (
     <div className={assessmentStyle.SelfAssessmentPage__ResultContainer}>
       <div className={assessmentStyle.SelfAssessmentPage__resultBox}>

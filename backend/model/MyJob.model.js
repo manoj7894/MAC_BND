@@ -50,6 +50,18 @@ const myJobSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        applicationStatus: [{
+
+            JobStatus: {
+                type: String
+            },
+            StatusText:{
+                type: String
+            },
+            updatedAt: {
+                type: Date
+            }
+        }]
     }
 );
 const appliedJobCollection = mongoose.model('appliedJob', myJobSchema);

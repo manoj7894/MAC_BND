@@ -3,6 +3,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer");
 const dotenv = require("dotenv");
+const { uploadonCloudinary } = require("../../utility/cloudinary");
 dotenv.config();
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -13,7 +14,7 @@ const getHR =  async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
-    res.json({ name: user.name, email: user.email });
+    res.json({ name: user.name, email: user.email ,hrDetails:user});
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ message: 'Internal server error' });
@@ -48,7 +49,8 @@ const signUp = async (req, res) => {
       email,
       jobTitle,
       department,
-      companyName
+      companyName,
+      bookmarkUser : []
     });
   } catch (error) {
     console.error('Error:', error);
@@ -83,6 +85,7 @@ const login = async (req, res) => {
       jobTitle: hr.jobTitle,
       department: hr.department,
       companyName: hr.companyName,
+      bookmarkUser : hr.bookmarkUser,
       userType : 'employee'
     });
   } catch (error) {
@@ -147,5 +150,91 @@ const resetPassword = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+const HRupdateUserField = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const updateFields = {};
+    const result = req.file && (await uploadonCloudinary(req.file.path));
+    req.body.profileImage = result && result?.secure_url;
 
-module.exports = { signUp, login, forgotPassword, resetPassword, getHR };
+    req.body.skills =
+      req.body.skills?.length > 0
+        ? req.body.skills
+            ?.split(",")
+            .map((skill, index) => ({ name: skill.trim(), index }))
+        : "";
+
+    for (const key in req.body) {
+      if (
+        req.body[key] !== "null" &&
+        req.body[key] !== "" &&
+        req.body[key] !== " " &&
+        req.body[key]
+      ) {
+        updateFields[key] = req.body[key];
+      }
+    }
+
+    const findUser = await Hr.findOneAndUpdate(
+      { email: email },
+      updateFields,
+      { new: true }
+    );
+
+    if (findUser) {
+      res.status(200).json({
+        success: true,
+        msg: "Hr details updated successfully",
+      });
+    } else {
+      res.status(404).json({
+        success: false,
+        msg: "No Hr found to update",
+      });
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Internal Server Error" });
+  }
+  // try {
+  //   const { email } = req.params;
+  //   const updateFields = {};
+  //   const result = req.file && (await uploadonCloudinary(req.file.path));
+    
+  //   if (result && result.secure_url) {
+  //     updateFields.profileImage = result.secure_url;
+  //   }
+
+  //   if (req.body.name) {
+  //     updateFields.name = req.body.name;
+  //   }
+
+  //   if (req.body.email) {
+  //     updateFields.email = req.body.email;
+  //   }
+
+  //   const findUser = await Hr.findOneAndUpdate(
+  //     { email: email },
+  //     updateFields,
+  //     { new: true }
+  //   );
+
+  //   if (findUser) {
+  //     res.status(200).json({
+  //       success: true,
+  //       msg: "HR details updated successfully",
+  //       hrDetails: findUser
+  //     });
+  //   } else {
+  //     res.status(404).json({
+  //       success: false,
+  //       msg: "No HR found to update",
+  //     });
+  //   }
+  // } catch (error) {
+  //   console.error("Error updating user:", error);
+  //   return res.status(500).json({ message: "Internal Server Error" });
+  // }
+};
+
+module.exports = { signUp, login, forgotPassword, resetPassword, getHR,HRupdateUserField };

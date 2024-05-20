@@ -1,5 +1,8 @@
 const { uploadonCloudinary } = require("../utility/cloudinary");
-const { savedJobCollection, appliedJobCollection} = require("../model/MyJob.model");
+const {
+  savedJobCollection,
+  appliedJobCollection,
+} = require("../model/MyJob.model");
 const jobCollection = require("../model/Job.Model");
 const User = require("../model/users/UserModel");
 
@@ -15,7 +18,17 @@ const create = async (req, res) => {
       skilRequired,
       employeeEmail,
       jobExperience,
+      education,
+      responsibility,
+      howToApply,
+      mcq
     } = req.body;
+
+    // Parse the skilRequired string into an array of objects
+    const skillArray = skilRequired.split(",").map((skill, index) => ({ name: skill.trim(), index }));
+
+      const mcqData = mcq ? mcq : [];
+
     const newPost = {
       jobPoster: result.secure_url,
       jobTitle,
@@ -23,13 +36,18 @@ const create = async (req, res) => {
       employmentType,
       location,
       salaryRange,
-      skilRequired,
+      skilRequired: skillArray, // Use the parsed skill array
       employeeEmail,
       jobExperience,
+      education,
+      responsibility,
+      howToApply,
       createdAt: Date.now(),
+      mcq: mcqData
     };
-    const mongooseRespoonse = await jobCollection.create(newPost);
-    if (mongooseRespoonse) {
+
+    const mongooseResponse = await jobCollection.create(newPost);
+    if (mongooseResponse) {
       res.status(200).json({
         success: true,
       });
@@ -38,7 +56,6 @@ const create = async (req, res) => {
         success: false,
       });
     }
-    // res.json({ message: 'Post created successfully!', newPost });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Error creating post" });

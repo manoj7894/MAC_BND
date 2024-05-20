@@ -3,17 +3,15 @@ import ResumeStyle from "../MyResume.module.css";
 import axios from "axios";
 import PdfComp from "../PdfComp";
 
-const CurrentResume = () => {
+const CurrentResume = ({ email }) => {
   const [latestResume, setLatestResume] = useState(null); // Initialize latestResume as null
-  // console.log(latestResume);
-  const email = localStorage.getItem("email");
+  // console.log(email);
+  // const email = localStorage.getItem("email");
 
   useEffect(() => {
     const fetchResumes = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:8080/resume/getall/${email}`
-        );
+        const response = await axios.get(`http://localhost:8080/resume/getall/${email}`);
         const resumesData = response.data.resumes;
         // console.log(resumesData);
 
@@ -31,7 +29,7 @@ const CurrentResume = () => {
     };
 
     fetchResumes();
-  }, [email, latestResume]);
+  }, [email]);
 
   return (
     <div className={ResumeStyle.Current_Resume_Container}>
@@ -44,10 +42,7 @@ const CurrentResume = () => {
 
       {latestResume &&
         latestResume.path && ( // Render PdfComp only if latestResume and latestResume.path are defined
-          <PdfComp
-            key={latestResume._id}
-            pdf={`http://localhost:8080/${latestResume.path}`}
-          />
+          <PdfComp key={latestResume._id} pdf={`http://localhost:8080/${latestResume.path}`} />
         )}
     </div>
   );

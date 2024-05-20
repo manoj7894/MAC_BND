@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
@@ -24,6 +24,15 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
   });
 
   const [name, setName] = useState("");
+
+  const passwordRef = useRef(null);
+
+  useEffect(() => {
+    // Set focus to the password input field when step changes to 2
+    if (formData.step === 2) {
+      passwordRef.current.focus();
+    }
+  }, [formData.step]);
 
   useEffect(() => {
     // Fetch user's name based on their email
@@ -57,6 +66,18 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     }
   };
 
+  const handleEnterKey = async (e) => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      if (formData.step === 1) {
+        await nextStep();
+      } else {
+        await handleSubmit(e);
+      }
+    }
+  };
+  
+  
   const nextStep = async () => {
     if (formData.email) {
       try {
@@ -85,7 +106,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
         headers: { "Content-Type": "application/json" },
       });
 
-      const { name, email, token } = response.data;
+      const { name, email, token,bookmarkUser } = response.data;
 
       // Store user details in local storage
       localStorage.setItem("token", token);
@@ -97,6 +118,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
           email: email,
           name: name,
           userType: "employee",
+          bookmarkUser : bookmarkUser,
         })
       );
       toast.success(`Welcome Back Recruiter, ${name}`);
@@ -113,12 +135,9 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
     nav("/hr/forgot-password");
   };
 
+
   return (
-    <>
-      {/* {isHRLogin ? (
-        <UserLogin />
-      ) : ( */}
-      <>
+      <div onKeyDown={handleEnterKey}>
         {formData.step === 1 ? (
           <div className={hrLoginStyle.sub_container1}>
             <div className={hrLoginStyle.sub_container2}>
@@ -190,6 +209,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
                           value={formData.email}
                           onChange={handleChange}
                           required
+                          autoFocus
                         />
                       </Form>
                     </div>
@@ -291,6 +311,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                             ref={passwordRef}
                           />
                           <span
                             style={{
@@ -334,8 +355,7 @@ function HrLogin({ toggleLoginType, isHRLogin }) {
             </div>
           </div>
         )}
-      </>
-    </>
+      </div>
   );
 }
 

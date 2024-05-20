@@ -1,13 +1,13 @@
 import React from "react";
 import navStyle from "./SideNav.module.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faRobot,faCalendarDays } from "@fortawesome/free-solid-svg-icons";
 import { FaHouse } from "react-icons/fa6";
 import { FaEnvelopeOpenText } from "react-icons/fa";
-import { IoChatbubblesOutline } from "react-icons/io5";
+import { HiBriefcase } from "react-icons/hi";
 import { SiSimpleanalytics } from "react-icons/si";
-import { PiBriefcaseBold } from "react-icons/pi";
 import { GrDocumentText } from "react-icons/gr";
 import { GoSmiley } from "react-icons/go";
-import { SlCalender } from "react-icons/sl";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import { NavLink } from "react-router-dom";
@@ -16,6 +16,10 @@ import { useSelector, useDispatch } from 'react-redux'
 import { handleUserLogOut } from "../../../../Redux/ReduxSlice";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast';
+import axios from 'axios'
+
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
+
 const menuItems = [
   {
     path: "/dashboard",
@@ -30,7 +34,7 @@ const menuItems = [
   {
     path: "/chatbot",
     name: "Chat bot",
-    icon: <IoChatbubblesOutline className={navStyle.JobSeeker_navITEMICON} />,
+    icon:<FontAwesomeIcon icon={faRobot} className={navStyle.JobSeeker_navITEMICON}/>,
   },
   {
     path: "/analytics",
@@ -40,7 +44,7 @@ const menuItems = [
   {
     path: "/myjobs",
     name: "My jobs",
-    icon: <PiBriefcaseBold className={navStyle.JobSeeker_navITEMICON} />,
+    icon: <HiBriefcase className={navStyle.JobSeeker_navITEMICON} />,
   },
   {
     path: "/myresume",
@@ -55,7 +59,7 @@ const menuItems = [
   {
     path: "/interviews",
     name: "Interview Scheduled",
-    icon: <SlCalender className={navStyle.JobSeeker_navITEMICON} />,
+    icon: <FontAwesomeIcon icon={faCalendarDays} className={navStyle.JobSeeker_navITEMICON}/> ,
   },
   {
     path: "/settings",
@@ -67,15 +71,30 @@ const menuItems = [
 function SideNavbar() {
   const dispatch = useDispatch();
   const navigateTO = useNavigate()
-  const { name } = useSelector((state) => state.Assessment.currentUser);
+  const { name,profileImage } = useSelector((state) => state.Assessment.currentUser);
+  const email = localStorage.getItem("email")
 
-  const handleLogoutClick = () => {
-    dispatch(handleUserLogOut());
-    toast.success(`${name} Logged out !!`)
-    setTimeout(() => {
-      navigateTO("/login")
-    }, 1000);
-  }
+
+  const handleLogoutClick = async () => {
+    try {
+      dispatch(handleUserLogOut());
+
+      const response = await axios.post(`${baseUrl}/logout?email=${email}`,);
+      
+      if (response.status !== 200) {
+        throw new Error('Logout failed');
+      }
+  
+      toast.success(`${name} Logged out !!`);
+      setTimeout(() => {
+        navigateTO("/login");
+      }, 1000);
+    } catch (error) {
+      console.error('Logout failed:', error);
+      toast.error('Logout failed. Please try again.');
+    }
+  };
+  
   return (
     <>
       <div className={navStyle.SidenavBar__Container}>
@@ -107,18 +126,20 @@ function SideNavbar() {
           })}
         </nav>
 
-        <div className={navStyle.sidenavBar__profileBox}>
+       <div>
+       <div className={navStyle.sidenavBar__profileBox}>
           <Tooltip title="Profile" arrow placement="right-end">
             <img
-              src="https://w7.pngwing.com/pngs/831/88/png-transparent-user-profile-computer-icons-user-interface-mystique-miscellaneous-user-interface-design-smile.png"
+              src={profileImage ?? 'https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg'}
               alt="UserProfilePicture"
               className={navStyle.sidenavBar__userProfilePicture}
+              onError={(e) => { e.target.src = `https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg`; e.onError = null; }}
             />
           </Tooltip>
 
           <p className={navStyle.sidenavBar__userName}>
-            {name && name}
-            <button className={navStyle.editProfileButton}>Edit Profile</button>
+            {name && name?.split(" ")[0]}
+            <button onClick={() => navigateTO('/settings/editprofile')} className={navStyle.editProfileButton}>Edit Profile</button>
           </p>
 
           <DropDownMENU userName={name} userLogOut={handleLogoutClick} />
@@ -128,6 +149,7 @@ function SideNavbar() {
           <RiLogoutCircleRLine className={navStyle.logOutButtonICON} />
           Log Out
         </button>
+       </div>
       </div>
     </>
   );
@@ -136,10 +158,12 @@ function SideNavbar() {
 export default SideNavbar;
 
 function DropDownMENU({ userName, userLogOut }) {
+  const navigateTO = useNavigate()
+
   return (
     <div className={navStyle.ProfileDropDownContainer}>
       <p className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Name}`}> {userName && userName}</p>
-      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`}>Edit Profile</button>
+      <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={(e) => navigateTO("/settings/editprofile")}>Edit Profile</button>
       <button className={`${navStyle.dropDownITEM} ${navStyle.dropDownITEM_Button}`} onClick={userLogOut}>  <RiLogoutCircleRLine className={navStyle.logOutButtonICON} />
         Log Out </button>
     </div>

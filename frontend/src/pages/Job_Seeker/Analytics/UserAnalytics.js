@@ -9,7 +9,6 @@ import { BarChart, Bar, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import userAnalyticsStyle from "./Analytics.module.css";
-
 import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
@@ -23,6 +22,7 @@ import {
   PointElement,
   Filler,
 } from "chart.js";
+import axios from 'axios'
 import FrequencyChart from "./Frequency";
 ChartJS.register(
   Title,
@@ -35,6 +35,8 @@ ChartJS.register(
   Filler
 );
 
+const baseUrl = process.env.REACT_APP_BACKEND_BASE_URL
+
 function UserAnalytics() {
   const { pathname } = useLocation();
   const navigateTO = useNavigate();
@@ -44,13 +46,14 @@ function UserAnalytics() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
+
+  const period = pathname.split('/')[2];
+
   return (
     <>
       <div className={userAnalyticsStyle.analyticsPage__box}>
         <AnalyticsPageNavbar />
-        {/* <div className={userAnalyticsStyle.analyticsPage__outletContainer}>
-          <Outlet />
-        </div> */}
+         <AnalyticsPageCarousel period={period} />
         <AnalyticsReportComponent/>
       </div>
     </>
@@ -81,61 +84,95 @@ function AnalyticsPageNavbar() {
   );
 }
 
+const dummyData = [
+  {
+    name: "Jan",
+    value: 250,
+  },
+  {
+    name: "Feb",
+    value: 200,
+  },
+  {
+    name: "Mar",
+    value: 150,
+  },
+  {
+    name: "Apr",
+    value: 200,
+  },
+  {
+    name: "Jun",
+    value: 50,
+  },
+  {
+    name: "Jul",
+    value: 150,
+  },
+  {
+    name: "Aug",
+    value: 100,
+  },
+  {
+    name: "Sep",
+    value: 120,
+  },
+  {
+    name: "Oct",
+    value: 220,
+  },
+  {
+    name: "Nov",
+    value: 180,
+  },
+  {
+    name: "Dec",
+    value: 210,
+  },
+];
+
 function AnalyticsReportComponent() {
-  const dummyData = [
-    {
-      name: "Jan",
-      value: 250,
-    },
-    {
-      name: "Feb",
-      value: 200,
-    },
-    {
-      name: "Mar",
-      value: 150,
-    },
-    {
-      name: "Apr",
-      value: 200,
-    },
-    {
-      name: "Jun",
-      value: 50,
-    },
-    {
-      name: "Jul",
-      value: 150,
-    },
-    {
-      name: "Aug",
-      value: 100,
-    },
-    {
-      name: "Sep",
-      value: 120,
-    },
-    {
-      name: "Oct",
-      value: 220,
-    },
-    {
-      name: "Nov",
-      value: 180,
-    },
-    {
-      name: "Dec",
-      value: 210,
-    },
-  ];
+  const [analyticsData, setAnalyticsData] = useState([]);
+  const [jobViewData, setjobViewData] = useState([]);
+
+   useEffect(() => {
+     const fetchAnalyticsData = async () => {
+      const email = localStorage.getItem("email")
+       try {
+         const response = await axios.get(`${baseUrl}/analytics/job-application?email=${email}`)
+         setAnalyticsData(response.data);
+        //  console.log(response.data)
+       } catch (error) {
+         console.error('Error fetching analytics data:', error);
+       }
+     };
+ 
+     fetchAnalyticsData();
+   }, []); 
+
+   useEffect(() => {
+    const fetchJobViewData = async () => {
+     const email = localStorage.getItem("email")
+     try {
+      const response = await axios.get(`${baseUrl}/jobs/get-job-views?userEmail=${email}`);
+      const data = response.data.jobViewsData;
+
+      // Convert jobViewsData object to array of objects
+      const jobViewsArray = Object.keys(data).map(month => ({ month, views: data[month] }));
+      setjobViewData(jobViewsArray);
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      }
+    };
+
+    fetchJobViewData();
+  }, []);
   return (
     <section className={userAnalyticsStyle.analyticsReportComponent__container}>
-      <AnalyticsPageCarousel />
-
       <div className={userAnalyticsStyle.analyticsPage__analysis__Box}>
         <div className={userAnalyticsStyle.analysisBox__header}>
           <h2 className={userAnalyticsStyle.analysisBox__header__primaryText}>
-            Job Application analytics
+            Job Application Analytics
           </h2>
           <span className={userAnalyticsStyle.analysisBox__header__secondaryText}>
             Success rate
@@ -143,10 +180,10 @@ function AnalyticsReportComponent() {
         </div>
         <div style={{ height: "400px", width:'80%', marginLeft:'69px', marginTop:'20px' }}>
           <ResponsiveContainer>
-            <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} axisLine={false} tickLine={false} />
-              <YAxis axisLine={false} tickLine={false}/>
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
+            <BarChart data={analyticsData}>
+              <XAxis dataKey="month" axisLine={false} tickLine={false}  />
+              <YAxis axisLine={false} tickLine={false} />
+              <Bar dataKey="jobApplications" fill="#00296B" barSize={35} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -163,11 +200,6 @@ function AnalyticsReportComponent() {
         <div className={userAnalyticsStyle.spline_chart_design} style={{height:'400px', width:'80%', marginLeft:'100px'}}>
           <ResponsiveContainer>
             <SplineChart />
-            {/* <BarChart data={dummyData}>
-              <XAxis dataKey={"name"} />
-              <YAxis />
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
-            </BarChart> */}
           </ResponsiveContainer>
         </div>
       </div>
@@ -198,15 +230,15 @@ function AnalyticsReportComponent() {
           </span>
         </div>
 
-        <div style={{height:'400px', width:'80%', marginLeft:'100px', marginTop:'30px'}}>
-          <ResponsiveContainer>
-            <BarChart data={dummyData}>
-            <XAxis dataKey={"name"}  axisLine={false} tickLine={false} />
-              <YAxis  axisLine={false} tickLine={false} />
-              <Bar dataKey={"value"} fill="#00296B" barSize={35} />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+        <div style={{ height: '400px', width: '80%', marginLeft: '100px', marginTop: '30px' }}>
+        <ResponsiveContainer>
+          <BarChart data={jobViewData}>
+            <XAxis dataKey="month" axisLine={false} tickLine={false} />
+            <YAxis axisLine={false} tickLine={false}/>
+            <Bar dataKey="views" fill="#00296B" barSize={35} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
       </div>
 
       <div className={userAnalyticsStyle.analyticsPage__analysis__Box}>
@@ -225,22 +257,73 @@ function AnalyticsReportComponent() {
   );
 }
 
-function AnalyticsPageCarousel() {
+function AnalyticsPageCarousel({ period }) {
+  const [email, setEmail] = useState(null); 
+  const [loginFrequency, setLoginFrequency] = useState(null);
+  const [timeSpent, setTimeSpent] = useState(null);
+
+  useEffect(() => {
+    const fetchUserEmail = async () => {
+      try {
+        const storedEmail = localStorage.getItem("email");
+        setEmail(storedEmail);
+      } catch (error) {
+        console.error('Error fetching user email:', error);
+      }
+    };
+
+    fetchUserEmail();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (email) {
+          let timeSpentResponse;
+          if (period === 'weekly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/weekly?email=${email}`);
+          } else if (period === 'monthly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/monthly?email=${email}`);
+          } else if (period === 'yearly') {
+            timeSpentResponse = await axios.get(`${baseUrl}/analytics/time-spent/yearly?email=${email}`);
+          }
+          setTimeSpent(timeSpentResponse.data.timeSpent);
+
+          let loginFrequencyResponse;
+          if (period === 'weekly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/weekly?email=${email}`);
+          } else if (period === 'monthly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/monthly?email=${email}`);
+          } else if (period === 'yearly') {
+            loginFrequencyResponse = await axios.get(`${baseUrl}/analytics/login-frequency/yearly?email=${email}`);
+          }
+          setLoginFrequency(loginFrequencyResponse.data.loginFrequency);
+        }
+      } catch (error) {
+        console.error('Error fetching analytics data:', error);
+      }
+    };
+
+    fetchData();
+  }, [period, email]); 
+
+
+
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
       items: 3,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     tablet: {
       breakpoint: { max: 1024, min: 464 },
       items: 2,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
     mobile: {
       breakpoint: { max: 464, min: 0 },
       items: 1,
-      slidesToSlide: 1, // optional, default to 1.
+      slidesToSlide: 1,
     },
   };
 
@@ -263,12 +346,11 @@ function AnalyticsPageCarousel() {
       cardID: 3,
       cardICON: clockICON,
       cardTitle: "Time Spent",
-      cardData: "15 Min",
+      cardData: `${timeSpent} Min`, 
       cardBG: "#CBF0FB",
     },
     {
       cardID: 4,
-
       cardICON: activeICON,
       cardTitle: "Active users",
       cardData: "5000",
@@ -278,7 +360,7 @@ function AnalyticsPageCarousel() {
       cardID: 5,
       cardICON: loginICON,
       cardTitle: "Login Frequency",
-      cardData: "3 Times",
+      cardData: `${loginFrequency} Times`, 
       cardBG: "#f9bbbb",
     },
   ];
@@ -320,7 +402,7 @@ function AnalyticsPageCarousel() {
 }
 
 function SplineChart() {
-  const [data, setData] = useState({
+  const [data] = useState({
     labels: [
       "Jan",
       "Feb",
@@ -350,7 +432,8 @@ function SplineChart() {
       },
     ],
   });
-  console.log(setData);
+
+  // console.lo);
   return (
     <div style={{ height: "420px" }}>
       <Line data={data}>Hello</Line>
