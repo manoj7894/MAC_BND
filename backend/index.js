@@ -14,7 +14,7 @@ app.use(
 );
 
 //!  Assessments Related  Routes and import
-const { assessmentRoute } = require("./routes/Assessment.Route");
+const { assessmentRoute } = require("./Routes/Assessment.Route");
 const assesmentQuestionRouter = require("./Routes/AssessmentQuestion.Route");
 app.use("/api/assessment", assessmentRoute);
 app.use("/api/questions", assesmentQuestionRouter);
